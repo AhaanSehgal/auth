@@ -34,7 +34,7 @@ export default function LoaderPage() {
         if (isAccountExist === true) {
           window.close()
         } else {
-          navigate("/signUpUserName")
+          navigate(`/signUpUserName/${userId}`)
         }
 
         // setActiveSocialMedia('google');
@@ -51,7 +51,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
-          navigate("/signUpUserName")
+          navigate(`/signUpUserName/${data.userId}`)
         }
         // setId(id);
         // setActiveSocialMedia('instagram');
@@ -66,7 +66,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
-          navigate("/signUpUserName")
+          navigate(`/signUpUserName/${data.userId}`)
         }
         // setFlag(false);
       } else if (code) {
@@ -76,7 +76,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
-          navigate("/signUpUserName")
+          navigate(`/signUpUserName/${data.userId}`)
         }
         // console.log(data);
         // setId(data.userId);
