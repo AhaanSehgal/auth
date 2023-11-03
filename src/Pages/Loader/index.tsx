@@ -1,0 +1,104 @@
+import React, { useEffect } from 'react'
+import Loader from '../../Components/Loader'
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from "axios"
+
+
+export default function LoaderPage() {
+
+  const navigate = useNavigate()
+  const location = useLocation();
+  const baseUrl = 'https://staging.tria.so'
+
+  // useEffect(() => {
+  //     setTimeout(() => {
+  //         navigate('/welcome')
+  //     }, 2000)
+  // }, [])
+
+  useEffect(() => {
+    console.log("useEffect called")
+    async function submitData() {
+      const searchParams = new URLSearchParams(location.search);
+      const code = searchParams.get('code');
+      const scope = searchParams.get('scope');
+      const state = searchParams.get('state');
+      console.log('state', state);
+      if (code && scope && state === 'google') {
+        const {
+          data: { userId, isAccountExist, password, isPasswordRequired },
+        } = await axios.get(
+          `${baseUrl}/api/v1/auth/google/callback?code=${code}&scope=${scope}`
+        );
+        console.log("res", userId, isAccountExist, password)
+        if (isAccountExist === true) {
+          window.close()
+        } else {
+          navigate("/signUpUserName")
+        }
+
+        // setActiveSocialMedia('google');
+        // setId(userId);
+        // setPassword(password);
+        // setIsPasswordRequired(isPasswordRequired);
+        // setIsExist(isAccountExist);
+        // setFlag(false);
+        // navigate('/');
+      } else if (code && state === 'instagram') {
+        const { data } = await axios.get(
+          `${baseUrl}/api/v1/auth/instagram/callback?code=${code}`
+        );
+        if (data.isAccountExist === true) {
+          window.close()
+        } else {
+          navigate("/signUpUserName")
+        }
+        // setId(id);
+        // setActiveSocialMedia('instagram');
+        // setPassword(password);
+        // setIsPasswordRequired(isPasswordRequired);
+        // setIsExist(isAccountExist);
+        // setFlag(false);
+        // navigate('/');
+      } else if (code && state === 'discord') {
+        const { data } = await axios.get(`${baseUrl}/api/v1/auth/discord/callback?code=${code}`);
+        // console.log(data);
+        if (data.isAccountExist === true) {
+          window.close()
+        } else {
+          navigate("/signUpUserName")
+        }
+        // setFlag(false);
+      } else if (code) {
+        const { data } = await axios.get(
+          `${baseUrl}/api/v1/auth/twitter/callback?code=${code}&state=${state}`
+        );
+        if (data.isAccountExist === true) {
+          window.close()
+        } else {
+          navigate("/signUpUserName")
+        }
+        // console.log(data);
+        // setId(data.userId);
+        // setDiscordUsername(data.username)
+        // setActiveSocialMedia('discord');
+        // setPassword(data.password);
+        // setIsPasswordRequired(data.isPasswordRequired);
+        // setIsExist(data.isAccountExist);
+        // // setFlag(false);
+        // navigate('/');
+      }
+    }
+    try {
+      submitData();
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  return (
+    <div>
+      <div className='mt-80'><Loader /></div>
+    </div>
+  )
+}
