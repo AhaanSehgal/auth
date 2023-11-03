@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import Loader from '../../Components/Loader'
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios"
+import NavContext from '../../NavContext';
+
 
 
 export default function LoaderPage() {
 
   const navigate = useNavigate()
+  const { setToken } = useContext(NavContext)
   const location = useLocation();
   const baseUrl = 'https://staging.tria.so'
 
@@ -26,7 +29,7 @@ export default function LoaderPage() {
       console.log('state', state);
       if (code && scope && state === 'google') {
         const {
-          data: { userId, isAccountExist, password, isPasswordRequired },
+          data: { userId, isAccountExist, password, isPasswordRequired, AccessToken },
         } = await axios.get(
           `${baseUrl}/api/v1/auth/google/callback?code=${code}&scope=${scope}`
         );
@@ -34,6 +37,8 @@ export default function LoaderPage() {
         if (isAccountExist === true) {
           window.close()
         } else {
+          console.log("at", AccessToken)
+          setToken(AccessToken)
           navigate(`/signUpUserName/${userId}`)
         }
 
@@ -51,6 +56,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
+          setToken(data.AccessToken)
           navigate(`/signUpUserName/${data.userId}`)
         }
         // setId(id);
@@ -66,6 +72,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
+          setToken(data.AccessToken)
           navigate(`/signUpUserName/${data.userId}`)
         }
         // setFlag(false);
@@ -76,6 +83,7 @@ export default function LoaderPage() {
         if (data.isAccountExist === true) {
           window.close()
         } else {
+          setToken(data.AccessToken)
           navigate(`/signUpUserName/${data.userId}`)
         }
         // console.log(data);
