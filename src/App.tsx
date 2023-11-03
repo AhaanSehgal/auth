@@ -20,28 +20,36 @@ import NavContext from './NavContext';
 
 const App = () => {
 
+  const [token, setToken] = useState("")
+
+  const obj = {
+    token,
+    setToken
+  }
+
   // const [showWallet, setShowWallet] = useState(true);
 
   return (
     <>
-      <Router>
-        <div className="flex items-center justify-center">
-          {/* <div className=""> */}
+      <NavContext.Provider value={obj}>
+        <Router>
+          <div className="flex items-center justify-center">
+            {/* <div className=""> */}
             {/* {showWallet && ( */}
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/confirmEmail" element={<ConfirmEmail />} />
-                 <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
-                <Route path="/signUpPassword" element={<SignUpPassword />} />
-                <Route path="/signUpConfirmPassword" element={<SignUpPasswordConfirm />} />
-                <Route path="/signInPassword/:param" element={<SignInPassword />} />
-                <Route path="/welcome" element={<Welcome />} />
-                <Route path="/onboarding" element={<Onboarding />} />
-                <Route path="/connectWallet" element={<ConnectWallet />} />
-                <Route path="/createWallet" element={<CreateWallet />} />
-                <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
-                <Route path="/callback/:param" element={<LoaderPage />} />
-              </Routes>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/confirmEmail" element={<ConfirmEmail />} />
+              <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
+              <Route path="/signUpPassword" element={<SignUpPassword />} />
+              <Route path="/signUpConfirmPassword" element={<SignUpPasswordConfirm />} />
+              <Route path="/signInPassword/:param" element={<SignInPassword />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/connectWallet" element={<ConnectWallet />} />
+              <Route path="/createWallet" element={<CreateWallet />} />
+              <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
+              <Route path="/callback/:param" element={<LoaderPage />} />
+            </Routes>
             {/* )} */}
             {/* <div
               className="wallet_icon fixed w-[80px] bottom-4 right-8 cursor-pointer"
@@ -58,9 +66,10 @@ const App = () => {
                 </div>
               </div>
             </div> */}
-          {/* </div> */}
-        </div>
-      </Router>
+            {/* </div> */}
+          </div>
+        </Router>
+      </NavContext.Provider>
     </>
   );
 };
