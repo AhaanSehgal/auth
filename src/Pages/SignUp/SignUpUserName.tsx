@@ -141,7 +141,7 @@ export default function SignUp() {
                   <div className='flex gap-3 items-center w-[376px] overflow-x-scroll h-20 '>
                     {recommendations?.map((item, index) => {
                       return (
-                        <div onClick={() => setName(item)} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
+                        <div onClick={() => {setName(item); getNameRecommendations(item); checkIfAvailable(item)}} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
                           <div className='bg-gray-100 rounded-full px-5 py-2 font-Montserrat'>
                             {item}
                           </div>
