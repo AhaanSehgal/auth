@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer';
 import { KeyringController } from '@tria-sdk/web';
 import axios from "axios"
-
+import { useParams } from 'react-router-dom'
 
 
 export default function SignUp() {
@@ -21,6 +21,10 @@ export default function SignUp() {
   const [recommendations, setRecommendations] = useState([])
   const [available, setAvailable] = useState()
   const [name, setName] = useState("")
+  
+  const userId = useParams()
+
+  console.log("id",userId)
   const walletType = {
     embedded: true,
   };
@@ -57,7 +61,8 @@ export default function SignUp() {
     const res = await keyringController.socialogin({
       triaName: name,
       platform: 'google',
-      userId: Id,
+       //@ts-ignore
+      userId: userId?.param,
       isPasswordLess: true,
       //@ts-ignore
       password: null,
