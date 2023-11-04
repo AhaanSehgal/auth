@@ -9,7 +9,6 @@ import { KeyringController } from '@tria-sdk/web';
 
 export default function LoaderPage() {
 
-  const baseUrl = 'https://staging.tria.so';
 
   const walletType = {
     embedded: true,
