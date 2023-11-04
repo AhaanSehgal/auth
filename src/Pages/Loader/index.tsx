@@ -3,10 +3,17 @@ import Loader from '../../Components/Loader'
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios"
 import NavContext from '../../NavContext';
+import { KeyringController } from '@tria-sdk/web';
 
 
 
 export default function LoaderPage() {
+
+  const baseUrl = 'https://staging.tria.so';
+
+  const walletType = {
+    embedded: true,
+  };
 
   const navigate = useNavigate()
   const { setToken } = useContext(NavContext)
@@ -35,6 +42,10 @@ export default function LoaderPage() {
         );
         console.log("res", userId, isAccountExist, password)
         if (isAccountExist === true) {
+          const keyringController = new KeyringController({
+        baseUrl,
+        walletType,
+      });
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
