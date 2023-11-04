@@ -53,7 +53,7 @@ export default function LoaderPage() {
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
-          //navigate(`/signUpUserName/${userId}`)
+          navigate(`/signUpUserName/${userId}`)
         }
 
         // setActiveSocialMedia('google');
