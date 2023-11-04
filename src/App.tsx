@@ -16,10 +16,21 @@ import CreateWallet from './Pages/CreateWallet';
 import SignUpPasswordConfirm from './Pages/SignUp/SignUpConfirmPassword';
 import LoaderPage from './Pages/Loader';
 import NavContext from './NavContext';
+import { useSocialConnect } from '@tria-sdk/connect';
 
 
 const App = () => {
 
+  const {success} = useSocialConnect()
+    useEffect(()=>{ 
+        getStatus()
+    },[])
+
+    const getStatus = async() =>{
+        setTimeout(()=>{
+            console.log("success",success)
+        },1000)
+    }
   const [token, setToken] = useState("")
 
   const obj = {
