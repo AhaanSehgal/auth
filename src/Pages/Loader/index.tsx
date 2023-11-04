@@ -39,7 +39,7 @@ export default function LoaderPage() {
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
-          navigate(`/signUpUserName/${userId}`)
+          //navigate(`/signUpUserName/${userId}`)
         }
 
         // setActiveSocialMedia('google');
@@ -57,7 +57,7 @@ export default function LoaderPage() {
           window.close()
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          //navigate(`/signUpUserName/${data.userId}`)
         }
         // setId(id);
         // setActiveSocialMedia('instagram');
@@ -73,7 +73,7 @@ export default function LoaderPage() {
           window.close()
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          //navigate(`/signUpUserName/${data.userId}`)
         }
         // setFlag(false);
       } else if (code) {
@@ -84,7 +84,7 @@ export default function LoaderPage() {
           window.close()
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          //navigate(`/signUpUserName/${data.userId}`)
         }
         // console.log(data);
         // setId(data.userId);
