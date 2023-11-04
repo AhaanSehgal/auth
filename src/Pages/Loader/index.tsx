@@ -36,6 +36,9 @@ export default function LoaderPage() {
         console.log("res", userId, isAccountExist, password)
         if (isAccountExist === true) {
           console.log("account exists")
+          console.log("password", password)
+          console.log('userId', userId)
+          await keyringController.getVault({ password:password, userId: userId });
           //window.close()
         } else {
           console.log("at", AccessToken)
