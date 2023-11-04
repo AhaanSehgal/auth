@@ -35,7 +35,8 @@ export default function LoaderPage() {
         );
         console.log("res", userId, isAccountExist, password)
         if (isAccountExist === true) {
-          window.close()
+          console.log("account exists")
+          //window.close()
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
