@@ -76,7 +76,9 @@ export default function SignUp() {
       });
       console.log('res', res.success);
       if (res.success === true) {
-        window.close()
+        console.log("successful login")
+        setLoader(false)
+        //window.close()
       } else {
         setLoader(false)
       }

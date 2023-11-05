@@ -19,10 +19,21 @@ import NavContext from './NavContext';
 import SignMessage from './Pages/SignMessage';
 import SendAsset from './Pages/Send';
 
+import { useSocialConnect } from '@tria-sdk/connect';
 
 
 const App = () => {
 
+  const {success} = useSocialConnect()
+    useEffect(()=>{ 
+        getStatus()
+    },[])
+
+    const getStatus = async() =>{
+        setTimeout(()=>{
+            console.log("success",success)
+        },1000)
+    }
   const [token, setToken] = useState("")
 
   const obj = {
