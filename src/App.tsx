@@ -16,6 +16,9 @@ import CreateWallet from './Pages/CreateWallet';
 import SignUpPasswordConfirm from './Pages/SignUp/SignUpConfirmPassword';
 import LoaderPage from './Pages/Loader';
 import NavContext from './NavContext';
+import SignMessage from './Pages/SignMessage';
+import SendAsset from './Pages/Send';
+
 
 
 const App = () => {
@@ -49,6 +52,8 @@ const App = () => {
               <Route path="/createWallet" element={<CreateWallet />} />
               <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
               <Route path="/callback/:param" element={<LoaderPage />} />
+              <Route path="/signMessage/:param" element={<SignMessage />} />
+              <Route path="/send/:param" element={<SendAsset/>}/>
             </Routes>
             {/* )} */}
             {/* <div
