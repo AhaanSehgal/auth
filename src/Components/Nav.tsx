@@ -21,12 +21,12 @@ export default function Nav() {
         <div className="h-[221px] px-5 py-6 flex-col justify-center  gap-4 flex">
             <div className="self-stretch py-2  justify-center  gap-2 inline-flex">
               <div className=" flex-col justify-center  gap-2 inline-flex">
-                <img className="w-[95px] h-[95px]" src="/icons/sea.png" />
+                <img className="w-[95px] h-[95px]" src="https://www.empireofsight.com/assets/images/logo-icon.svg" />
               </div>
             </div>
             <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-center  gap-2 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Connect with Opensea</div>
+                <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Login to Empire of Sight</div>
               </div>
             </div>
           </div>

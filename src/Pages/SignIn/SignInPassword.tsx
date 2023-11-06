@@ -53,14 +53,14 @@ export default function SignInPassword() {
           <div className=" self-stretch h-[255px] px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Continue with Tria</div>
+                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Login with email</div>
               </div>
             </div>
             <div className="self-stretch h-32 flex-col justify-center items-center flex">
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                 <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex">
                   <div className="justify-start items-center flex">
-                    <div className="mix-blend-difference text-center text-white text-opacity-90 text-base font-semibold font-Montserrat leading-tight">{triaName?.param}<span className="text-zinc-500 text-opacity-60 text-base font-normal leading-tight">@tria</span></div>
+                    <div className="mix-blend-difference text-center text-white text-opacity-90 text-base font-semibold font-Montserrat leading-tight">{triaName?.param}</div>
                   </div>
                 </div>
               </div>
@@ -73,11 +73,11 @@ export default function SignInPassword() {
                 </div>
               </div>
             </div>
-            <div className="self-stretch py-2 rounded-[44px] justify-start items-start inline-flex">
+            {/* <div className="self-stretch py-2 rounded-[44px] justify-start items-start inline-flex">
               <div className="grow shrink basis-0 h-[17px] justify-start items-center flex">
                 <div className="mix-blend-difference text-center text-white text-opacity-80 text-sm font-normal font-Montserrat leading-[16.80px]">Forgot Password?</div>
               </div>
-            </div>
+            </div> */}
           </div>
 
 

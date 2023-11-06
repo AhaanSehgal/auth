@@ -24,10 +24,9 @@ import { useSocialConnect } from '@tria-sdk/connect';
 
 const App = () => {
 
-  const { success } = useSocialConnect()
-  
+  const {success} = useSocialConnect()
+    
   const [token, setToken] = useState("")
-
 
 
   const obj = {
@@ -58,7 +57,7 @@ const App = () => {
               <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
               <Route path="/callback/:param" element={<LoaderPage />} />
               <Route path="/signMessage/:param" element={<SignMessage />} />
-              <Route path="/send/:param" element={<SendAsset />} />
+              <Route path="/send/:param" element={<SendAsset/>}/>
             </Routes>
             {/* )} */}
             {/* <div
