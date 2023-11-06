@@ -46,7 +46,7 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
-          await keyringController.getVault({ password:password, userId: userId });
+          await keyringController.getVault({ password:password, userId: userId, socialName:'google' });
           //window.close()
         } else {
           console.log("at", AccessToken)
