@@ -47,7 +47,9 @@ export default function LoaderPage() {
           console.log("password", password)
           console.log('userId', userId)
           await keyringController.getVault({ password:password, userId: userId, socialName:'google' });
-          //window.close()
+          setTimeout(()=>{
+            window.close()
+          },2000)       
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
