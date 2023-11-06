@@ -30,6 +30,7 @@ console.log("eecc",encodedParams);
 console.log(encodedParams);
    const location = useLocation();
   const [params, setParams] = useState();
+  const [darkMode, setDarkMode] = useState<boolean>(false)
 
   const param = useParams();
   console.log("pa",param);
@@ -83,199 +84,62 @@ console.log(encodedParams);
   }, [param]);
 
   return (
-      <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-        <div className="h-[221.50px] px-5 flex-col justify-center items-center flex">
-          <div className="w-[416px] justify-end items-start inline-flex">
-            <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-            <img
-              className="dark:invisible visible dark:w-0"
-              src="/icons/Shape.svg"
-            ></img>
-            <img className="dark:visible " src="/icons/ShapeW.svg"></img>{" "}
-          </div>
-          <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
-              <Navbar />
+      <div className={`h-[588px] w-[315px] p-4 flex flex-col bg-primaryColor ${darkMode? "bg-primaryDarkColor" : "bg-primaryColor"} rounded-[20px] `}>
+        <div className="flex flex-col gap-[8px] w-full justify-center items-center ">
+          <div className={`flex w-full justify-between item-center gap-[16px] py-3`}>
+          <div className="flex ">
+            <div>
+              <img/>
             </div>
-            <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-              <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-                <img className="w-7 h-7 shadow" src="/icons/sea.svg" />
-                <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                  https://opensea.io
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
-                Send Transaction
-              </div>
+            <div className="flex flex-col ">
+              <p>data?.chainName</p>
+              <p>data?.triaName</p>
             </div>
           </div>
-          <div className="self-stretch h-[444px] py-2 flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch h-[215px] px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
-              <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
-                <div className="self-stretch justify-center items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                    $1.07
-                  </div>
-                </div>
-                <div className="self-stretch justify-center items-center gap-1 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    2 MATIC
-                  </div>
-                </div>
-              </div>
-              <div className="w-[376px] justify-center items-start gap-4 inline-flex">
-                <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
-                  <img
-                    className="w-[50px] h-[50px] rounded-[50px]"
-                    src="/icons/boy.svg"
-                  />
-                  <div className="px-2 justify-start items-center inline-flex">
-                    <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                      thekaypo@tria
-                    </div>
-                  </div>
-                </div>
-                <div className="py-6 flex-col justify-center items-center gap-3 inline-flex">
-                  <div className="w-6 h-6 relative">
-                    <img
-                      className="dark:invisible visible dark:w-0"
-                      src="/icons/arrow-right.svg"
-                    ></img>
-                    <div className="w-6 h-6 left-0 top-0 absolute"></div>
-                  </div>
-                </div>
-                <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
-                  <img
-                    className="w-[50px] h-[50px] rounded-[50px]"
-                    src="/icons/man.svg"
-                  />
-                  <div className="px-2 justify-start items-center inline-flex">
-                    <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px]">
-                      avi@tria
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch h-[205px] px-5 py-4 rounded-2xl flex-col justify-center items-center gap-2 flex">
-              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                      Network Fee
-                    </div>
-                    <div className="w-[18px] h-[18px] relative">
-                      <div className="font-montserrat">
-                        <img
-                          className="dark:invisible visible dark:w-0"
-                          src="/icons/info-circle.svg"
-                        ></img>
-                        <img
-                          className="dark:visible invisible w-0 dark:w-[18px]"
-                          src="/icons/info-circle-dark.svg"
-                        ></img>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                    <div className="text-center text-stone-950 text-opacity-20 text-xs font-medium font-montserrat leading-[14.40px] dark:text-text">
-                      Refreshes in: 30
-                    </div>
-                  </div>
-                </div>
-                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                  <div className="self-stretch justify-end items-center gap-2 inline-flex">
-                    <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
-                      $0.024
-                    </div>
-                    <div className="w-[18px] h-[18px] relative">
-                      <div className="font-montserrat">
-                        <img
-                          className="dark:invisible visible dark:w-0"
-                          src="/icons/setting-2.svg"
-                        ></img>
-                        <img
-                          className="dark:visible  invisible w-0 dark:w-[18px]"
-                          src="/icons/setting-2-dark.svg"
-                        ></img>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="self-stretch justify-end items-center gap-2 inline-flex">
-                    <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                      0 MATIC
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-                <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
-                  <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                    Total Cost
-                  </div>
-                </div>
-                <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
-                    $1.094
-                  </div>
-                  <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                    2 MATIC
-                  </div>
-                </div>
-              </div>
-              <div className="w-[376px] px-2 justify-center items-center gap-2 inline-flex">
-                <div className="justify-center items-center gap-0.5 flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-['Red Hat Display'] text-zinc-500">
-                    More
-                  </div>
-                  <div className="w-[18px] h-[18px] relative">
-                    <div className="font-montserrat">
-                      <img
-                        className="dark:invisible visible dark:w-0"
-                        src="/icons/arrow-down.svg"
-                      ></img>
-                      <img
-                        className="dark:visible invisible w-0 dark:w-[18px]"
-                        src="/icons/arrow-down-dark.svg"
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+            <p>Balance</p>
+            <p>data?.balance</p>
           </div>
-          <div className="self-stretch h-[104px] flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch h-[53px] flex-col justify-center items-center gap-4 flex">
-              <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
-                  <div className="justify-center items-center flex">
-                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
-                      Reject
-                    </div>
-                  </div>
-                </div>
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex">
-                  <div className="justify-center items-center flex">
-                    <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">
-                      Approve
-                    </div>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div className={`w-full h-[84px] py-[12px] flex flex-col gap-[12px] items-center justify-center `}>
+            <div className={`w-[212px] h-[60px] rounded-[52px] py-[16px] px-[24px border-[2px] ${darkMode?"border-outliningDark":"border-outlining"}`}>
+              <p className={`text-center text-[14px] font-[400] leading-[120%] ${darkMode? "text-fontExtraLightColorDark" : "text-fontExtraLightColor"}`}>data?.appDomain</p>
             </div>
-            <div className="self-stretch py-3 rounded-[44px] justify-start items-start inline-flex">
-              <div className="grow shrink basis-0 h-[19px] justify-center items-center gap-2 flex">
-                <div className="w-[19px] h-[19px] relative rounded-[5px]" />
-                <img src="/icons/logo.svg"></img>
-                <div className="text-center text-stone-950 text-opacity-40 text-sm font-semibold font-montserrat leading-[16.80px] text-zinc-500">
-                  Powered by Tria
-                </div>
-              </div>
+            <div className="w-full flex items-center  justify-center">
+              <p className={`${darkMode?"text-fontPrimaryDarkColor":"text-fontPrimaryColor"} text-[20px] font-[600] leading-[120%]`}>Send Transaction</p>
             </div>
+
           </div>
         </div>
+        
+        <div className="py-8 flex flex-col gap-[8px] justify-center items-center">
+          <div className={`border-2px rounded-[16px] py-[16px] px-[20px] flex flex-col justify-center items-center self-stretch ${darkMode?"border-outliningDark":"border-outlining "}`}>
+            <div className="py-[12px] flex flex-col self-stretch items-center justify-center">
+              <p className={`text-center font-[600] text-[24px] leading-[120%] ${darkMode?"text-fontPrimaryDarkColor": "text-fontPrimaryColor"}`}>$1.07</p>
+              <p className={`text-center font-[500] text-[16px] leading-[120%] ${darkMode?"text-fontExtraLightColorDark": "text-fontExtraLightColor"}`}>2 MATIC</p>
+            </div>
+            <div className={`flex self-stretch h-[103px] gap-[16px] ${darkMode?"text-fontExtraLightColorDark":"text-fontExtraLightColor"} font-[600] leading-[120%] text-[14px]`}>
+              <div className="flex items-center justify-center flex-col h-[103px] py-[12px] gap-[12px]">
+                <div className="w-[50px] h-[50px] rounded-[50px]">
+                <img className="w-[50px] h-[50px] rounded-[50px]"/>
+                </div>
+                <p>data?.triaName</p>
+              </div>
+              <div></div>
+               <div className="flex items-center justify-center flex-col h-[103px] py-[12px] gap-[12px]">
+                <div className="w-[50px] h-[50px] rounded-[50px]">
+                <img className="w-[50px] h-[50px] rounded-[50px]"/>
+                </div>
+                <p>data?.triaName</p>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div></div>
+
       </div>
   );
 }
