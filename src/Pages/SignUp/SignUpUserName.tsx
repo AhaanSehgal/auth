@@ -76,9 +76,11 @@ export default function SignUp() {
       });
       console.log('res', res.success);
       if (res.success === true) {
-        console.log("successful login")
-        setLoader(false)
-        //window.close()
+        console.log("successful login") 
+        setTimeout(()=>{
+          setLoader(false)
+          window.close()
+        },2000)   
       } else {
         setLoader(false)
       }
