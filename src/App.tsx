@@ -33,14 +33,14 @@ const App = () => {
     token,
     setToken
   }
-
+  const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
 
   return (
     <>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className="flex items-center justify-center">
+          <div className={`flex items-center justify-center ${isDarkMode? "dark": ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
