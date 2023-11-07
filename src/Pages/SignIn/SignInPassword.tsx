@@ -23,6 +23,10 @@ export default function SignInPassword() {
     embedded: true,
   };
 
+  const authController = new AuthController(
+    baseUrl
+  );
+
   const keyringController = new KeyringController({
     baseUrl,
     walletType,
@@ -34,7 +38,7 @@ export default function SignInPassword() {
 
   const checkIfExists = async () => {
     try {
-      const check = await keyringController.checkLinkEmailExists({ email: triaName?.param })
+      const check = await authController.checkLinkEmailExists({ email: triaName?.param })
       console.log('check email', check)
       if (check === true) {
         setSignUp(false)
@@ -50,14 +54,21 @@ export default function SignInPassword() {
     if (password.length !== 0) {
       // setLoader(true)
       try {
-        const check = await keyringController.checkLinkEmailExists({ email: triaName?.param })
+        const check = await authController.checkLinkEmailExists({ email: triaName?.param })
         console.log('check email', check)
 
         const auth = await keyringController.initiateEmailLinkAuth({
           email: triaName?.param,
           password: password
         })
-        console.log('auth', auth)
+        console.log('auth', auth?.hash)
+        const vault = await keyringController.getVault({
+          input: triaName?.param,
+          link: true,
+          hash: auth?.hash,
+          password: auth?.password
+        })
+        console.log('vault', vault)
 
       } catch (err) {
         console.log(err)
