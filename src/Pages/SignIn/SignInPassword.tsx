@@ -19,11 +19,14 @@ export default function SignInPassword() {
   const [loader, setLoader] = useState(false)
 
   const baseUrl = 'https://staging.tria.so';
+  const walletType = {
+    embedded: true,
+  };
 
   const keyringController = new KeyringController({
     baseUrl,
     walletType,
-});
+  });
 
   useEffect(() => {
     checkIfExists()
