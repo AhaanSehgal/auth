@@ -19,9 +19,10 @@ export default function VerificationPage() {
     const baseUrl = 'https://staging.tria.so'
 
 
-    const authController = new AuthController(
-        baseUrl
-    );
+    const keyringController = new KeyringController({
+        baseUrl,
+        walletType,
+    });
 
     // useEffect(() => {
     //     setTimeout(() => {
@@ -37,7 +38,7 @@ export default function VerificationPage() {
         //@ts-ignore
         console.log('Token', token);
         //@ts-ignore
-        const check = await authController.emailLinkVerification({ email: email, code: token })
+        const check = await keyringController.emailLinkVerification({ email: email, code: token })
         console.log('check', check)
         console.log('params', searchParams)
     }

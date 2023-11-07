@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Footer from '../../Components/Footer';
 import NavContext from '../../NavContext';
 import { AuthController } from '@tria-sdk/core';
+import { KeyringController } from '@tria-sdk/web';
 // import { KeyringController } from "../../../../../packages/web/dist/controllers/keyring.controller"
 
 export default function SignInPassword() {
@@ -19,9 +20,10 @@ export default function SignInPassword() {
 
   const baseUrl = 'https://staging.tria.so';
 
-  const authController = new AuthController(
-    baseUrl
-  );
+  const keyringController = new KeyringController({
+    baseUrl,
+    walletType,
+});
 
   useEffect(() => {
     checkIfExists()
@@ -29,7 +31,7 @@ export default function SignInPassword() {
 
   const checkIfExists = async () => {
     try {
-      const check = await authController.checkLinkEmailExists({ email: triaName?.param })
+      const check = await keyringController.checkLinkEmailExists({ email: triaName?.param })
       console.log('check email', check)
       if (check === true) {
         setSignUp(false)
@@ -45,10 +47,10 @@ export default function SignInPassword() {
     if (password.length !== 0) {
       // setLoader(true)
       try {
-        const check = await authController.checkLinkEmailExists({ email: triaName?.param })
+        const check = await keyringController.checkLinkEmailExists({ email: triaName?.param })
         console.log('check email', check)
 
-        const auth = await authController.initiateEmailLinkAuth({
+        const auth = await keyringController.initiateEmailLinkAuth({
           email: triaName?.param,
           password: password
         })
