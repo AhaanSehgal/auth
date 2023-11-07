@@ -27,11 +27,12 @@ const Sign: React.FC<Props> = ({ params, signMessage }) => {
       <div className="w-[448px] h-[840px] bg-white dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between items-center inline-flex">
         <div className="w-[416px] justify-end items-start inline-flex">
           <div className="p-3 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-          <img
+          {/* <img
               className="dark:invisible visible dark:w-0"
               src="/icons/Shape.svg"
             ></img>
-            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>        </div>
+            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>       */}
+              </div>
         <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
           <Navbar />
           <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">

@@ -9,6 +9,7 @@ import NavContext from '../../NavContext';
 export default function SignInPassword() {
 
   const triaName = useParams()
+  console.log(triaName)
   const [password, setPassword] = useState("")
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ export default function SignInPassword() {
 
   return (
     <div>
-      <div className="w-[448px] bg-white rounded-2xl h-[840px] p-4 flex-col justify-between inline-flex">
+      <div className="w-[448px] bg-white dark:bg-fontLightColor rounded-2xl h-[840px] p-4 flex-col justify-between inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />
@@ -53,7 +54,7 @@ export default function SignInPassword() {
           <div className=" self-stretch h-[255px] px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Login with email</div>
+                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug ">Login with email</div>
               </div>
             </div>
             <div className="self-stretch h-32 flex-col justify-center items-center flex">
@@ -65,7 +66,7 @@ export default function SignInPassword() {
                 </div>
               </div>
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat" placeholder='Password' />
+                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat dark:text-text" placeholder='Password' />
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                   <div className="justify-center items-center flex">
                     <button onClick={() => navigate('/welcome')}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">Log in</div> </button>

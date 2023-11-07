@@ -87,11 +87,11 @@ console.log(encodedParams);
         <div className=" px-5 flex-col justify-center items-center flex">
           <div className="w-[416px] justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-            <img
+            {/* <img
               className="dark:invisible visible dark:w-0"
               src="/icons/Shape.svg"
             ></img>
-            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "}
+            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "} */}
           </div>
           <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
@@ -106,7 +106,7 @@ console.log(encodedParams);
               </div>
             </div>
             <div className="self-stretch justify-center  items-center gap-2 inline-flex">
-              <div className="text-center mb-2 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
+              <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
                 Send Transaction
               </div>
             </div>

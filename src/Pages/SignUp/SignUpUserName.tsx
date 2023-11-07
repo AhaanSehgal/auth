@@ -96,7 +96,7 @@ export default function SignUp() {
   return (
 
     <div>
-      <div className="w-[448px] h-[840px] p-4 bg-white rounded-2xl flex-col justify-between items-center inline-flex">
+      <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
         <div className="flex-col justify-start items-center gap-2 flex">
           <div className="w-[416px] justify-between items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
@@ -111,13 +111,13 @@ export default function SignUp() {
           <Nav />
           <div className="w-[376px] h-[46px] py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Login to Empire of Sight</div>
+              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to Empire of Sight</div>
             </div>
           </div>
         </div>
-        <div className="self-stretch h-96 flex-col justify-center items-center gap-2 flex">
-          <div className="self-stretch h-80 flex-col justify-start items-center gap-3 flex rounded-md">
-            <div className="w-[416px] h-48 px-5 py-4 rounded-2xl  border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
+          <div className="self-stretch h-80 flex-col justify-start  items-center gap-3 flex rounded-md">
+            <div className="w-[416px]  px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
               <div className="self-stretch py-3 flex-col justify-center items-start gap-4 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                   <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your username</div>
@@ -135,7 +135,7 @@ export default function SignUp() {
               <div className="self-stretch h-16 flex-col justify-center items-center flex">
                 <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                    <input className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                    <input className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                     {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
