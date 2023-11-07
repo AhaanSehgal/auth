@@ -27,8 +27,8 @@ export default function SignUp() {
   const [loader, setLoader] = useState(false)
 
   const userId = useParams()
+  const handle = useParams()
 
-  console.log("id", userId)
   const walletType = {
     embedded: true,
   };
@@ -66,7 +66,8 @@ export default function SignUp() {
 
       const res = await keyringController.socialogin({
         triaName: name,
-        platform: 'google',
+        //@ts-ignore
+        platform: handle?.param1,
         //@ts-ignore
         userId: userId?.param,
         isPasswordLess: true,
@@ -76,11 +77,11 @@ export default function SignUp() {
       });
       console.log('res', res.success);
       if (res.success === true) {
-        console.log("successful login") 
-        setTimeout(()=>{
+        console.log("successful login")
+        setTimeout(() => {
           setLoader(false)
           window.close()
-        },2000)   
+        }, 2000)
       } else {
         setLoader(false)
       }
@@ -171,7 +172,7 @@ export default function SignUp() {
                 </div>
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                   <div className='flex flex-wrap gap-3 items-center w-[376px] px-2 '>
-                    {recommendations?.slice(0,3)?.map((item, index) => {
+                    {recommendations?.slice(0, 3)?.map((item, index) => {
                       return (
                         <div onClick={() => setName(item)} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
                           <div className='bg-gray-100 rounded-full px-5 py-2 font-Montserrat'>
@@ -181,6 +182,7 @@ export default function SignUp() {
                       )
                     })}
                   </div>
+
                 </div>
               </div> : null}
             </div>

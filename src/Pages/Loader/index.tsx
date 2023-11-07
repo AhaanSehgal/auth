@@ -53,7 +53,7 @@ export default function LoaderPage() {
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
-          navigate(`/signUpUserName/${userId}`)
+          navigate(`/signUpUserName/google/${userId}`)
         }
 
         // setActiveSocialMedia('google');
@@ -81,7 +81,7 @@ export default function LoaderPage() {
           }, 2000)
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/instagram/${data.userId}`)
         }
         // setId(id);
         // setActiveSocialMedia('instagram');
@@ -107,7 +107,7 @@ export default function LoaderPage() {
           }, 2000)
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
       } else if (code) {
@@ -128,7 +128,7 @@ export default function LoaderPage() {
           }, 2000)
         } else {
           setToken(data.AccessToken)
-          navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/twitter/${data.userId}`)
         }
         // console.log(data);
         // setId(data.userId);

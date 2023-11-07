@@ -46,7 +46,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/confirmEmail" element={<ConfirmEmail />} />
-              <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
+              <Route path="/signUpUserName/:param1/:param" element={<SignUpUserName />} />
               <Route path="/signUpPassword" element={<SignUpPassword />} />
               <Route path="/signUpConfirmPassword" element={<SignUpPasswordConfirm />} />
               <Route path="/signInPassword/:param" element={<SignInPassword />} />
