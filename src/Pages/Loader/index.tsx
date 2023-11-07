@@ -30,6 +30,8 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
+
+      console.log('state without parse', state);
       //@ts-ignore
       console.log('state', JSON.parse(state)?.platform);
       //@ts-ignore
