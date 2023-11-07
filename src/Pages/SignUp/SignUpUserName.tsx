@@ -116,7 +116,7 @@ export default function SignUp() {
           </div>
         </div>
         <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
-          <div className="self-stretch h-80 flex-col justify-start  items-center gap-3 flex rounded-md">
+          <div className="self-stretch  flex-col justify-start  items-center gap-3 flex rounded-md">
             <div className="w-[416px]  px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
               <div className="self-stretch py-3 flex-col justify-center items-start gap-4 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
