@@ -30,8 +30,10 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-      console.log('state', state);
-      if (code && scope && state === 'google') {
+      //@ts-ignore
+      console.log('state', JSON.parse(state)?.platform);
+      //@ts-ignore
+      if (code && scope && JSON.parse(state)?.platform === 'google') {
         const {
           data: { userId, isAccountExist, password, isPasswordRequired, AccessToken },
         } = await axios.get(
@@ -63,7 +65,8 @@ export default function LoaderPage() {
         // setIsExist(isAccountExist);
         // setFlag(false);
         // navigate('/');
-      } else if (code && state === 'instagram') {
+        //@ts-ignore
+      } else if (code && JSON.parse(state)?.platform === 'instagram') {
         const { data } = await axios.get(
           `${baseUrl}/api/v1/auth/instagram/callback?code=${code}`
         );
@@ -90,7 +93,8 @@ export default function LoaderPage() {
         // setIsExist(isAccountExist);
         // setFlag(false);
         // navigate('/');
-      } else if (code && state === 'discord') {
+        //@ts-ignore
+      } else if (code && JSON.parse(state)?.platform === 'discord') {
         const { data } = await axios.get(`${baseUrl}/api/v1/auth/discord/callback?code=${code}`);
         // console.log(data);
         if (data.isAccountExist === true) {
