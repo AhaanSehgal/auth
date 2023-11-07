@@ -5,7 +5,6 @@ import axios from "axios"
 import NavContext from '../../NavContext';
 import { KeyringController } from '@tria-sdk/web';
 import { AuthController } from '@tria-sdk/core';
-import { call } from 'web3/lib/commonjs/eth.exports';
 
 
 export default function VerificationPage() {
