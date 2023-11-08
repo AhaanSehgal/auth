@@ -20,6 +20,7 @@ import SignMessage from './Pages/SignMessage';
 import SendAsset from './Pages/Send';
 
 import { useSocialConnect } from '@tria-sdk/connect';
+import OnboardingHome from './Pages/OnboardingHome';
 
 
 const App = () => {
@@ -51,7 +52,7 @@ const App = () => {
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<OnboardingHome />} />
               <Route path="/confirmEmail" element={<ConfirmEmail />} />
               <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
               <Route path="/signUpPassword" element={<SignUpPassword />} />
