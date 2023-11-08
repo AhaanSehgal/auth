@@ -12,6 +12,7 @@ import { KeyringController } from '@tria-sdk/web';
 export default function SignInPassword() {
 
   const triaName = useParams()
+  const { setStoredPassword } = useContext(NavContext)
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [signUp, setSignUp] = useState(false)
@@ -150,13 +151,11 @@ export default function SignInPassword() {
                   </div>
                 </div> */}
               </div>}
-
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => setPassword(e.target.value)} />
+                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => { setPassword(e.target.value); setStoredPassword(e.target.value) }} />
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                   <div className="justify-center items-center flex">
                     <button onClick={() => checkEmail()}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
-
                       {loader === false ? <span>Log in</span>
                         :
                         <div className='ml-2' role="status">
@@ -166,7 +165,6 @@ export default function SignInPassword() {
                           </svg>
                         </div>
                       }
-
                     </div> </button>
                   </div>
                 </div>

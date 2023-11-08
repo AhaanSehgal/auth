@@ -25,14 +25,17 @@ import VerificationPage from './Pages/Verification';
 
 const App = () => {
 
-  const {success} = useSocialConnect()
-    
+  const { success } = useSocialConnect()
+
   const [token, setToken] = useState("")
+  const [storedPassword, setStoredPassword] = useState("")
 
 
   const obj = {
     token,
-    setToken
+    setToken,
+    storedPassword,
+    setStoredPassword
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -41,7 +44,7 @@ const App = () => {
     <>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className={`flex items-center justify-center ${isDarkMode? "dark": ""}`}>
+          <div className={`flex items-center justify-center ${isDarkMode ? "dark" : ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
@@ -58,8 +61,8 @@ const App = () => {
               <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
               <Route path="/callback/:param" element={<LoaderPage />} />
               <Route path="/signMessage/:param" element={<SignMessage />} />
-              <Route path="/send/:param" element={<SendAsset/>}/>
-              <Route path="/verify" element={<VerificationPage/>}/>
+              <Route path="/send/:param" element={<SendAsset />} />
+              <Route path="/verify" element={<VerificationPage />} />
             </Routes>
             {/* )} */}
             {/* <div

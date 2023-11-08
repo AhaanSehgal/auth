@@ -16,6 +16,8 @@ export default function VerificationPage() {
         embedded: true,
     };
 
+    const { storedPassword } = useContext(NavContext)
+
     const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
     const [recommendations, setRecommendations] = useState([])
@@ -73,9 +75,15 @@ export default function VerificationPage() {
         console.log('Token', token);
         const check = await keyringController.emailLinkVerification({ email: email, code: token })
         console.log('check', check)
-        setOpen(true)
-        setHash(check?.hash)
-        setPassword(check?.password)
+        const auth = await keyringController.initiateEmailLinkAuth({
+            email: email,
+            password: storedPassword
+        })
+        if (check?.hash !== undefined) {
+            setOpen(true)
+            setHash(auth?.hash)
+            setPassword(auth?.password)
+        }
     }
 
     const call2 = async () => {
