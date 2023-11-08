@@ -93,7 +93,7 @@ export default function VerificationPage() {
             input: email,
             hash: hash,
             password: password,
-            type: "LINK"
+            type: "link"
         })
         console.log('res', res)
         const resp = await keyringController.getVault({
