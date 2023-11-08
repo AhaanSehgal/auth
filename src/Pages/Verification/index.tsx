@@ -88,6 +88,7 @@ export default function VerificationPage() {
     }
 
     const call2 = async () => {
+        setLoader(true)
         const res = await keyringController.generateAccountByOTPOrLINK({
             triaName: name,
             input: email,

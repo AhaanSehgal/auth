@@ -53,7 +53,7 @@ export default function SignInPassword() {
 
   const checkEmail = async () => {
     if (password.length !== 0) {
-      // setLoader(true)
+      setLoader(true)
       try {
         const check = await authController.checkLinkEmailExists({ email: triaName?.param })
         console.log('check email', check)
