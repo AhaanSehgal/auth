@@ -7,7 +7,7 @@ export default function Welcome() {
     const navigate= useNavigate();
   return (
     <div>
-        <div className="w-[448px] h-[840px] p-4 bg-white rounded-2xl flex-col justify-between items-center inline-flex">
+        <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
         <div className="flex-col justify-start items-center gap-2 flex">
         <div className="w-[416px] justify-between items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
@@ -16,16 +16,16 @@ export default function Welcome() {
         </div>
                    </div>
                    <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
-                        <img src='/icons/Shape.svg'></img>
+                        {/* <img src='/icons/Shape.svg'></img> */}
                          </div>
                   </div>
           <Nav/>
           <div className="w-[376px] mb-auto h-[79px] py-3 flex-col justify-center items-start gap-1 inline-flex">
   <div className="self-stretch justify-center items-center gap-2 inline-flex">
-    <div className="text-center text-stone-950 text-opacity-90 text-2xl font-normal font-['Montserrat'] leading-[28.80px]">Welcome to Tria</div>
+    <div className="text-center text-stone-950 text-opacity-90 text-2xl font-normal font-['Montserrat'] leading-[28.80px] dark:text-text">Welcome to Tria</div>
   </div>
   <div className="self-stretch justify-center items-center gap-2 inline-flex">
-    <div className="text-center text-stone-950 text-opacity-90 text-lg font-semibold font-['Montserrat'] leading-snug">kunaaal@tria</div>
+    <div className="text-center text-stone-950 text-opacity-90 text-lg font-semibold font-['Montserrat'] leading-snug dark:text-text">kunaaal@tria</div>
   </div>
 </div>
 

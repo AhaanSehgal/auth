@@ -25,35 +25,28 @@ import { useSocialConnect } from '@tria-sdk/connect';
 const App = () => {
 
   const {success} = useSocialConnect()
-    useEffect(()=>{ 
-        getStatus()
-    },[])
-
-    const getStatus = async() =>{
-        setTimeout(()=>{
-            console.log("success",success)
-        },1000)
-    }
+    
   const [token, setToken] = useState("")
+
 
   const obj = {
     token,
     setToken
   }
-
+  const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
 
   return (
     <>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className="flex items-center justify-center">
+          <div className={`flex items-center justify-center ${isDarkMode? "dark": ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/confirmEmail" element={<ConfirmEmail />} />
-              <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
+              <Route path="/signUpUserName/:param1/:param" element={<SignUpUserName />} />
               <Route path="/signUpPassword" element={<SignUpPassword />} />
               <Route path="/signUpConfirmPassword" element={<SignUpPasswordConfirm />} />
               <Route path="/signInPassword/:param" element={<SignInPassword />} />

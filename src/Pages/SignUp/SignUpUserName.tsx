@@ -27,8 +27,8 @@ export default function SignUp() {
   const [loader, setLoader] = useState(false)
 
   const userId = useParams()
+  const handle = useParams()
 
-  console.log("id", userId)
   const walletType = {
     embedded: true,
   };
@@ -46,7 +46,7 @@ export default function SignUp() {
   const checkIfAvailable = async (name) => {
     try {
       const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-        did: name
+        did: name + "@tria"
       })
       console.log("did", data?.response?.availabilityStatus)
       setAvailable(data?.response?.availabilityStatus)
@@ -66,7 +66,8 @@ export default function SignUp() {
 
       const res = await keyringController.socialogin({
         triaName: name,
-        platform: 'google',
+        //@ts-ignore
+        platform: handle?.param1,
         //@ts-ignore
         userId: userId?.param,
         isPasswordLess: true,
@@ -77,8 +78,10 @@ export default function SignUp() {
       console.log('res', res.success);
       if (res.success === true) {
         console.log("successful login")
-        setLoader(false)
-        //window.close()
+        setTimeout(() => {
+          setLoader(false)
+          window.close()
+        }, 2000)
       } else {
         setLoader(false)
       }
@@ -93,7 +96,7 @@ export default function SignUp() {
   return (
 
     <div>
-      <div className="w-[448px] h-[840px] p-4 bg-white rounded-2xl flex-col justify-between items-center inline-flex">
+      <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
         <div className="flex-col justify-start items-center gap-2 flex">
           <div className="w-[416px] justify-between items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
@@ -108,33 +111,33 @@ export default function SignUp() {
           <Nav />
           <div className="w-[376px] h-[46px] py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Creating your Tria account</div>
+              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to Empire of Sight</div>
             </div>
           </div>
         </div>
-        <div className="self-stretch h-96 flex-col justify-center items-center gap-2 flex">
-          <div className="self-stretch h-80 flex-col justify-start items-center gap-3 flex rounded-md">
-            <div className="w-[416px] h-48 px-5 py-4 rounded-2xl  border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
+          <div className="self-stretch  flex-col justify-start  items-center gap-3 flex rounded-md">
+            <div className="w-[416px]  px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
               <div className="self-stretch py-3 flex-col justify-center items-start gap-4 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                  <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your tria name</div>
+                  <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your username</div>
                 </div>
               </div>
               <div className="w-[376px] px-2 justify-start items-center inline-flex">
                 <div className="grow shrink basis-0 mix-blend-difference">
                   <div>
-                    <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}>Your </span>
-                    <span style={{ color: 'white', opacity: 0.9, fontSize: '0.875rem', fontWeight: 'bold' }}>@tria</span>
-                    <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}> is like Gmail, for Web3. Pay, receive and log-in to apps on any device, and blockchain.</span>
+                    {/* <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}>Your </span>
+                    <span style={{ color: 'white', opacity: 0.9, fontSize: '0.875rem', fontWeight: 'bold' }}>@tria</span> */}
+                    <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}>This will be your in-game name.</span>
                   </div>
                 </div>
               </div>
               <div className="self-stretch h-16 flex-col justify-center items-center flex">
                 <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                    <input className='justify-start bg-transparent px-2 py-2 font-Montserrat' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                    <input className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
-                    <div className='text-gray-700 font-bold font-Montserrat'>@tria</div>
+                    {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
                   <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                     <div className="justify-center items-center flex">
@@ -164,12 +167,12 @@ export default function SignUp() {
                 }
               </div> : null}
               {name.length > 0 ? <div>
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                <div className="self-stretch justify-start items-center gap-2 inline-flex mt-4">
                   <div className="mix-blend-difference text-center text-gray-400 text-sm font-medium font-Montserrat leading-snug">Recommended : </div>
                 </div>
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                  <div className='flex gap-3 items-center w-[376px] overflow-x-scroll h-20 '>
-                    {recommendations?.map((item, index) => {
+                  <div className='flex flex-wrap gap-3 items-center w-[376px] px-2 '>
+                    {recommendations?.slice(0, 3)?.map((item, index) => {
                       return (
                         <div onClick={() => setName(item)} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
                           <div className='bg-gray-100 rounded-full px-5 py-2 font-Montserrat'>
@@ -179,6 +182,7 @@ export default function SignUp() {
                       )
                     })}
                   </div>
+
                 </div>
               </div> : null}
             </div>

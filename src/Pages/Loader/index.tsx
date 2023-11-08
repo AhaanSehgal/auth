@@ -30,8 +30,10 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-      console.log('state', state);
-      if (code && scope && state === 'google') {
+      //@ts-ignore
+      console.log('state', JSON.parse(state)?.platform);
+      //@ts-ignore
+      if (code && scope && JSON.parse(state)?.platform === 'google') {
         const {
           data: { userId, isAccountExist, password, isPasswordRequired, AccessToken },
         } = await axios.get(
@@ -40,18 +42,20 @@ export default function LoaderPage() {
         console.log("res", userId, isAccountExist, password)
         if (isAccountExist === true) {
           const keyringController = new KeyringController({
-        baseUrl,
-        walletType,
-      });
+            baseUrl,
+            walletType,
+          });
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
-          await keyringController.getVault({ password:password, userId: userId });
-          //window.close()
+          await keyringController.getVault({ password: password, userId: userId, socialName: 'google' });
+          setTimeout(() => {
+            window.close()
+          }, 2000)
         } else {
           console.log("at", AccessToken)
           setToken(AccessToken)
-          navigate(`/signUpUserName/${userId}`)
+          navigate(`/signUpUserName/google/${userId}`)
         }
 
         // setActiveSocialMedia('google');
@@ -61,15 +65,26 @@ export default function LoaderPage() {
         // setIsExist(isAccountExist);
         // setFlag(false);
         // navigate('/');
-      } else if (code && state === 'instagram') {
+        //@ts-ignore
+      } else if (code && JSON.parse(state)?.platform === 'instagram') {
         const { data } = await axios.get(
           `${baseUrl}/api/v1/auth/instagram/callback?code=${code}`
         );
         if (data.isAccountExist === true) {
-          window.close()
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          console.log("account exists")
+          console.log("password", data.password)
+          console.log('userId', data.userId)
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram' });
+          setTimeout(() => {
+            window.close()
+          }, 2000)
         } else {
           setToken(data.AccessToken)
-          //navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/instagram/${data.userId}`)
         }
         // setId(id);
         // setActiveSocialMedia('instagram');
@@ -78,14 +93,25 @@ export default function LoaderPage() {
         // setIsExist(isAccountExist);
         // setFlag(false);
         // navigate('/');
-      } else if (code && state === 'discord') {
+        //@ts-ignore
+      } else if (code && JSON.parse(state)?.platform === 'discord') {
         const { data } = await axios.get(`${baseUrl}/api/v1/auth/discord/callback?code=${code}`);
         // console.log(data);
         if (data.isAccountExist === true) {
-          window.close()
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          console.log("account exists")
+          console.log("password", data.password)
+          console.log('userId', data.userId)
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord' });
+          setTimeout(() => {
+            window.close()
+          }, 2000)
         } else {
           setToken(data.AccessToken)
-          //navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
       } else if (code) {
@@ -93,10 +119,20 @@ export default function LoaderPage() {
           `${baseUrl}/api/v1/auth/twitter/callback?code=${code}&state=${state}`
         );
         if (data.isAccountExist === true) {
-          window.close()
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          console.log("account exists")
+          console.log("password", data.password)
+          console.log('userId', data.userId)
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter' });
+          setTimeout(() => {
+            window.close()
+          }, 2000)
         } else {
           setToken(data.AccessToken)
-          //navigate(`/signUpUserName/${data.userId}`)
+          navigate(`/signUpUserName/twitter/${data.userId}`)
         }
         // console.log(data);
         // setId(data.userId);
