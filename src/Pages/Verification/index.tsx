@@ -97,13 +97,13 @@ export default function VerificationPage() {
             type: "link"
         })
         console.log('res', res)
-        const resp = await keyringController.getVault({
-            input: email,
-            link: true,
-            hash: hash,
-            password: password
-        })
-        console.log("resp", resp)
+        // const resp = await keyringController.getVault({
+        //     input: email,
+        //     link: true,
+        //     hash: hash,
+        //     password: password
+        // })
+        // console.log("resp", resp)
     }
 
     useEffect(() => {
