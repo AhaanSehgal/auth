@@ -30,8 +30,6 @@ const App = () => {
 
   const [token, setToken] = useState("")
   const [storedPassword, setStoredPassword] = useState("")
-
-
   const obj = {
     token,
     setToken,
@@ -40,7 +38,6 @@ const App = () => {
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
-
   return (
     <>
       <NavContext.Provider value={obj}>
