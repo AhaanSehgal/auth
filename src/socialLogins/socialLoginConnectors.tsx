@@ -26,6 +26,7 @@ function googleIcon() {
 
 function instaIcon() {
   return (
+    <div className='h-10 w-10 bg-white rounded-full flex center justify-center items-center'>
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M18.375 0H5.625C2.5184 0 0 2.5184 0 5.625V18.375C0 21.4816 2.5184 24 5.625 24H18.375C21.4816 24 24 21.4816 24 18.375V5.625C24 2.5184 21.4816 0 18.375 0Z" fill="url(#paint0_radial_1628_57)" />
       <path d="M18.375 0H5.625C2.5184 0 0 2.5184 0 5.625V18.375C0 21.4816 2.5184 24 5.625 24H18.375C21.4816 24 24 21.4816 24 18.375V5.625C24 2.5184 21.4816 0 18.375 0Z" fill="url(#paint1_radial_1628_57)" />
@@ -44,7 +45,7 @@ function instaIcon() {
         </radialGradient>
       </defs>
     </svg>
-
+    </div>
   )
 }
 
