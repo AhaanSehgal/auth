@@ -10,7 +10,7 @@ export default function Onboarding() {
   const { setView } = useContext(NavContext)
 
   return (
-    <div>  <div className="w-[448px] bg-white rounded-2xl h-[840px] p-4 flex-col justify-between inline-flex">
+    <div>  <div className="w-[448px] bg-white dark:bg-fontLightColor rounded-2xl h-[840px] p-4 flex-col justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />
@@ -32,7 +32,7 @@ export default function Onboarding() {
             </div>
           </div>
           <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
-            <img src='/icons/Shape.svg'></img>
+            {/* <img src='/icons/Shape.svg'></img> */}
           </div>
         </div>
 
@@ -45,10 +45,10 @@ export default function Onboarding() {
           </div>
           <div className="self-stretch h-[79px] py-3 flex-col justify-center items-start gap-1 flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-90 text-2xl font-normal font-['Montserrat'] leading-[28.80px]">Welcome to Opensea</div>
+              <div className="text-center text-stone-950 text-opacity-90 text-2xl font-normal font-['Montserrat'] leading-[28.80px] dark:text-text">Welcome to Opensea</div>
             </div>
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-90 text-lg font-semibold font-['Montserrat'] leading-snug">kunaaal@tria</div>
+              <div className="text-center text-stone-950 text-opacity-90 text-lg font-semibold font-['Montserrat'] leading-snug dark:text-text">kunaaal@tria</div>
             </div>
           </div>
         </div>

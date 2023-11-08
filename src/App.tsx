@@ -20,41 +20,38 @@ import SignMessage from './Pages/SignMessage';
 import SendAsset from './Pages/Send';
 
 import { useSocialConnect } from '@tria-sdk/connect';
+import VerificationPage from './Pages/Verification';
 import OnboardingHome from './Pages/OnboardingHome';
 
 
 const App = () => {
 
-  const {success} = useSocialConnect()
-    useEffect(()=>{ 
-        getStatus()
-    },[])
+  const { success } = useSocialConnect()
 
-    const getStatus = async() =>{
-        setTimeout(()=>{
-            console.log("success",success)
-        },1000)
-    }
   const [token, setToken] = useState("")
+  const [storedPassword, setStoredPassword] = useState("")
+
 
   const obj = {
     token,
-    setToken
+    setToken,
+    storedPassword,
+    setStoredPassword
   }
-
+  const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
 
   return (
     <>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className="flex items-center justify-center">
+          <div className={`flex items-center justify-center ${isDarkMode ? "dark" : ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
               <Route path="/" element={<OnboardingHome />} />
               <Route path="/confirmEmail" element={<ConfirmEmail />} />
-              <Route path="/signUpUserName/:param" element={<SignUpUserName />} />
+              <Route path="/signUpUserName/:param1/:param" element={<SignUpUserName />} />
               <Route path="/signUpPassword" element={<SignUpPassword />} />
               <Route path="/signUpConfirmPassword" element={<SignUpPasswordConfirm />} />
               <Route path="/signInPassword/:param" element={<SignInPassword />} />
@@ -65,7 +62,8 @@ const App = () => {
               <Route path="/connectingAnimation" element={<ConnectingAnimation />} />
               <Route path="/callback/:param" element={<LoaderPage />} />
               <Route path="/signMessage/:param" element={<SignMessage />} />
-              <Route path="/send/:param" element={<SendAsset/>}/>
+              <Route path="/send/:param" element={<SendAsset />} />
+              <Route path="/verify" element={<VerificationPage />} />
             </Routes>
             {/* )} */}
             {/* <div

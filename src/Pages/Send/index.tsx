@@ -84,14 +84,14 @@ console.log(encodedParams);
 
   return (
       <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-        <div className="h-[221.50px] px-5 flex-col justify-center items-center flex">
+        <div className=" px-5 flex-col justify-center items-center flex">
           <div className="w-[416px] justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-            <img
+            {/* <img
               className="dark:invisible visible dark:w-0"
               src="/icons/Shape.svg"
             ></img>
-            <img className="dark:visible " src="/icons/ShapeW.svg"></img>{" "}
+            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "} */}
           </div>
           <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
@@ -105,8 +105,8 @@ console.log(encodedParams);
                 </div>
               </div>
             </div>
-            <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
+            <div className="self-stretch justify-center  items-center gap-2 inline-flex">
+              <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
                 Send Transaction
               </div>
             </div>
@@ -246,8 +246,8 @@ console.log(encodedParams);
               </div>
             </div>
           </div>
-          <div className="self-stretch h-[104px] flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch h-[53px] flex-col justify-center items-center gap-4 flex">
+          <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
+            <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
               <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
                 <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
                   <div className="justify-center items-center flex">
@@ -265,7 +265,7 @@ console.log(encodedParams);
                 </div>
               </div>
             </div>
-            <div className="self-stretch py-3 rounded-[44px] justify-start items-start inline-flex">
+            <div className="self-stretch  py-3 rounded-[44px] justify-start items-start inline-flex">
               <div className="grow shrink basis-0 h-[19px] justify-center items-center gap-2 flex">
                 <div className="w-[19px] h-[19px] relative rounded-[5px]" />
                 <img src="/icons/logo.svg"></img>
