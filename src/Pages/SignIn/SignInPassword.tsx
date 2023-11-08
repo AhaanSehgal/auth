@@ -63,6 +63,10 @@ export default function SignInPassword() {
           password: password
         })
         console.log('auth', auth?.hash)
+        console.log("input", triaName?.param )
+        console.log("link", true )
+        console.log("hash", auth?.hash )
+        console.log("password", auth?.password )
         const vault = await keyringController.getVault({
           input: triaName?.param,
           link: true,
@@ -150,7 +154,7 @@ export default function SignInPassword() {
                     </div> </button>
                   </div>
                 </div> */}
-                
+
               </div>}
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                 <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => { setPassword(e.target.value); localStorage.setItem('tempPass', e.target.value) }} />
