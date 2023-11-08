@@ -46,7 +46,7 @@ export default function SignUp() {
   const checkIfAvailable = async (name) => {
     try {
       const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-        did: name + "@tria"
+        did: name + "@eos"
       })
       console.log("did", data?.response?.availabilityStatus)
       setAvailable(data?.response?.availabilityStatus)
@@ -65,7 +65,7 @@ export default function SignUp() {
       });
 
       const res = await keyringController.socialogin({
-        triaName: name,
+        triaName: name + "@eos",
         //@ts-ignore
         platform: handle?.param1,
         //@ts-ignore

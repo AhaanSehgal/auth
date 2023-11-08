@@ -119,7 +119,7 @@ export default function LoaderPage() {
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
-      } else if (code) {
+      } else if (code && state) {
         const { data } = await axios.get(
           `${baseUrl}/api/v1/auth/twitter/callback?code=${code}&state=${state}`
         );
