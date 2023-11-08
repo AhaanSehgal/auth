@@ -104,9 +104,12 @@ export default function LoaderPage() {
             baseUrl,
             walletType,
           });
+          console.log('data', data)
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
+          console.log('access_token', data.AccessToken)
+          console.log()
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord' });
           setTimeout(() => {
             window.close()
