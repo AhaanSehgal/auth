@@ -80,7 +80,7 @@ export default function VerificationPage() {
             password: localStorage.getItem('tempPass')
         })
         console.log('auth', auth)
-        if (check?.hash !== undefined) {
+        if (auth?.hash !== undefined) {
             setOpen(true)
             setHash(auth?.hash)
             setPassword(auth?.password)
