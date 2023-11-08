@@ -108,14 +108,14 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          console.log('access_token', data.AccessToken)
+          console.log('access_token', data.accessToken)
           console.log()
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord' });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          setToken(data.AccessToken)
+          setToken(data.accessToken)
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
