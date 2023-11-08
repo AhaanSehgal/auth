@@ -152,7 +152,7 @@ export default function SignInPassword() {
                 </div> */}
               </div>}
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => { setPassword(e.target.value); setStoredPassword(e.target.value) }} />
+                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => { setPassword(e.target.value); localStorage.setItem('tempPass', e.target.value) }} />
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                   <div className="justify-center items-center flex">
                     <button onClick={() => checkEmail()}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">

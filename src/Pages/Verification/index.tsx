@@ -77,7 +77,7 @@ export default function VerificationPage() {
         console.log('check', check)
         const auth = await keyringController.initiateEmailLinkAuth({
             email: email,
-            password: storedPassword
+            password: localStorage.getItem('tempPass')
         })
         if (check?.hash !== undefined) {
             setOpen(true)
