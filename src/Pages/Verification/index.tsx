@@ -79,6 +79,7 @@ export default function VerificationPage() {
             email: email,
             password: localStorage.getItem('tempPass')
         })
+        console.log('auth', auth)
         if (check?.hash !== undefined) {
             setOpen(true)
             setHash(auth?.hash)
