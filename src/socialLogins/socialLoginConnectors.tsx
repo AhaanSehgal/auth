@@ -112,5 +112,5 @@ export function useSocialLoginConnectors() {
     id: "4",
     type: SocialLoginTypes.Discord,
   };
-  return [google, twitter, discord];
+  return [google, twitter, discord,instagram];
 }
