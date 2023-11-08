@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import Loader from '../../Components/Loader'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from "axios"
 import NavContext from '../../NavContext';
 import { KeyringController } from '@tria-sdk/web';
@@ -13,6 +13,7 @@ export default function LoaderPage() {
   };
 
   const navigate = useNavigate()
+  const param = useParams()
   const { setToken } = useContext(NavContext)
   const location = useLocation();
   const baseUrl = 'https://staging.tria.so'
@@ -30,12 +31,11 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-
+      console.log('search_params', searchParams)
+      console.log('params', param.param)
       console.log('state without parse', state);
       //@ts-ignore
-      console.log('state', JSON?.parse(state)?.platform);
-      //@ts-ignore
-      if (code && scope && JSON?.parse(state)?.platform === 'google') {
+      if (code && scope && param.param === 'google') {
         const {
           data: { userId, isAccountExist, password, isPasswordRequired, AccessToken },
         } = await axios.get(
@@ -68,7 +68,7 @@ export default function LoaderPage() {
         // setFlag(false);
         // navigate('/');
         //@ts-ignore
-      } else if (code && JSON?.parse(state)?.platform === 'instagram') {
+      } else if (code && param.param === 'instagram') {
         const { data } = await axios.get(
           `${baseUrl}/api/v1/auth/instagram/callback?code=${code}`
         );
@@ -96,7 +96,7 @@ export default function LoaderPage() {
         // setFlag(false);
         // navigate('/');
         //@ts-ignore
-      } else if (code && JSON?.parse(state)?.platform === 'discord') {
+      } else if (code && param.param === 'discord') {
         const { data } = await axios.get(`${baseUrl}/api/v1/auth/discord/callback?code=${code}`);
         // console.log(data);
         if (data.isAccountExist === true) {
@@ -119,7 +119,7 @@ export default function LoaderPage() {
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
-      } else if (code && state) {
+      } else if (code && param.param === "twitter") {
         const { data } = await axios.get(
           `${baseUrl}/api/v1/auth/twitter/callback?code=${code}&state=${state}`
         );
