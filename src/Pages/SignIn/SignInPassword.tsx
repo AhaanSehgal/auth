@@ -19,6 +19,9 @@ export default function SignInPassword() {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false)
 
+  //show or hide password
+  const [showPassword, setShowPassword] = useState(false)
+
   const baseUrl = 'https://staging.tria.so';
   const walletType = {
     embedded: true,
@@ -51,32 +54,46 @@ export default function SignInPassword() {
     }
   }
 
-  const checkEmail = async () => {
+  const login = async () => {
     if (password.length !== 0) {
       setLoader(true)
-      try {
-        const check = await authController.checkLinkEmailExists({ email: triaName?.param })
-        console.log('check email', check)
+      if (signUp === false) {
+        try {
+          const check = await authController.checkLinkEmailExists({ email: triaName?.param })
+          console.log('check email', check)
 
-        const auth = await keyringController.initiateEmailLinkAuth({
-          email: triaName?.param,
-          password: password
-        })
-        console.log('auth', auth?.hash)
-        console.log("input", triaName?.param )
-        console.log("link", true )
-        console.log("hash", auth?.hash )
-        console.log("password", auth?.password )
-        const vault = await keyringController.getVault({
-          input: triaName?.param,
-          link: true,
-          hash: auth?.hash,
-          password: auth?.password
-        })
-        console.log('vault', vault)
+          const auth = await keyringController.initiateEmailLinkAuth({
+            email: triaName?.param,
+            password: password
+          })
+          console.log('auth', auth?.hash)
+          console.log("input", triaName?.param)
+          console.log("link", true)
+          console.log("hash", auth?.hash)
+          console.log("password", auth?.password)
+          const vault = await keyringController.getVault({
+            input: triaName?.param,
+            link: true,
+            hash: auth?.hash,
+            password: auth?.password
+          })
+          console.log('vault', vault)
 
-      } catch (err) {
-        console.log(err)
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        try {
+          const auth = await keyringController.initiateEmailLinkAuth({
+            email: triaName?.param,
+            password: password
+          })
+          if (auth.message === "Link Sent") {
+            navigate('/verifyAccount')
+          }
+        } catch (err) {
+          console.log(err)
+        }
       }
     }
   }
@@ -136,7 +153,10 @@ export default function SignInPassword() {
                 </div>
               </div>
               {signUp && <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder='Password' type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                <div className='grow shrink basis-0 h-10 px-5  py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white'>
+                  <input className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder='Password' type="password" onChange={(e) => { setConfirmPassword(e.target.value); }} />
+                  {/* <img onClick={() => setShowPassword(!showPassword)} className='ml-2 cursor-pointer' src="/icons/eye-slash.svg" alt="eye-slash" /> */}
+                </div>
                 {/* <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                   <div className="justify-center items-center flex">
                     <button onClick={() => checkEmail()}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
@@ -157,10 +177,13 @@ export default function SignInPassword() {
 
               </div>}
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <input className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type="password" onChange={(e) => { setPassword(e.target.value); localStorage.setItem('tempPass', e.target.value) }} />
+                <div className='grow shrink basis-0 h-10 px-5  py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white'>
+                  <input className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type={showPassword === false ? "password" : "text"} onChange={(e) => { setPassword(e.target.value); localStorage.setItem('tempPass', e.target.value) }} />
+                  <img onClick={() => setShowPassword(!showPassword)} className='ml-2 cursor-pointer' src="/icons/eye-slash.svg" alt="eye-slash" />
+                </div>
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                   <div className="justify-center items-center flex">
-                    <button onClick={() => checkEmail()}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
+                    <button onClick={() => login()}> <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
                       {loader === false ? <span>Log in</span>
                         :
                         <div className='ml-2' role="status">

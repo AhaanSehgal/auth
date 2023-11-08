@@ -57,7 +57,7 @@ export default function VerificationPage() {
     const checkIfAvailable = async (name) => {
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-                did: name + "@tria"
+                did: name + "@eos"
             })
             console.log("did", data?.response?.availabilityStatus)
             setAvailable(data?.response?.availabilityStatus)
@@ -90,7 +90,7 @@ export default function VerificationPage() {
     const call2 = async () => {
         setLoader(true)
         const res = await keyringController.generateAccountByOTPOrLINK({
-            triaName: name,
+            triaName: name + "@eos",
             input: email,
             hash: hash,
             password: password,
