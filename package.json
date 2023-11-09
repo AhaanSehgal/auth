@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@tria-sdk/connect": "^1.0.39",
+    "@tria-sdk/connect": "^1.0.41",
     "@tria-sdk/core": "^4.0.8",
     "@tria-sdk/web": "3.6.4",
     "@types/jest": "^27.5.2",
