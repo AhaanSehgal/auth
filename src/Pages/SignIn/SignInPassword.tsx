@@ -92,9 +92,9 @@ export default function SignInPassword() {
             password: password,
             origin: window?.parent?.origin
           })
-          if (auth.message === "Link Sent") {
-            navigate('/verifyAccount')
-          }
+
+          navigate('/verifyAccount')
+
         } catch (err) {
           console.log(err)
         }
