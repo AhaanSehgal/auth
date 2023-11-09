@@ -100,6 +100,7 @@ export default function VerificationPage() {
             origin: origin
         })
         console.log('res', res)
+        window.open(`${origin}?verified=true`,"_self")
         // const resp = await keyringController.getVault({
         //     input: email,
         //     link: true,

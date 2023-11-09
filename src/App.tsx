@@ -23,6 +23,7 @@ import { useSocialConnect } from '@tria-sdk/connect';
 import VerificationPage from './Pages/Verification';
 import OnboardingHome from './Pages/OnboardingHome';
 import VerifyAccount from './Pages/VerifyAccount';
+import Verified from './Pages/Verified';
 
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/verify" element={<VerificationPage />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
+              <Route path="/verified" element={<Verified />} />
 
             </Routes>
             {/* )} */}
