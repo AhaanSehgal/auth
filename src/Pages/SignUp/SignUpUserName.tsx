@@ -80,7 +80,7 @@ export default function SignUp() {
         console.log("successful login")
         setTimeout(() => {
           setLoader(false)
-          // window.close()
+          window.close()
         }, 2000)
       } else {
         setLoader(false)
