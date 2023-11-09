@@ -85,6 +85,7 @@ export default function SignInPassword() {
         }
       } else {
         try {
+          localStorage.setItem("email", triaName?.param)
           const auth = await keyringController.initiateEmailLinkAuth({
             email: triaName?.param,
             password: password

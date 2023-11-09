@@ -108,6 +108,13 @@ export default function VerificationPage() {
 
     useEffect(() => {
         call()
+        const userEmail = localStorage?.getItem("email")
+        const refined_email = userEmail.substring(0, str.indexOf('@'));
+        if (refined_email.length !== 0) {
+            setName(refined_email)
+            checkIfAvailable(refined_email)
+            getNameRecommendations(refined_email)
+        }
     }, []);
 
     return (
