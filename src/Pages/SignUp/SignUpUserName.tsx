@@ -74,6 +74,7 @@ export default function SignUp() {
         //@ts-ignore
         password: null,
         accessToken: token,
+        origin: localStorage.getItem('origin')
       });
       console.log('res', res.success);
       if (res.success === true) {

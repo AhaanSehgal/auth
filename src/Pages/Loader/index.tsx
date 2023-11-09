@@ -31,12 +31,13 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-   
+      
+
       console.log('search_params', searchParams)
       console.log('params', param.param)
       console.log('state without parse', state);
-       //@ts-ignore
-      localStorage.setItem('origin',JSON.parse(state)?.origin)
+      //@ts-ignore
+      localStorage.setItem('origin', JSON.parse(state)?.origin)
       //@ts-ignore
       if (code && scope && param.param === 'google') {
         const {
@@ -53,7 +54,8 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
-          await keyringController.getVault({ password: password, userId: userId, socialName: 'google' });
+          //@ts-ignore
+          await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
@@ -83,7 +85,8 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram' });
+          //@ts-ignore
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
@@ -112,8 +115,8 @@ export default function LoaderPage() {
           console.log("password", data.password)
           console.log('userId', data.userId)
           console.log('access_token', data.accessToken)
-          console.log()
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord' });
+          //@ts-ignore
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
@@ -123,8 +126,10 @@ export default function LoaderPage() {
         }
         // setFlag(false);
       } else if (code && param.param === "twitter") {
+        const oauth_token = searchParams.get('oauth_token');
+        const oauth_verifier = searchParams.get('oauth_verifier');
         const { data } = await axios.get(
-          `${baseUrl}/api/v1/auth/twitter/callback?code=${code}&state=${state}`
+          `${baseUrl}/api/v1/auth/twitter/callback?state=${state}&oauth_token=${oauth_token}&oauth_verifier=${oauth_verifier}`
         );
         if (data.isAccountExist === true) {
           const keyringController = new KeyringController({
@@ -134,7 +139,8 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter' });
+          //@ts-ignore
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state))?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)

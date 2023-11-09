@@ -76,7 +76,8 @@ export default function SignInPassword() {
             input: triaName?.param,
             link: true,
             hash: auth?.hash,
-            password: auth?.password
+            password: auth?.password,
+            origin: window?.parent?.origin
           })
           console.log('vault', vault)
 
