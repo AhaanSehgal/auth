@@ -76,7 +76,8 @@ export default function SignInPassword() {
             input: triaName?.param,
             link: true,
             hash: auth?.hash,
-            password: auth?.password
+            password: auth?.password,
+            origin: window?.parent?.origin
           })
           console.log('vault', vault)
 
@@ -88,11 +89,12 @@ export default function SignInPassword() {
           localStorage.setItem("email", triaName?.param)
           const auth = await keyringController.initiateEmailLinkAuth({
             email: triaName?.param,
-            password: password
+            password: password,
+            origin: window?.parent?.origin
           })
-          if (auth.message === "Link Sent") {
-            navigate('/verifyAccount')
-          }
+
+          navigate('/verifyAccount')
+
         } catch (err) {
           console.log(err)
         }

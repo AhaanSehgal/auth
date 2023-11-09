@@ -32,7 +32,13 @@ export default function EmailAndSocial(props: any) {
     try {
       //window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}`, '_blank');
       setOpenFrame(true)
-      window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}?origin=${window?.origin}`, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
+      const call = await axios.get(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}?origin=${window?.origin}`)
+      //console.log('all',call)
+      //@ts-ignore
+      console.log('json', call?.data?.url)
+      const redirect_url = call?.data?.url
+      window.open( redirect_url , "SSO", `width=${500},height=${600},left=${0},top=${top}`);
+      //window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}?origin=${window?.origin}`, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
     } catch (err) {
       console.log(err);
     }
