@@ -152,7 +152,7 @@ export default function LoaderPage() {
             window.close()
           }, 2000)
         } else {
-          setToken(data.AccessToken)
+          setToken(data.accessToken)
           navigate(`/signUpUserName/twitter/${data.userId}`)
         }
         // console.log(data);
