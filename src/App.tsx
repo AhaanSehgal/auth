@@ -40,10 +40,10 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
   return (
-    <>
+    <div className=''>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className={`fixed z-50 bottom-[0px] right-[0px] ${isDarkMode ? "dark" : ""}`}>
+          <div className={` fixed lg:right-[40%] lg:top-[15%] right-0 bottom-0 ${isDarkMode ? "dark" : ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
@@ -85,7 +85,7 @@ const App = () => {
           </div>
         </Router>
       </NavContext.Provider>
-    </>
+    </div>
   );
 };
 
