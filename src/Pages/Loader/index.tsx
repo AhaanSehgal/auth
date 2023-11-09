@@ -125,7 +125,7 @@ export default function LoaderPage() {
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
         // setFlag(false);
-      } else if (code && param.param === "twitter") {
+      } else if (param.param === "twitter") {
         const oauth_token = searchParams.get('oauth_token');
         const oauth_verifier = searchParams.get('oauth_verifier');
         const { data } = await axios.get(

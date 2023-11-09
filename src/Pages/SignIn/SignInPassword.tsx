@@ -89,7 +89,8 @@ export default function SignInPassword() {
           localStorage.setItem("email", triaName?.param)
           const auth = await keyringController.initiateEmailLinkAuth({
             email: triaName?.param,
-            password: password
+            password: password,
+            origin: window?.parent?.origin
           })
           if (auth.message === "Link Sent") {
             navigate('/verifyAccount')

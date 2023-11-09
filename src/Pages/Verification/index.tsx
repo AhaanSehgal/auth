@@ -89,12 +89,15 @@ export default function VerificationPage() {
 
     const call2 = async () => {
         setLoader(true)
+        const searchParams = new URLSearchParams(location.search);
+        const origin = searchParams.get('origin');
         const res = await keyringController.generateAccountByOTPOrLINK({
             triaName: name + "@eos",
             input: email,
             hash: hash,
             password: password,
-            type: "link"
+            type: "link",
+            origin: origin
         })
         console.log('res', res)
         // const resp = await keyringController.getVault({
