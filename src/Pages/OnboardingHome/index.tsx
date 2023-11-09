@@ -112,10 +112,13 @@ export default function OnboardingHome() {
         {' '}
         <HomeBackgroundVector />
       </div>
-      <div className="flex-col justify-start gap-2  dark:bg-primaryDarkColor flex">
+      <div className="flex-col justify-start gap-2   flex">
         <Nav />
       </div>
+      <div className='mt-auto'>
       <EmailAndSocial />
+      </div>
+      
       <Footer />
     </div>
   );

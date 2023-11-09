@@ -57,7 +57,7 @@ export default function VerificationPage() {
     const checkIfAvailable = async (name) => {
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-                did: name + "@tria"
+                did: name + "@eos"
             })
             console.log("did", data?.response?.availabilityStatus)
             setAvailable(data?.response?.availabilityStatus)
@@ -90,7 +90,7 @@ export default function VerificationPage() {
     const call2 = async () => {
         setLoader(true)
         const res = await keyringController.generateAccountByOTPOrLINK({
-            triaName: name,
+            triaName: name + "@eos",
             input: email,
             hash: hash,
             password: password,
@@ -108,6 +108,13 @@ export default function VerificationPage() {
 
     useEffect(() => {
         call()
+        const userEmail = localStorage?.getItem("email")
+        const refined_email = userEmail.substring(0, userEmail.indexOf('@'));
+        if (refined_email.length !== 0) {
+            setName(refined_email)
+            checkIfAvailable(refined_email)
+            getNameRecommendations(refined_email)
+        }
     }, []);
 
     return (
