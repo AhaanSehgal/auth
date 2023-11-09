@@ -31,13 +31,20 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-      
+
 
       console.log('search_params', searchParams)
       console.log('params', param.param)
       console.log('state without parse', state);
-      //@ts-ignore
-      localStorage.setItem('origin', JSON.parse(state)?.origin)
+
+      if (param.param === "twitter") {
+        //@ts-ignore
+        localStorage.setItem('origin', JSON.parse(atob(state)).origin)
+      } else {
+        //@ts-ignore
+        localStorage.setItem('origin', JSON.parse(state)?.origin)
+
+      }
       //@ts-ignore
       if (code && scope && param.param === 'google') {
         const {
