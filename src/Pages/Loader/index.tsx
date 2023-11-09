@@ -140,7 +140,7 @@ export default function LoaderPage() {
           console.log("password", data.password)
           console.log('userId', data.userId)
           //@ts-ignore
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state))?.origin });
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin });
           setTimeout(() => {
             window.close()
           }, 2000)
