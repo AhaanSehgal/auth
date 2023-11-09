@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tria-sdk/connect": "^1.0.42",
     "@tria-sdk/core": "^4.0.8",
-    "@tria-sdk/web": "3.6.4",
+    "@tria-sdk/web": "3.6.7",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.59",
     "@types/react-dom": "^18.2.14",
