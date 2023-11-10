@@ -112,7 +112,8 @@ export default function VerificationPage() {
 
     useEffect(() => {
         call()
-        const userEmail = localStorage?.getItem("email")
+        const searchParams = new URLSearchParams(location.search);
+        const userEmail = searchParams.get('email');
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
         if (refined_email.length !== 0) {
             setName(refined_email)
