@@ -99,7 +99,7 @@ export default function SignUp() {
 
 
   useEffect(() => {
-    const refined_email = username?.substring(0, username.indexOf('@'));
+    const refined_email = username;
     if (refined_email.length !== 0) {
       setName(refined_email)
       checkIfAvailable(refined_email)
