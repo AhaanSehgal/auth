@@ -47,7 +47,7 @@ export default function LoaderPage() {
       //@ts-ignore
       if (code && scope && param.param === 'google') {
         const {
-          data: { userId, isAccountExist, password, isPasswordRequired, accessToken },
+          data: { userId, isAccountExist, password, isPasswordRequired, accessToken, username },
         } = await axios.get(
           `${baseUrl}/api/v1/auth/google/callback?code=${code}&scope=${scope}`
         );
@@ -66,7 +66,7 @@ export default function LoaderPage() {
             message: {
               accountExists: isAccountExist,
               userId: userId,
-              token: accessToken
+              token: accessToken,
             },
           }, true)
           //@ts-ignore
@@ -87,6 +87,7 @@ export default function LoaderPage() {
               accountExists: isAccountExist,
               userId: userId,
               token: accessToken,
+              username: username
             }
           })
           window.close()

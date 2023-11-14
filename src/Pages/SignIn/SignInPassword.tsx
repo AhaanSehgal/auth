@@ -142,10 +142,7 @@ export default function SignInPassword() {
       setPassword("")
       setConfirmPassword("")
     }
-
   }
-
-
 
   // const walletType = {
   //   embedded: true,

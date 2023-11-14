@@ -14,7 +14,7 @@ export default function OnboardingHome() {
   const [emailAndSocial, setEmailAndSocial] = useState(false);
   const [connectWallet, setConnectWallet] = useState(false);
   const navigate = useNavigate()
-  const { setToken } = useContext(NavContext)
+  const { setToken, setUsername } = useContext(NavContext)
 
 
   const { eventData }: any = useListenerSO();
@@ -23,6 +23,7 @@ export default function OnboardingHome() {
     if (eventData?.message?.accountExists === false) {
       console.log("message_event", eventData?.message)
       localStorage.setItem("accessToken", eventData?.message?.token)
+      setUsername(eventData?.message?.username)
       setToken(eventData?.message?.token)
       navigate(`/signUpUserName/google/${eventData?.message?.userId}`)
     } else {

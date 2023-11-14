@@ -18,6 +18,7 @@ const Logout = () => {
         const log = await keyringController.logout()
         console.log("logged_out", log)
     }
+    
     useEffect(()=>{
         logout()
     },[])
@@ -26,7 +27,6 @@ const Logout = () => {
         <>
         </>
     )
-
 }
 
 export default Logout

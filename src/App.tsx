@@ -32,12 +32,16 @@ const App = () => {
   const { success } = useSocialConnect()
 
   const [token, setToken] = useState("")
+  const [username, setUsername] = useState("")
   const [storedPassword, setStoredPassword] = useState("")
+  
   const obj = {
     token,
     setToken,
     storedPassword,
-    setStoredPassword
+    setStoredPassword,
+    username,
+    setUsername
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);

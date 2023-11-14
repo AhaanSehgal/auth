@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Nav from '../../Components/SignUp/Nav';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../Components/Footer';
@@ -19,7 +19,7 @@ export default function SignUp() {
 
   const baseUrl = 'https://staging.tria.so';
 
-  const { token } = useContext(NavContext)
+  const { token, username } = useContext(NavContext)
 
   const [recommendations, setRecommendations] = useState([])
   const [available, setAvailable] = useState()
@@ -96,6 +96,16 @@ export default function SignUp() {
     }
   }
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const refined_email = username?.substring(0, username.indexOf('@'));
+    if (refined_email.length !== 0) {
+      setName(refined_email)
+      checkIfAvailable(refined_email)
+      getNameRecommendations(refined_email)
+    }
+  }, [])
 
   return (
 
