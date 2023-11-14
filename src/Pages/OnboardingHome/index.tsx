@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Nav from '../../Components/Nav';
 import ContinueWithTria from '../../Components/ContinueWithTria';
 import EmailAndSocial from '../../Components/EmailAndSocial';
 import ConnectWallet from '../../Components/ConnectWallet';
 import HomeBackgroundVector from '../../Components/HomeBackgroundVector';
 import Footer from '../../Components/Footer';
+import { useListenerSO } from "@tria-sdk/connect"
 
 export default function OnboardingHome() {
   const [continueWithTria, setContinueWithTria] = useState(true);
   const [emailAndSocial, setEmailAndSocial] = useState(false);
   const [connectWallet, setConnectWallet] = useState(false);
+
+  const { eventData } = useListenerSO();
+
+  useEffect(()=>{
+    setInterval(()=>{
+      console.log("event_data",eventData)
+
+    },1000)
+  },[])
 
   const toggleState = () => {
     setContinueWithTria(!continueWithTria);

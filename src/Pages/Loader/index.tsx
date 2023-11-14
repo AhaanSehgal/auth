@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from "axios"
 import NavContext from '../../NavContext';
 import { KeyringController } from '@tria-sdk/web';
+import { eventTypes } from "@tria-sdk/connect";
 
 
 export default function LoaderPage() {
@@ -31,7 +32,6 @@ export default function LoaderPage() {
       const code = searchParams.get('code');
       const scope = searchParams.get('scope');
       const state = searchParams.get('state');
-
 
       console.log('search_params', searchParams)
       console.log('params', param.param)
@@ -63,6 +63,13 @@ export default function LoaderPage() {
           console.log('userId', userId)
           console.log('accessToken', accessToken)
           localStorage.setItem("accessToken", accessToken)
+          keyringController.postMessage({
+            type: eventTypes.passMessage,
+            message: {
+              accountExists: isAccountExist,
+              userId: userId
+            },
+          }, true)
           //@ts-ignore
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
@@ -70,7 +77,17 @@ export default function LoaderPage() {
             //window.close()
           }, 2000)
         } else {
-          
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          keyringController.postMessage({
+            type: eventTypes.passMessage, // import {eventTypes} from @tria-sdk/connect;
+            message: {
+              accountExists: isAccountExist,
+              userId: userId
+            }
+          })
           setToken(accessToken)
           navigate(`/signUpUserName/google/${userId}`)
         }
