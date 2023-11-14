@@ -63,7 +63,7 @@ const App = () => {
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/verify" element={<VerificationPage />} />
-              <Route path="/verifyAccount" element={<VerifyAccount />} />
+            <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
 
             </Routes>
