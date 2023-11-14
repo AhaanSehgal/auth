@@ -43,7 +43,6 @@ export default function LoaderPage() {
       } else {
         //@ts-ignore
         localStorage.setItem('origin', JSON.parse(state)?.origin)
-
       }
       //@ts-ignore
       if (code && scope && param.param === 'google') {
@@ -58,38 +57,39 @@ export default function LoaderPage() {
             baseUrl,
             walletType,
           });
-          console.log("account exists")
-          console.log("password", password)
-          console.log('userId', userId)
-          console.log('accessToken', accessToken)
-          localStorage.setItem("accessToken", accessToken)
+          // console.log("account exists")
+          // console.log("password", password)
+          // console.log('userId', userId)
+          // console.log('accessToken', accessToken)
           keyringController.postMessage({
             type: eventTypes.passMessage,
             message: {
               accountExists: isAccountExist,
-              userId: userId
+              userId: userId,
+              token: accessToken
             },
           }, true)
           //@ts-ignore
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
-            console.log("Do not close")
-            //window.close()
+            window.close()
           }, 2000)
         } else {
+          //if Google account does not exist
           const keyringController = new KeyringController({
             baseUrl,
             walletType,
           });
           keyringController.postMessage({
-            type: eventTypes.passMessage, // import {eventTypes} from @tria-sdk/connect;
+            type: eventTypes.passMessage,
             message: {
               accountExists: isAccountExist,
-              userId: userId
+              userId: userId,
+              token: accessToken,
             }
           })
-          setToken(accessToken)
-          navigate(`/signUpUserName/google/${userId}`)
+          window.close()
+          // navigate(`/signUpUserName/google/${userId}`)
         }
 
         // setActiveSocialMedia('google');
@@ -112,14 +112,14 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          localStorage.setItem("accessToken", data.accessToken)
+          
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          setToken(data.accessToken)
+          
           navigate(`/signUpUserName/instagram/${data.userId}`)
         }
         // setId(id);
@@ -138,20 +138,39 @@ export default function LoaderPage() {
             baseUrl,
             walletType,
           });
+          keyringController.postMessage({
+            type: eventTypes.passMessage,
+            message: {
+              accountExists: data.isAccountExist,
+              userId: data.userId,
+              token: data.accessToken
+            },
+          }, true)
           console.log('data', data)
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
           console.log('access_token', data.accessToken)
-          localStorage.setItem("accessToken", data.accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          setToken(data.accessToken)
-          navigate(`/signUpUserName/discord/${data.userId}`)
+          //if Discord account does not exist
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          keyringController.postMessage({
+            type: eventTypes.passMessage,
+            message: {
+              accountExists: data.isAccountExist,
+              userId: data.userId,
+              token: data.accessToken,
+            }
+          })
+          window.close()
         }
         // setFlag(false);
       } else if (param.param === "twitter") {
@@ -165,28 +184,38 @@ export default function LoaderPage() {
             baseUrl,
             walletType,
           });
+          keyringController.postMessage({
+            type: eventTypes.passMessage,
+            message: {
+              accountExists: data.isAccountExist,
+              userId: data.userId,
+              token: data.accessToken
+            },
+          }, true)
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          localStorage.setItem("accessToken", data.accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          setToken(data.accessToken)
-          navigate(`/signUpUserName/twitter/${data.userId}`)
+          //if Twitter account does not exist
+          const keyringController = new KeyringController({
+            baseUrl,
+            walletType,
+          });
+          keyringController.postMessage({
+            type: eventTypes.passMessage,
+            message: {
+              accountExists: data.isAccountExist,
+              userId: data.userId,
+              token: data.accessToken,
+            }
+          })
+          window.close()
         }
-        // console.log(data);
-        // setId(data.userId);
-        // setDiscordUsername(data.username)
-        // setActiveSocialMedia('discord');
-        // setPassword(data.password);
-        // setIsPasswordRequired(data.isPasswordRequired);
-        // setIsExist(data.isAccountExist);
-        // // setFlag(false);
-        // navigate('/');
       }
     }
     try {

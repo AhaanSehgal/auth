@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Nav from '../../Components/Nav';
 import ContinueWithTria from '../../Components/ContinueWithTria';
 import EmailAndSocial from '../../Components/EmailAndSocial';
@@ -6,20 +6,30 @@ import ConnectWallet from '../../Components/ConnectWallet';
 import HomeBackgroundVector from '../../Components/HomeBackgroundVector';
 import Footer from '../../Components/Footer';
 import { useListenerSO } from "@tria-sdk/connect"
+import { useNavigate } from 'react-router-dom';
+import NavContext from '../../NavContext';
 
 export default function OnboardingHome() {
   const [continueWithTria, setContinueWithTria] = useState(true);
   const [emailAndSocial, setEmailAndSocial] = useState(false);
   const [connectWallet, setConnectWallet] = useState(false);
+  const navigate = useNavigate()
+  const { setToken } = useContext(NavContext)
 
-  const { eventData } = useListenerSO();
 
-  useEffect(()=>{
-    setInterval(()=>{
-      console.log("event_data",eventData)
+  const { eventData }: any = useListenerSO();
 
-    },1000)
-  },[])
+  useEffect(() => {
+    if (eventData?.message?.accountExists === false) {
+      console.log("message_event", eventData?.message)
+      localStorage.setItem("accessToken", eventData?.message?.token)
+      setToken(eventData?.message?.token)
+      navigate(`/signUpUserName/google/${eventData?.message?.userId}`)
+    } else {
+      localStorage.setItem("accessToken", eventData?.message?.token)
+      setToken(eventData?.message?.token)
+    }
+  }, [eventData])
 
   const toggleState = () => {
     setContinueWithTria(!continueWithTria);

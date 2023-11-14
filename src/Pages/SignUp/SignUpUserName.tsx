@@ -59,6 +59,7 @@ export default function SignUp() {
   async function createAccountWithoutPassword() {
     setLoader(true)
     try {
+      console.log('token ---->>>', token)
       const keyringController = new KeyringController({
         baseUrl,
         walletType,
@@ -73,11 +74,11 @@ export default function SignUp() {
         isPasswordLess: true,
         //@ts-ignore
         password: null,
+        //@ts-ignore
         accessToken: token,
         //@ts-ignore
         origin: localStorage.getItem('origin')
       });
-      localStorage.setItem("accessToken", token)
       console.log('res', res.success);
       if (res.success === true) {
         console.log("successful login")
