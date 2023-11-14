@@ -48,7 +48,7 @@ export default function LoaderPage() {
       //@ts-ignore
       if (code && scope && param.param === 'google') {
         const {
-          data: { userId, isAccountExist, password, isPasswordRequired, AccessToken },
+          data: { userId, isAccountExist, password, isPasswordRequired, accessToken },
         } = await axios.get(
           `${baseUrl}/api/v1/auth/google/callback?code=${code}&scope=${scope}`
         );
@@ -61,16 +61,16 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
-          localStorage.setItem("accessToken", AccessToken)
+          console.log('accessToken', accessToken)
+          localStorage.setItem("accessToken", accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          console.log("at", AccessToken)
-          localStorage.setItem("accessToken", AccessToken)
-          setToken(AccessToken)
+          
+          setToken(accessToken)
           navigate(`/signUpUserName/google/${userId}`)
         }
 
@@ -101,7 +101,6 @@ export default function LoaderPage() {
             window.close()
           }, 2000)
         } else {
-          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.AccessToken)
           navigate(`/signUpUserName/instagram/${data.userId}`)
         }
@@ -133,7 +132,6 @@ export default function LoaderPage() {
             window.close()
           }, 2000)
         } else {
-          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.accessToken)
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
@@ -159,7 +157,6 @@ export default function LoaderPage() {
             window.close()
           }, 2000)
         } else {
-          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.accessToken)
           navigate(`/signUpUserName/twitter/${data.userId}`)
         }
