@@ -61,6 +61,7 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", password)
           console.log('userId', userId)
+          localStorage.setItem("accessToken", AccessToken)
           //@ts-ignore
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
@@ -68,6 +69,7 @@ export default function LoaderPage() {
           }, 2000)
         } else {
           console.log("at", AccessToken)
+          localStorage.setItem("accessToken", AccessToken)
           setToken(AccessToken)
           navigate(`/signUpUserName/google/${userId}`)
         }
@@ -92,12 +94,14 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
+          localStorage.setItem("accessToken", data.accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
+          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.AccessToken)
           navigate(`/signUpUserName/instagram/${data.userId}`)
         }
@@ -122,12 +126,14 @@ export default function LoaderPage() {
           console.log("password", data.password)
           console.log('userId', data.userId)
           console.log('access_token', data.accessToken)
+          localStorage.setItem("accessToken", data.accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
+          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.accessToken)
           navigate(`/signUpUserName/discord/${data.userId}`)
         }
@@ -146,12 +152,14 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
+          localStorage.setItem("accessToken", data.accessToken)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
+          localStorage.setItem("accessToken", data.accessToken)
           setToken(data.accessToken)
           navigate(`/signUpUserName/twitter/${data.userId}`)
         }
