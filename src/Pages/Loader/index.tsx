@@ -170,6 +170,7 @@ export default function LoaderPage() {
               accountExists: data.isAccountExist,
               userId: data.userId,
               token: data.accessToken,
+              username: data.username
             }
           })
           window.close()
@@ -214,6 +215,7 @@ export default function LoaderPage() {
               accountExists: data.isAccountExist,
               userId: data.userId,
               token: data.accessToken,
+              username: data.username
             }
           })
           window.close()
