@@ -77,6 +77,7 @@ export default function SignUp() {
         //@ts-ignore
         origin: localStorage.getItem('origin')
       });
+      localStorage.setItem("accessToken", token)
       console.log('res', res.success);
       if (res.success === true) {
         console.log("successful login")
