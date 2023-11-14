@@ -66,7 +66,8 @@ export default function LoaderPage() {
           //@ts-ignore
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
-            window.close()
+            console.log("Do not close")
+            //window.close()
           }, 2000)
         } else {
           
