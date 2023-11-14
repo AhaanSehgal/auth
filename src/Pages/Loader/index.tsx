@@ -57,10 +57,11 @@ export default function LoaderPage() {
             baseUrl,
             walletType,
           });
-          // console.log("account exists")
-          // console.log("password", password)
-          // console.log('userId', userId)
-          // console.log('accessToken', accessToken)
+          //@ts-ignore
+          console.log("origin",JSON.parse(state)?.origin )
+          console.log("password", password)
+          console.log('userId', userId)
+          console.log('accessToken', accessToken)
           keyringController.postMessage({
             type: eventTypes.passMessage,
             message: {
