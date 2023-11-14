@@ -24,6 +24,7 @@ import VerificationPage from './Pages/Verification';
 import OnboardingHome from './Pages/OnboardingHome';
 import VerifyAccount from './Pages/VerifyAccount';
 import Verified from './Pages/Verified';
+import Logout from './Pages/Logout';
 
 
 const App = () => {
@@ -63,8 +64,9 @@ const App = () => {
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/verify" element={<VerificationPage />} />
-            <Route path="/verifyAccount" element={<VerifyAccount />} />
+              <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
+              <Route path="/logout" element={<Logout />} />
 
             </Routes>
             {/* )} */}
