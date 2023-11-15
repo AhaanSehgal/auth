@@ -119,8 +119,18 @@ export default function SendAsset(props:any) {
       baseUrl,
       walletType,
     });
+    const payload = {
+      fromTriaName: params?.senderAddress,
+      recipientTriaName: params?.recepientAddress,
+      amount: params?.enteredAmountValue,
+      tokenAddress:params?.tokenAddress 
+  };
     await wallet.init();
-    const txn = await wallet.send(params?.chainName, params?.payload);
+    const txn = await wallet.send(params?.chainName,payload);  
+    const res = await wallet.waitForTransaction(txn);
+    if(res.success){
+      
+    }
     // console.log({ res });
   };
 
