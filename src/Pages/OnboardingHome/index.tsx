@@ -28,6 +28,14 @@ export default function OnboardingHome() {
       const logo = searchParams.get('dappLogo');
       setDappLogo(logo)
     }
+
+    //Test logs
+    const searchParams = new URLSearchParams(location.search);
+    const name = searchParams.get('dappName');
+    const logo = searchParams.get('dappLogo');
+    console.log("DappName",name)
+    console.log("Logo",logo)
+    
   }, [])
 
   useEffect(() => {
