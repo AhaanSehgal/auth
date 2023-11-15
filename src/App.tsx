@@ -25,6 +25,10 @@ import OnboardingHome from './Pages/OnboardingHome';
 import VerifyAccount from './Pages/VerifyAccount';
 import Verified from './Pages/Verified';
 import Logout from './Pages/Logout';
+import Account from './Pages/Recover/Account';
+import Email from './Pages/Recover/Email';
+import Reset from './Pages/Recover/Reset';
+import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
 
@@ -34,6 +38,8 @@ const App = () => {
   const [token, setToken] = useState("")
   const [username, setUsername] = useState("")
   const [storedPassword, setStoredPassword] = useState("")
+  const [dappName, setDappName] = useState("")
+  const [dappLogo, setDappLogo] = useState("")
   
   const obj = {
     token,
@@ -41,7 +47,11 @@ const App = () => {
     storedPassword,
     setStoredPassword,
     username,
-    setUsername
+    setUsername,
+    dappName,
+    setDappName,
+    dappLogo,
+    setDappLogo
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -71,6 +81,12 @@ const App = () => {
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/email" element={<Email />} />
+              <Route path="/reset" element={<Reset />} />
+              <Route path="/resetConfirm" element={<ResetConfirm />} />
+              <Route path="/reset" element={<Reset />} />
+
 
             </Routes>
             {/* )} */}

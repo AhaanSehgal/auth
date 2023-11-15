@@ -46,7 +46,7 @@ export default function SignUp() {
   const checkIfAvailable = async (name) => {
     try {
       const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-        did: name + "@eos"
+        did: name + "@tria"
       })
       console.log("did", data?.response?.availabilityStatus)
       setAvailable(data?.response?.availabilityStatus)
@@ -66,7 +66,7 @@ export default function SignUp() {
       });
 
       const res = await keyringController.socialogin({
-        triaName: name + "@eos",
+        triaName: name + "@tria",
         //@ts-ignore
         platform: handle?.param1,
         //@ts-ignore
@@ -96,6 +96,12 @@ export default function SignUp() {
     }
   }
   const navigate = useNavigate();
+
+  const checkSpecialChar =(e)=>{
+    if(!/[0-9a-zA-Z]/.test(e.key)){
+     e.preventDefault();
+    }
+   };
 
 
   useEffect(() => {
@@ -149,7 +155,7 @@ export default function SignUp() {
               <div className="self-stretch h-16 flex-col justify-center items-center flex">
                 <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                    <input className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                    <input onKeyDown={(e)=>checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                     {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
