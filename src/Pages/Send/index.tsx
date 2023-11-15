@@ -199,6 +199,7 @@ export default function SendAsset(props: any) {
       getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
       getAsset(jsonData);
       setParams(jsonData);
+   
     }
   };
 
@@ -240,6 +241,7 @@ export default function SendAsset(props: any) {
 
   useEffect(() => {
     if (params) {
+      fetchSendFee();
       const intervalId = setInterval(async () => {
         fetchSendFee();
       }, 30000);
