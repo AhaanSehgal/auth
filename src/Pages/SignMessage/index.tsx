@@ -48,7 +48,7 @@ function SignMessage() {
         baseUrl,
         walletType,
       });
-      await wallet.init({ loginType: 'native', triaName: '', socialName: '', userId: '', input: '' });
+      await wallet.init();
       const res = await wallet.signMessage(params?.chainName, params?.message);
       console.log({ res });
     };
