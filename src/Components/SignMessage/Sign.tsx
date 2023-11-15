@@ -1,24 +1,40 @@
 import React,{useState,useEffect} from 'react';
-import Navbar from './Nav';
+import Navbar from '../Navbar/index';
 
 interface params {
   chainName:string;
   message:string;
-  loginType:string;
   triaName:string,
-  socialName:string,
-  userId:string,
-  input:string,
   appDomain:string,
-  appLogo:string
+  appLogo:string,
+  tokenAddress: String
+}
+
+interface AssetDetails {
+  balanceInTokens: number;
+  balanceInUSD: number;
+  balanceOfTokensInUnits: string;
+  chainLogo: string;
+  chainName: string;
+  decimals: number;
+  isFavorite: boolean;
+  isNativeToken: boolean;
+  isSpam: boolean;
+  logoUrl: string;
+  name: string;
+  percentChangeIn24hr: number;
+  quoteRate: number;
+  symbol: string;
+  tokenAddress: string;
 }
 
 interface Props {
   params: params;
   signMessage: () => Promise<void>;
+  tokenDetails:AssetDetails
 }
 
-const Sign: React.FC<Props> = ({ params, signMessage }) => {
+const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails }) => {
 
   console.log("params", params, signMessage );
 
@@ -34,9 +50,9 @@ const Sign: React.FC<Props> = ({ params, signMessage }) => {
             <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>       */}
               </div>
         <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
-          <Navbar />
+          <Navbar params={params} tokenDetails={tokenDetails} />
           <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-            <img className="w-7 h-7 shadow" src="/icons/sea.svg" />
+            <img className="w-7 h-7 shadow" src={params.appLogo} />
             <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
               {params.appDomain}
             </div>
@@ -83,7 +99,8 @@ const Sign: React.FC<Props> = ({ params, signMessage }) => {
                   </div>
                 </div>
               </div>
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex">
+              <div className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex cursor-pointer"
+              onClick={()=>signMessage()}>
                 <div className="justify-center items-center flex">
                   <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">
                     Approve

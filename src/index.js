@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {UserProvider} from "./contexts/tria-user-provider";
 
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, base, zora, goerli } from 'wagmi/chains';
@@ -70,9 +71,11 @@ const wagmiConfig = createConfig({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
+    
     <WagmiConfig config={wagmiConfig}>
-      <App />
+         <UserProvider>
+          <App />
+      </UserProvider> 
     </WagmiConfig>
 
 );

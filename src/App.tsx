@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useCallback}from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Home from './Pages/Home';
@@ -26,11 +26,11 @@ import VerifyAccount from './Pages/VerifyAccount';
 import Verified from './Pages/Verified';
 import Logout from './Pages/Logout';
 
+import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
 
 const App = () => {
 
-  const { success } = useSocialConnect()
-
+  const { success } = useSocialConnect();
   const [token, setToken] = useState("")
   const [username, setUsername] = useState("")
   const [storedPassword, setStoredPassword] = useState("")
