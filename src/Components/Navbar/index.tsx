@@ -32,7 +32,7 @@ interface AssetDetails {
 
 interface Props {
   params: params;
-  tokenDetails:AssetDetails
+  tokenDetails?:AssetDetails
 }
 
 

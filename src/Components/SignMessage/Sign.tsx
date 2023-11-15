@@ -31,7 +31,7 @@ interface AssetDetails {
 interface Props {
   params: params;
   signMessage: () => Promise<void>;
-  tokenDetails:AssetDetails
+  tokenDetails?:AssetDetails
 }
 
 const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails }) => {

@@ -58,10 +58,7 @@ interface AssetDetails {
   tokenAddress: string;
 }
 
-interface fee{
-  eth:String
-  usd:String,
-}
+interface fee{ eth: string; usd?: string | undefined; }
 
 const walletType = { embedded: true };
 const baseUrl = "https://staging.tria.so";
@@ -108,6 +105,7 @@ export default function SendAsset(props:any) {
   const[amountInUSD,setAmountInUSD]=useState<number>();
   const[totalAmountInUSD,setTotalAmountInUSD]=useState<number>();
   const[totalAmountIncrypto,setTotalAmountIncrypto]=useState<number>();
+  const [feeLoading,setFeeLoading]=useState<boolean>(false);
   console.log("gasfees---------->",gasFees);
   const param = useParams();
   console.log("pa", param);
@@ -119,14 +117,14 @@ export default function SendAsset(props:any) {
       baseUrl,
       walletType,
     });
-    const payload = {
+    const payload:Send = {
       fromTriaName: params?.senderAddress,
-      recipientTriaName: params?.recepientAddress,
-      amount: params?.enteredAmountValue,
+      recipientTriaName: params?.recepientAddress || "",
+      amount: params?.enteredAmountValue || 0,
       tokenAddress:params?.tokenAddress 
   };
     await wallet.init();
-    const txn = await wallet.send(params?.chainName,payload);  
+    const txn = await wallet.send(payload,params?.chainName );  
     const res = await wallet.waitForTransaction(txn);
     if(res.success){
       
@@ -141,6 +139,8 @@ export default function SendAsset(props:any) {
   }
 
   const getSendFee = async (feeCallData) => {
+    try{
+    setFeeLoading(true);
     const fee = new FeeController({
       baseUrl,
       walletType,
@@ -158,10 +158,17 @@ export default function SendAsset(props:any) {
     const res = await fee.getSendFee(chainNames, payload);
     if(res.success===true){
       setGasFees(res.fee);
-      setTotalAmountInUSD(parseFloat((res.fee?.usd)+amountInUSD).toFixed(8));
-      setTotalAmountIncrypto(parseFloat((res?.fee?.eth)+params?.enteredAmountValue).toFixed(8))
+      setTotalAmountInUSD(parseFloat(res.fee?.usd ||'0')+(amountInUSD ||0));
+      setTotalAmountIncrypto(parseFloat(res?.fee?.eth ||'0')+(params?.enteredAmountValue ||0))
     }
     console.log({ res });
+  }
+  catch(err){
+    console.error(err);
+  }
+  finally{
+    setFeeLoading(false);
+  }
   };
 
   const setStateParams = async () => {
@@ -180,33 +187,13 @@ export default function SendAsset(props:any) {
       // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
       // console.log("userdetail",getUserDetail )
       console.log("jsonData", jsonData);
-      getTriaName('0xCfC2A01b6439e7bad1C43306e9124947241E0623','ARBITRUM');
+      getTriaName(jsonData?.recepientAddress,jsonData?.chainName);
       getAsset(jsonData);
       setParams(jsonData);     
-      getSendFee(jsonData);
-      // const triaName=await getUserByAddress(jsonData.recepientAddress);
-      // console.log("recieptnt------->",triaName);
-
+    
     }
   };
 
-  // const getUserDetail = async (triaName:String,tokenAddress:String) => {
-  //   try {
-  //     console.log("token",tokenAddress);
-  //     const response = await getAssetsForATriaName(triaName);
-  //     console.log("----------------->",response);
-  //     // eslint-disable-next-line array-callback-return
-  //     const resp=response.filter((token:any)=>{
-  //                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  //     return token.tokenAddress=== tokenAddress;
-  //     })
-  //     // setTokenDetails(resp[0]);
-  //     console.log(response);
-  //     console.log("resp",resp);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   
   // const SDK_BASE_URL = 'https://staging.tria.so'
@@ -226,26 +213,35 @@ export default function SendAsset(props:any) {
     }
 
     console.log("asset----------------------->",response);
-    // const data=await getAssetDetails('POLYGON','0x1de58d46d05a379e020b1cbed0db98a2f55831b2','test@tria');
-    // console.log("data",data);
   }
 
  useEffect(()=>{
   if(params?.enteredAmountValue && tokenDetails){
     const total= params?.enteredAmountValue * tokenDetails.quoteRate;
     console.log("total-------------->",total);
-    setAmountInUSD(total.toFixed(8));
+    setAmountInUSD(total);
     }
  },[params?.enteredAmountValue,tokenDetails]);
 
- useEffect(() => {
-  const intervalId = setInterval(async () => {
-    await getSendFee(params);
-  }, 30000);
+ const fetchSendFee=async()=>{
+  try{
+     await getSendFee(params);
+  }
+  catch(err)
+  {
+    console.error(err);
+  }
+ }
 
+ useEffect(() => {
+  if(params){
+  const intervalId = setInterval(async () => {
+    fetchSendFee();
+  }, 30000);
   return () => {
     clearInterval(intervalId);
   };
+}
 }, [params]);
 
   useEffect(() => {
@@ -397,7 +393,7 @@ export default function SendAsset(props:any) {
               <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
                 <div className="self-stretch justify-end items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
-                    ${gasFees?.usd.substring(0, 7)}
+                    ${gasFees?.usd?.substring(0, 7)}
                   </div>
                   <div className="w-[18px] h-[18px] relative">
                     <div className="font-montserrat">
