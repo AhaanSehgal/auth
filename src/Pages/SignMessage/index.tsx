@@ -83,10 +83,10 @@ function SignMessage() {
         walletType,
       });
 
-      console.log("wallet",wallet,params?.chainName, params?.message)
-      // await wallet.init({ loginType: 'native', triaName: '', socialName: '', userId: '', input: '' });
-      // const res = await wallet.signMessage(params?.chainName, params?.message);
-      // console.log({ res });
+      console.log("wallet",wallet,params?.chainName, params?.message);
+      await wallet.init();
+      const res = await wallet.signMessage(params?.chainName, params?.message);
+      console.log("sign--------------------->",res);
     };
 
     const setStateParams = async () => {

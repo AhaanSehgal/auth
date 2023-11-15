@@ -5,10 +5,14 @@ import { FeeController, WalletController } from "@tria-sdk/web";
 import { Send } from "@tria-sdk/web";
 import { useParams } from "react-router-dom";
 import NavContext from "../../NavContext";
-import {useTriaUser} from "../../contexts/tria-user-provider";
-import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
+import { useTriaUser } from "../../contexts/tria-user-provider";
+import {
+  GetAllAddressesResponse,
+  RampnalysisAssets,
+  UserController,
+} from "@tria-sdk/core";
 interface param {
-  enteredAmountValue: number| undefined;
+  enteredAmountValue: number | undefined;
   senderName: string;
   senderAddress: string;
   recepientAddress: string;
@@ -30,15 +34,13 @@ interface param {
 //   balanceOfTokensInUnits: string,
 //   decimals: number,
 //   balanceInUSD: number,
-//   quoteRate: number, // value in USD of one token // eg. 1 ETH = 1916.545 
+//   quoteRate: number, // value in USD of one token // eg. 1 ETH = 1916.545
 //   tokenAddress: string,
 //   isNativeToken: boolean,
 //   isSpam: boolean,
-//   percentChangein24hr: number, // e.g. -0.3412 
+//   percentChangein24hr: number, // e.g. -0.3412
 //   isFavroutie: boolean
 // }
-
-
 
 interface AssetDetails {
   balanceInTokens: number;
@@ -58,11 +60,13 @@ interface AssetDetails {
   tokenAddress: string;
 }
 
-interface fee{ eth: string; usd?: string | undefined; }
+interface fee {
+  eth: string;
+  usd?: string | undefined;
+}
 
 const walletType = { embedded: true };
 const baseUrl = "https://staging.tria.so";
-
 
 // interface MyComponentProps {
 //   chainLogo: string;
@@ -73,9 +77,9 @@ const baseUrl = "https://staging.tria.so";
 //   // Add other props as needed
 // }
 
-export default function SendAsset(props:any) {
+export default function SendAsset(props: any) {
   // const { getAssetsForATriaName} = useContext(NavContext);
-  const {getAssetDetails,getUserByAddress} =useTriaUser();
+  const { getAssetDetails, getUserByAddress } = useTriaUser();
   // const chainName = "POLYGON";
   // const payload = {
   //   fromTriaName: "dev0@tria",
@@ -84,32 +88,34 @@ export default function SendAsset(props:any) {
   //   tokenAddress: "",
   // };
 
-  const encodedParams = btoa(JSON.stringify({
-    enteredAmountValue: .000001,
-    senderName: 'dev0@tria',
-    senderAddress: 'dev0@tria',
-    recepientAddress: 'dev@tria',
-    chainName: 'POLYGON',
-    appLogo: '',
-    appDomain: 'https://facebook.com',
-    darkMode: true,
-    tokenAddress: ''
-  }));
+  const encodedParams = btoa(
+    JSON.stringify({
+      enteredAmountValue: 0.000001,
+      senderName: "dev0@tria",
+      senderAddress: "dev@tria",
+      recepientAddress: "dev0@tria",
+      chainName: "POLYGON",
+      appLogo: "",
+      appDomain: "https://facebook.com",
+      darkMode: true,
+      tokenAddress: "",
+    })
+  );
   console.log("eecc", encodedParams);
 
   console.log(encodedParams);
   const [params, setParams] = useState<param>();
-  const [tokenDetails,setTokenDetails]=useState<AssetDetails>();
-  const [gasFees,setGasFees]=useState<fee>();
-  const [recieverTriaName,setRecieverTriaName]=useState();
-  const[amountInUSD,setAmountInUSD]=useState<number>();
-  const[totalAmountInUSD,setTotalAmountInUSD]=useState<number>();
-  const[totalAmountIncrypto,setTotalAmountIncrypto]=useState<number>();
-  const [feeLoading,setFeeLoading]=useState<boolean>(false);
-  console.log("gasfees---------->",gasFees);
+  const [tokenDetails, setTokenDetails] = useState<AssetDetails>();
+  const [gasFees, setGasFees] = useState<fee>();
+  const [recieverTriaName, setRecieverTriaName] = useState();
+  const [amountInUSD, setAmountInUSD] = useState<number>();
+  const [totalAmountInUSD, setTotalAmountInUSD] = useState<number>();
+  const [totalAmountIncrypto, setTotalAmountIncrypto] = useState<number>();
+  const [feeLoading, setFeeLoading] = useState<boolean>(false);
+  console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
-  console.log("tokenDetails---------------->",tokenDetails);
+  console.log("tokenDetails---------------->", tokenDetails);
 
   const sendToken = async () => {
     console.log("sending token..!!");
@@ -117,58 +123,61 @@ export default function SendAsset(props:any) {
       baseUrl,
       walletType,
     });
-    const payload:Send = {
+    const payload: Send = {
       fromTriaName: params?.senderAddress,
       recipientTriaName: params?.recepientAddress || "",
       amount: params?.enteredAmountValue || 0,
-      tokenAddress:params?.tokenAddress 
-  };
+      tokenAddress: params?.tokenAddress,
+    };
     await wallet.init();
-    const txn = await wallet.send(payload,params?.chainName );  
+    const txn = await wallet.send(payload, params?.chainName);
+    console.log("txawait--------------->", txn);
     const res = await wallet.waitForTransaction(txn);
-    if(res.success){
-      
-    }
-    // console.log({ res });
+    // if(res.success){
+
+    // }
+    console.log("txres-------------------------->", res);
   };
 
-  const getTriaName=async(address:any,chainName:any)=>{
-    const triaName=await getUserByAddress(address,chainName);
+  const getTriaName = async (address: any, chainName: any) => {
+    const triaName = await getUserByAddress(address, chainName);
     setRecieverTriaName(triaName);
-    console.log("triaName",triaName);
-  }
+    console.log("triaName", triaName);
+  };
 
   const getSendFee = async (feeCallData) => {
-    try{
-    setFeeLoading(true);
-    const fee = new FeeController({
-      baseUrl,
-      walletType,
-    });
+    try {
+      setFeeLoading(true);
+      const fee = new FeeController({
+        baseUrl,
+        walletType,
+      });
 
-    console.log("fee");
-    const payload = {
+      console.log("fee");
+      const payload = {
         fromTriaName: feeCallData?.senderAddress,
         recipientTriaName: feeCallData?.recepientAddress,
         amount: feeCallData?.enteredAmountValue,
-        tokenAddress:feeCallData?.tokenAddress 
-    };
-    const chainNames=feeCallData?.chainName;
-    console.log("chain------------------>",payload,chainNames);
-    const res = await fee.getSendFee(chainNames, payload);
-    if(res.success===true){
-      setGasFees(res.fee);
-      setTotalAmountInUSD(parseFloat(res.fee?.usd ||'0')+(amountInUSD ||0));
-      setTotalAmountIncrypto(parseFloat(res?.fee?.eth ||'0')+(params?.enteredAmountValue ||0))
+        tokenAddress: feeCallData?.tokenAddress,
+      };
+      const chainNames = feeCallData?.chainName;
+      console.log("chain------------------>", payload, chainNames);
+      const res = await fee.getSendFee(chainNames, payload);
+      if (res.success === true) {
+        setGasFees(res.fee);
+        setTotalAmountInUSD(
+          parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
+        );
+        setTotalAmountIncrypto(
+          parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
+        );
+      }
+      console.log({ res });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setFeeLoading(false);
     }
-    console.log({ res });
-  }
-  catch(err){
-    console.error(err);
-  }
-  finally{
-    setFeeLoading(false);
-  }
   };
 
   const setStateParams = async () => {
@@ -187,62 +196,58 @@ export default function SendAsset(props:any) {
       // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
       // console.log("userdetail",getUserDetail )
       console.log("jsonData", jsonData);
-      getTriaName(jsonData?.recepientAddress,jsonData?.chainName);
+      getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
       getAsset(jsonData);
-      setParams(jsonData);     
-    
+      setParams(jsonData);
     }
   };
 
-
-  
   // const SDK_BASE_URL = 'https://staging.tria.so'
   // const userController = new UserController(SDK_BASE_URL ?? '',"dev0@tria" );
 
-
-  const getAsset = async(asset:any)=>{
+  const getAsset = async (asset: any) => {
     console.log("start----------------------->");
     const response = await getAssetDetails(
-     asset?.chainName,asset?.tokenAddress ,asset?.senderAddress
+      asset?.chainName,
+      asset?.tokenAddress,
+      asset?.senderAddress
     );
     setTokenDetails(response);
-    if(params?.enteredAmountValue){
-    const total= params?.enteredAmountValue * response.quoteRate;
-    console.log("total-------------->",total);
-    setAmountInUSD(total);
+    if (params?.enteredAmountValue) {
+      const total = params?.enteredAmountValue * response.quoteRate;
+      console.log("total-------------->", total);
+      setAmountInUSD(total);
     }
 
-    console.log("asset----------------------->",response);
-  }
-
- useEffect(()=>{
-  if(params?.enteredAmountValue && tokenDetails){
-    const total= params?.enteredAmountValue * tokenDetails.quoteRate;
-    console.log("total-------------->",total);
-    setAmountInUSD(total);
-    }
- },[params?.enteredAmountValue,tokenDetails]);
-
- const fetchSendFee=async()=>{
-  try{
-     await getSendFee(params);
-  }
-  catch(err)
-  {
-    console.error(err);
-  }
- }
-
- useEffect(() => {
-  if(params){
-  const intervalId = setInterval(async () => {
-    fetchSendFee();
-  }, 30000);
-  return () => {
-    clearInterval(intervalId);
+    console.log("asset----------------------->", response);
   };
-}
-}, [params]);
+
+  useEffect(() => {
+    if (params?.enteredAmountValue && tokenDetails) {
+      const total = params?.enteredAmountValue * tokenDetails.quoteRate;
+      console.log("total-------------->", total);
+      setAmountInUSD(total);
+    }
+  }, [params?.enteredAmountValue, tokenDetails]);
+
+  const fetchSendFee = async () => {
+    try {
+      await getSendFee(params);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (params) {
+      const intervalId = setInterval(async () => {
+        fetchSendFee();
+      }, 30000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [params]);
 
   useEffect(() => {
     setStateParams();
@@ -261,47 +266,49 @@ export default function SendAsset(props:any) {
         </div>
         <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
           <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
-          <div>
-      <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
-        <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
-          <div className="w-[50px] h-[50px] relative">
-            <img
-              className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]"
-              src="/icons/boy.svg"
-            />
-            <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
-              <img src={tokenDetails?.chainLogo}></img>
-              <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
-            </div>
-          </div>
-          <div className="flex-col justify-center items-start gap-1 inline-flex">
-            <div className="h-[17px] px-2 flex-col justify-center items-start flex">
-              <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                {tokenDetails?.chainName} 
+            <div>
+              <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+                <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
+                  <div className="w-[50px] h-[50px] relative">
+                    <img
+                      className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]"
+                      src="/icons/boy.svg"
+                    />
+                    <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
+                      <img src={tokenDetails?.logoUrl}></img>
+                      <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
+                    </div>
+                  </div>
+                  <div className="flex-col justify-center items-start gap-1 inline-flex">
+                    <div className="h-[17px] px-2 flex-col justify-center items-start flex">
+                      <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
+                        {tokenDetails?.chainName}
+                      </div>
+                    </div>
+                    <div className="px-2 justify-start items-center inline-flex">
+                      <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
+                        {params?.senderName}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-3 flex-col justify-center items-end gap-1 inline-flex">
+                  <div className="px-2 flex-col justify-center items-end flex">
+                    <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
+                      Balance
+                    </div>
+                  </div>
+                  <div className="px-2 justify-start items-center inline-flex">
+                    <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
+                      {tokenDetails?.balanceInTokens.toFixed(8)}{" "}
+                      {tokenDetails?.symbol}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="px-2 justify-start items-center inline-flex">
-              <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                {params?.senderName}
-              </div>
-            </div>
+              {/* <Navbar params={params} tokenDetails={tokenDetails} /> */}
+            </div>{" "}
           </div>
-        </div>
-        <div className="py-3 flex-col justify-center items-end gap-1 inline-flex">
-          <div className="px-2 flex-col justify-center items-end flex">
-            <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-              Balance
-            </div>
-          </div>
-          <div className="px-2 justify-start items-center inline-flex">
-            <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-             {tokenDetails?.balanceInTokens.toFixed(8)} {tokenDetails?.symbol} 
-            </div>
-          </div>
-        </div>
-      </div>
-         {/* <Navbar params={params} tokenDetails={tokenDetails} /> */}
-    </div>          </div>
           <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
             <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
               <img className="w-7 h-7 shadow" src={params?.appLogo} />
@@ -321,7 +328,7 @@ export default function SendAsset(props:any) {
             <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
               <div className="self-stretch justify-center items-center gap-2 inline-flex">
                 <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                  ${amountInUSD}
+                  ${amountInUSD?.toFixed(6)}
                 </div>
               </div>
               <div className="self-stretch justify-center items-center gap-1 inline-flex">
@@ -410,7 +417,7 @@ export default function SendAsset(props:any) {
                 </div>
                 <div className="self-stretch justify-end items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                  {gasFees?.eth.substring(0, 7)}  {tokenDetails?.symbol}
+                    {gasFees?.eth.substring(0, 7)} {tokenDetails?.symbol}
                   </div>
                 </div>
               </div>
@@ -423,10 +430,10 @@ export default function SendAsset(props:any) {
               </div>
               <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
                 <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
-                  ${totalAmountInUSD}
+                  ${totalAmountInUSD?.toFixed(6)}
                 </div>
                 <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                  {totalAmountIncrypto} {tokenDetails?.symbol  }
+                  {totalAmountIncrypto?.toFixed(8)} {tokenDetails?.symbol}
                 </div>
               </div>
             </div>
@@ -461,7 +468,10 @@ export default function SendAsset(props:any) {
                   </div>
                 </div>
               </div>
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex">
+              <div
+                className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex cursor-pointer"
+                onClick={() => sendToken()}
+              >
                 <div className="justify-center items-center flex">
                   <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">
                     Approve

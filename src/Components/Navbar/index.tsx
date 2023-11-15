@@ -44,7 +44,7 @@ const Nav: React.FC<Props> =({params,tokenDetails})=> {
     <div className="w-[50px] h-[50px] relative">
       <img className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]" src="/icons/boy.svg" />
       <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left    justify-center items-center inline-flex">
-        <img src={tokenDetails?.chainLogo}></img>
+        <img src={tokenDetails?.logoUrl}></img>
         <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
       </div>
     </div>

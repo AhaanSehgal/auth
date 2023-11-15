@@ -52,7 +52,7 @@ const TriaUserContext = createContext<TriaUserContext>(initialValue);
 // This hook can be used to access the user info.
 export const useTriaUser = () => useContext(TriaUserContext);
 const SDK_BASE_URL = 'https://staging.tria.so'
-const userController = new UserController(SDK_BASE_URL ?? '',"dev@tria" );
+const userController = new UserController(SDK_BASE_URL ?? '' );
 console.log('co', userController);
 export function UserProvider(props: PropsWithChildren) {
   // const router = useTriaRouter()
