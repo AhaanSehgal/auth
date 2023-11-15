@@ -107,7 +107,7 @@ export default function EmailAndSocial(props: any) {
         </div>
         : null}
       <button>
-        <div className="w-[416px] h-[260px] px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className="w-[416px] h-[260px]  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
           <div className="w-[376px] h-[54px] py-3 justify-center items-center gap-4 inline-flex">
             <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
               <div onClick={props.toggleState2} className="text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Continue with email</div>
