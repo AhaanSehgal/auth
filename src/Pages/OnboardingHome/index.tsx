@@ -6,7 +6,7 @@ import ConnectWallet from '../../Components/ConnectWallet';
 import HomeBackgroundVector from '../../Components/HomeBackgroundVector';
 import Footer from '../../Components/Footer';
 import { useListenerSO } from "@tria-sdk/connect"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NavContext from '../../NavContext';
 
 export default function OnboardingHome() {
@@ -14,10 +14,29 @@ export default function OnboardingHome() {
   const [emailAndSocial, setEmailAndSocial] = useState(false);
   const [connectWallet, setConnectWallet] = useState(false);
   const navigate = useNavigate()
-  const { setToken, setUsername } = useContext(NavContext)
+  const location = useLocation();
+  const { setToken, setUsername, setDappLogo, setDappName, dappName, dappLogo } = useContext(NavContext)
 
 
   const { eventData }: any = useListenerSO();
+
+  useEffect(() => {
+    if (dappName === "" && dappLogo === "") {
+      const searchParams = new URLSearchParams(location.search);
+      const name = searchParams.get('dappName');
+      setDappName(name)
+      const logo = searchParams.get('dappLogo');
+      setDappLogo(logo)
+    }
+
+    //Test logs
+    const searchParams = new URLSearchParams(location.search);
+    const name = searchParams.get('dappName');
+    const logo = searchParams.get('dappLogo');
+    console.log("DappName",name)
+    console.log("Logo",logo)
+    
+  }, [])
 
   useEffect(() => {
     if (eventData?.message?.accountExists === false) {
@@ -148,12 +167,13 @@ export default function OnboardingHome() {
           <div className="h-[221px] px-5 py-6 flex-col justify-center  gap-4 flex">
             <div className="self-stretch py-2  justify-center  gap-2 inline-flex">
               <div className=" flex-col justify-center  gap-2 inline-flex">
-                <img className="w-[95px] h-[95px]" src="https://www.empireofsight.com/assets/images/logo-icon.svg" />
+                {/* <img className="w-[95px] h-[95px]" src={"https://www.empireofsight.com/assets/images/logo-icon.svg"} /> */}
+                <img className="w-[95px] h-[95px]" src={dappLogo} />
               </div>
             </div>
             <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-center  gap-2 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug dark:text-text">Login to Empire of Sight</div>
+                <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug dark:text-text">Login to {dappName}</div>
               </div>
             </div>
           </div>
