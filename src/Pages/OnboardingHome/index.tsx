@@ -147,7 +147,7 @@ export default function OnboardingHome() {
     //   </div>
     // </div>
     // </div>
-    <div className="w-[448px] rounded-2xl dark:bg-fontLightColor h-[840px] p-4 flex-col  justify-between inline-flex">
+    <div className="w-[448px] rounded-2xl dark:bg-fontLightColor  h-[840px] p-4 flex-col  justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />

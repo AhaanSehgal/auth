@@ -57,51 +57,53 @@ export default function SignUp() {
   const [Id, setId] = useState('');
 
   async function createAccountWithoutPassword() {
-    setLoader(true)
-    try {
-      console.log('token ---->>>', token)
-      const keyringController = new KeyringController({
-        baseUrl,
-        walletType,
-      });
+    if (name?.length > 3) {
+      setLoader(true)
+      try {
+        console.log('token ---->>>', token)
+        const keyringController = new KeyringController({
+          baseUrl,
+          walletType,
+        });
 
-      const res = await keyringController.socialogin({
-        triaName: name + "@tria",
-        //@ts-ignore
-        platform: handle?.param1,
-        //@ts-ignore
-        userId: userId?.param,
-        isPasswordLess: true,
-        //@ts-ignore
-        password: null,
-        //@ts-ignore
-        accessToken: token,
-        //@ts-ignore
-        origin: localStorage.getItem('origin')
-      });
-      console.log('res', res.success);
-      if (res.success === true) {
-        console.log("successful login")
-        setTimeout(() => {
+        const res = await keyringController.socialogin({
+          triaName: name + "@tria",
+          //@ts-ignore
+          platform: handle?.param1,
+          //@ts-ignore
+          userId: userId?.param,
+          isPasswordLess: true,
+          //@ts-ignore
+          password: null,
+          //@ts-ignore
+          accessToken: token,
+          //@ts-ignore
+          origin: localStorage.getItem('origin')
+        });
+        console.log('res', res.success);
+        if (res.success === true) {
+          console.log("successful login")
+          setTimeout(() => {
+            setLoader(false)
+            //window.close()
+          }, 2000)
+        } else {
           setLoader(false)
-          //window.close()
-        }, 2000)
-      } else {
+        }
+        // setUserData({ address: res.address });
+      } catch (err) {
         setLoader(false)
+        console.log(err)
       }
-      // setUserData({ address: res.address });
-    } catch (err) {
-      setLoader(false)
-      console.log(err)
     }
   }
   const navigate = useNavigate();
 
-  const checkSpecialChar =(e)=>{
-    if(!/[0-9a-zA-Z]/.test(e.key)){
-     e.preventDefault();
+  const checkSpecialChar = (e) => {
+    if (!/[0-9a-zA-Z]/.test(e.key)) {
+      e.preventDefault();
     }
-   };
+  };
 
 
   useEffect(() => {
@@ -155,7 +157,7 @@ export default function SignUp() {
               <div className="self-stretch h-16 flex-col justify-center items-center flex">
                 <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                    <input onKeyDown={(e)=>checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                    <input onKeyDown={(e) => checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                     {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
@@ -194,7 +196,7 @@ export default function SignUp() {
                   <div className='flex flex-wrap gap-3 items-center w-[376px] px-2 '>
                     {recommendations?.slice(0, 3)?.map((item, index) => {
                       return (
-                        <div onClick={() => {setName(item); checkIfAvailable(item);}} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
+                        <div onClick={() => { setName(item); checkIfAvailable(item); }} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
                           <div className='bg-gray-100 rounded-full px-5 py-2 font-Montserrat'>
                             {item}
                           </div>
