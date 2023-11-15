@@ -11,7 +11,7 @@ const Index = () => {
 
   return (
     <div>
-      <div className="w-[448px] h-[840px] bg-white rounded-2xl p-4 flex-col justify-between items-center inline-flex">
+      <div className="w-[448px] h-[840px] bg-white dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between items-center inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />

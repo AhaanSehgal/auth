@@ -25,6 +25,10 @@ import OnboardingHome from './Pages/OnboardingHome';
 import VerifyAccount from './Pages/VerifyAccount';
 import Verified from './Pages/Verified';
 import Logout from './Pages/Logout';
+import Account from './Pages/Recover/Account';
+import Email from './Pages/Recover/Email';
+import Reset from './Pages/Recover/Reset';
+import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 
 const App = () => {
@@ -71,6 +75,12 @@ const App = () => {
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/email" element={<Email />} />
+              <Route path="/reset" element={<Reset />} />
+              <Route path="/resetConfirm" element={<ResetConfirm />} />
+              <Route path="/reset" element={<Reset />} />
+
 
             </Routes>
             {/* )} */}
