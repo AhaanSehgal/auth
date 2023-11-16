@@ -32,6 +32,7 @@ import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
 import LoginDetect from './Pages/LoginDetect';
+import AccessToken from './Pages/AccessToken';
 
 const App = () => {
 
@@ -82,6 +83,7 @@ const App = () => {
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/verify" element={<VerificationPage />} />
+              <Route path="/accessToken" element={<AccessToken />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
               <Route path="/logout" element={<Logout />} />
@@ -91,7 +93,6 @@ const App = () => {
               <Route path="/resetConfirm" element={<ResetConfirm />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/loginDetect" element={<LoginDetect />} />
-
 
             </Routes>
             {/* )} */}
