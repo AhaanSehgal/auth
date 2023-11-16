@@ -6,6 +6,7 @@ import { Send } from "@tria-sdk/web";
 import { useParams } from "react-router-dom";
 import NavContext from "../../NavContext";
 import { useTriaUser } from "../../contexts/tria-user-provider";
+import Loader from "../../Components/Loader";
 import {
   GetAllAddressesResponse,
   RampnalysisAssets,
@@ -112,31 +113,37 @@ export default function SendAsset(props: any) {
   const [totalAmountInUSD, setTotalAmountInUSD] = useState<number>();
   const [totalAmountIncrypto, setTotalAmountIncrypto] = useState<number>();
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
+  const [approveLoading, setApproveLoading] = useState<boolean>(false);
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
   console.log("tokenDetails---------------->", tokenDetails);
 
   const sendToken = async () => {
-    console.log("sending token..!!");
-    const wallet = new WalletController({
-      baseUrl,
-      walletType,
-    });
-    const payload: Send = {
-      fromTriaName: params?.senderAddress,
-      recipientTriaName: params?.recepientAddress || "",
-      amount: params?.enteredAmountValue || 0,
-      tokenAddress: params?.tokenAddress,
-    };
-    await wallet.init();
-    const txn = await wallet.send(payload, params?.chainName);
-    console.log("txawait--------------->", txn);
-    const res = await wallet.waitForTransaction(txn);
-    // if(res.success){
-
-    // }
-    console.log("txres-------------------------->", res);
+    try {
+      setApproveLoading(true);
+      console.log("sending token..!!");
+      const wallet = new WalletController({
+        baseUrl,
+        walletType,
+      });
+      const payload: Send = {
+        fromTriaName: params?.senderAddress,
+        recipientTriaName: params?.recepientAddress || "",
+        amount: params?.enteredAmountValue || 0,
+        tokenAddress: params?.tokenAddress,
+      };
+      await wallet.init();
+      const txn = await wallet.send(payload, params?.chainName);
+      console.log("txawait--------------->", txn);
+      const pp = await txn.data.wait();
+      const res = await wallet.waitForTransaction(txn);
+      console.log("txres-------------------------->", res);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setApproveLoading(false);
+    }
   };
 
   const getTriaName = async (address: any, chainName: any) => {
@@ -199,7 +206,6 @@ export default function SendAsset(props: any) {
       getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
       getAsset(jsonData);
       setParams(jsonData);
-   
     }
   };
 
@@ -257,194 +263,199 @@ export default function SendAsset(props: any) {
 
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-      <div className=" px-5 flex-col justify-center items-center flex">
-        <div className="w-[416px] justify-end items-start inline-flex">
-          <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-          {/* <img
+      {approveLoading ? (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <Loader />
+        </div>
+      ) : (
+        <div className=" px-5 flex-col justify-center items-center flex">
+          <div className="w-[416px] justify-end items-start inline-flex">
+            <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
+            {/* <img
               className="dark:invisible visible dark:w-0"
               src="/icons/Shape.svg"
             ></img>
             <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "} */}
-        </div>
-        <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
-          <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
-            <div>
-              <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
-                <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
-                  <div className="w-[50px] h-[50px] relative">
-                    <img
-                      className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]"
-                      src="/icons/boy.svg"
-                    />
-                    <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
-                      <img src={tokenDetails?.logoUrl}></img>
-                      <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
+          </div>
+          <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
+            <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+              <div>
+                <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+                  <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
+                    <div className="w-[50px] h-[50px] relative">
+                      <img
+                        className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]"
+                        src="/icons/boy.svg"
+                      />
+                      <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
+                        <img src={tokenDetails?.logoUrl}></img>
+                        <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
+                      </div>
+                    </div>
+                    <div className="flex-col justify-center items-start gap-1 inline-flex">
+                      <div className="h-[17px] px-2 flex-col justify-center items-start flex">
+                        <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
+                          {tokenDetails?.chainName}
+                        </div>
+                      </div>
+                      <div className="px-2 justify-start items-center inline-flex">
+                        <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
+                          {params?.senderName}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex-col justify-center items-start gap-1 inline-flex">
-                    <div className="h-[17px] px-2 flex-col justify-center items-start flex">
+                  <div className="py-3 flex-col justify-center items-end gap-1 inline-flex">
+                    <div className="px-2 flex-col justify-center items-end flex">
                       <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                        {tokenDetails?.chainName}
+                        Balance
                       </div>
                     </div>
                     <div className="px-2 justify-start items-center inline-flex">
                       <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                        {params?.senderName}
+                        {tokenDetails?.balanceInTokens.toFixed(8)}{" "}
+                        {tokenDetails?.symbol}
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="py-3 flex-col justify-center items-end gap-1 inline-flex">
-                  <div className="px-2 flex-col justify-center items-end flex">
-                    <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                      Balance
-                    </div>
-                  </div>
-                  <div className="px-2 justify-start items-center inline-flex">
-                    <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                      {tokenDetails?.balanceInTokens.toFixed(8)}{" "}
-                      {tokenDetails?.symbol}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <Navbar params={params} tokenDetails={tokenDetails} /> */}
-            </div>{" "}
-          </div>
-          <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-            <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-              <img className="w-7 h-7 shadow" src={params?.appLogo} />
-              <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                {params?.appDomain}
-              </div>
+                {/* <Navbar params={params} tokenDetails={tokenDetails} /> */}
+              </div>{" "}
             </div>
-          </div>
-          <div className="self-stretch justify-center  items-center gap-2 inline-flex">
-            <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
-              Send Transaction
-            </div>
-          </div>
-        </div>
-        <div className="self-stretch h-[444px] py-2 flex-col justify-center items-center gap-2 flex">
-          <div className="self-stretch h-[215px] px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
-            <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
-              <div className="self-stretch justify-center items-center gap-2 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                  ${amountInUSD?.toFixed(6)}
-                </div>
-              </div>
-              <div className="self-stretch justify-center items-center gap-1 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                  {params?.enteredAmountValue} {tokenDetails?.symbol}
+            <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
+              <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+                <img className="w-7 h-7 shadow" src={params?.appLogo} />
+                <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
+                  {params?.appDomain}
                 </div>
               </div>
             </div>
-            <div className="w-[376px] justify-center items-start gap-4 inline-flex">
-              <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
-                <img
-                  className="w-[50px] h-[50px] rounded-[50px]"
-                  src="/icons/boy.svg"
-                />
-                <div className="px-2 justify-start items-center inline-flex">
-                  <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                    {params?.senderName}
+            <div className="self-stretch justify-center  items-center gap-2 inline-flex">
+              <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
+                Send Transaction
+              </div>
+            </div>
+          </div>
+          <div className="self-stretch h-[444px] py-2 flex-col justify-center items-center gap-2 flex">
+            <div className="self-stretch h-[215px] px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
+              <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
+                <div className="self-stretch justify-center items-center gap-2 inline-flex">
+                  <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
+                    ${amountInUSD?.toFixed(6)}
+                  </div>
+                </div>
+                <div className="self-stretch justify-center items-center gap-1 inline-flex">
+                  <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
+                    {params?.enteredAmountValue} {tokenDetails?.symbol}
                   </div>
                 </div>
               </div>
-              <div className="py-6 flex-col justify-center items-center gap-3 inline-flex">
-                <div className="w-6 h-6 relative">
+              <div className="w-[376px] justify-center items-start gap-4 inline-flex">
+                <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
                   <img
-                    className="dark:invisible visible dark:w-0"
-                    src="/icons/arrow-right.svg"
-                  ></img>
-                  <div className="w-6 h-6 left-0 top-0 absolute"></div>
+                    className="w-[50px] h-[50px] rounded-[50px]"
+                    src="/icons/boy.svg"
+                  />
+                  <div className="px-2 justify-start items-center inline-flex">
+                    <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
+                      {params?.senderName}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
-                <img
-                  className="w-[50px] h-[50px] rounded-[50px]"
-                  src="/icons/man.svg"
-                />
-                <div className="px-2 justify-start items-center inline-flex">
-                  <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px]">
-                    {recieverTriaName}
+                <div className="py-6 flex-col justify-center items-center gap-3 inline-flex">
+                  <div className="w-6 h-6 relative">
+                    <img
+                      className="dark:invisible visible dark:w-0"
+                      src="/icons/arrow-right.svg"
+                    ></img>
+                    <div className="w-6 h-6 left-0 top-0 absolute"></div>
+                  </div>
+                </div>
+                <div className="grow shrink basis-0 py-3 flex-col justify-center items-center gap-3 inline-flex">
+                  <img
+                    className="w-[50px] h-[50px] rounded-[50px]"
+                    src="/icons/man.svg"
+                  />
+                  <div className="px-2 justify-start items-center inline-flex">
+                    <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px]">
+                      {recieverTriaName}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="self-stretch h-[205px] px-5 py-4 rounded-2xl flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-              <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+            <div className="self-stretch h-[205px] px-5 py-4 rounded-2xl flex-col justify-center items-center gap-2 flex">
+              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
+                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
+                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
+                      Network Fee
+                    </div>
+                    <div className="w-[18px] h-[18px] relative">
+                      <div className="font-montserrat">
+                        <img
+                          className="dark:invisible visible dark:w-0"
+                          src="/icons/info-circle.svg"
+                        ></img>
+                        <img
+                          className="dark:visible invisible w-0 dark:w-[18px]"
+                          src="/icons/info-circle-dark.svg"
+                        ></img>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-20 text-xs font-medium font-montserrat leading-[14.40px] dark:text-text">
+                      Refreshes in: 30
+                    </div>
+                  </div>
+                </div>
+                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
+                  <div className="self-stretch justify-end items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
+                      ${gasFees?.usd?.substring(0, 7)}
+                    </div>
+                    <div className="w-[18px] h-[18px] relative">
+                      <div className="font-montserrat">
+                        <img
+                          className="dark:invisible visible dark:w-0"
+                          src="/icons/setting-2.svg"
+                        ></img>
+                        <img
+                          className="dark:visible  invisible w-0 dark:w-[18px]"
+                          src="/icons/setting-2-dark.svg"
+                        ></img>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="self-stretch justify-end items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
+                      {gasFees?.eth.substring(0, 7)} {tokenDetails?.symbol}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
+                <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                    Network Fee
-                  </div>
-                  <div className="w-[18px] h-[18px] relative">
-                    <div className="font-montserrat">
-                      <img
-                        className="dark:invisible visible dark:w-0"
-                        src="/icons/info-circle.svg"
-                      ></img>
-                      <img
-                        className="dark:visible invisible w-0 dark:w-[18px]"
-                        src="/icons/info-circle-dark.svg"
-                      ></img>
-                    </div>
+                    Total Cost
                   </div>
                 </div>
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-20 text-xs font-medium font-montserrat leading-[14.40px] dark:text-text">
-                    Refreshes in: 30
+                <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
+                  <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
+                    ${totalAmountInUSD?.toFixed(6)}
                   </div>
-                </div>
-              </div>
-              <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                <div className="self-stretch justify-end items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
-                    ${gasFees?.usd?.substring(0, 7)}
-                  </div>
-                  <div className="w-[18px] h-[18px] relative">
-                    <div className="font-montserrat">
-                      <img
-                        className="dark:invisible visible dark:w-0"
-                        src="/icons/setting-2.svg"
-                      ></img>
-                      <img
-                        className="dark:visible  invisible w-0 dark:w-[18px]"
-                        src="/icons/setting-2-dark.svg"
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-                <div className="self-stretch justify-end items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                    {gasFees?.eth.substring(0, 7)} {tokenDetails?.symbol}
+                    {totalAmountIncrypto?.toFixed(8)} {tokenDetails?.symbol}
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-              <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
-                <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                  Total Cost
-                </div>
-              </div>
-              <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
-                  ${totalAmountInUSD?.toFixed(6)}
-                </div>
-                <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                  {totalAmountIncrypto?.toFixed(8)} {tokenDetails?.symbol}
-                </div>
-              </div>
-            </div>
-            <div className="w-[376px] px-2 justify-center items-center gap-2 inline-flex">
-              <div className="justify-center items-center gap-0.5 flex">
-                <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-['Red Hat Display'] text-zinc-500">
-                  {/* More */}
-                </div>
-                {/* <div className="w-[18px] h-[18px] relative">
+              <div className="w-[376px] px-2 justify-center items-center gap-2 inline-flex">
+                <div className="justify-center items-center gap-0.5 flex">
+                  <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-['Red Hat Display'] text-zinc-500">
+                    {/* More */}
+                  </div>
+                  {/* <div className="w-[18px] h-[18px] relative">
                   <div className="font-montserrat">
                     <img
                       className="dark:invisible visible dark:w-0"
@@ -456,43 +467,44 @@ export default function SendAsset(props: any) {
                     ></img>
                   </div>
                 </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
-          <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
-            <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
-                <div className="justify-center items-center flex">
-                  <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
-                    Reject
-                  </div>
-                </div>
-              </div>
-              <div
-                className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex cursor-pointer"
-                onClick={() => sendToken()}
-              >
-                <div className="justify-center items-center flex">
-                  <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">
-                    Approve
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="self-stretch  py-3 rounded-[44px] justify-start items-start inline-flex">
-            <div className="grow shrink basis-0 h-[19px] justify-center items-center gap-2 flex">
-              <div className="w-[19px] h-[19px] relative rounded-[5px]" />
-              <img src="/icons/logo.svg"></img>
-              <div className="text-center text-stone-950 text-opacity-40 text-sm font-semibold font-montserrat leading-[16.80px] text-zinc-500">
-                Powered by Tria
+          <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
+            <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
+              <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
+                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
+                  <div className="justify-center items-center flex">
+                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
+                      Reject
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex cursor-pointer"
+                  onClick={() => sendToken()}
+                >
+                  <div className="justify-center items-center flex">
+                    <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">
+                      Approve
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="self-stretch  py-3 rounded-[44px] justify-start items-start inline-flex">
+              <div className="grow shrink basis-0 h-[19px] justify-center items-center gap-2 flex">
+                <div className="w-[19px] h-[19px] relative rounded-[5px]" />
+                <img src="/icons/logo.svg"></img>
+                <div className="text-center text-stone-950 text-opacity-40 text-sm font-semibold font-montserrat leading-[16.80px] text-zinc-500">
+                  Powered by Tria
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
