@@ -91,7 +91,7 @@ export default function LoaderPage() {
               username: username
             }
           })
-          window.close()
+          //window.close()
           // navigate(`/signUpUserName/google/${userId}`)
         }
 
