@@ -70,7 +70,7 @@ function SignMessage() {
     console.log(btoa(JSON.stringify({
       chainName: "POLYGON",
       message: "Hello, this is a dummy message!",
-      triaName: "dev0@tria",
+      triaName: "Lalitt@tria",
       appDomain: "https://facebook.com",
       appLogo: "dummylogo.png",
       tokenAddress: ""
@@ -85,7 +85,7 @@ function SignMessage() {
 
       console.log("wallet",wallet,params?.chainName, params?.message);
       await wallet.init();
-      const res = await wallet.signMessage(params?.chainName, params?.message);
+      const res = await wallet.signMessage(params?.message,params?.chainName);
       console.log("sign--------------------->",res);
     };
 
