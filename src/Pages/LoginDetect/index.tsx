@@ -37,16 +37,16 @@ export default function Home() {
         {' '}
         <HomeBackgroundVector />
       </div>
-      <div className="flex-col justify-start gap-2  dark:bg-primaryDarkColor flex">
+      <div className="flex-col justify-start gap-2  dark:bg-fontLightColor flex">
         <Nav />
       </div>
 
 
-
+<div className='mt-auto'>
 <LoginWith/>
+</div>
 
-
-{!continueWithTria && <div className='cursor-pointer' onClick={toggleState}>
+{/* {!continueWithTria && <div className='cursor-pointer' onClick={toggleState}>
         <div className="w-[416px] h-[78px] px-5 py-4 rounded-2xl border border-stone-950 border-opacity-5 flex-col justify-center items-center gap-2 inline-flex">
           <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
             <div className="self-stretch justify-start items-center gap-2 inline-flex">
@@ -63,7 +63,7 @@ export default function Home() {
         <div >
           <ContinueWithTria toggleState={toggleState} />
         </div>
-      )}
+      )} */}
 
 
 

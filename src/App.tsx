@@ -32,6 +32,9 @@ import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
 import LoginDetect from './Pages/LoginDetect';
+import LoginDetected from './Components/Popup/LoginDetected';
+import Incognito from './Pages/Incognito';
+import NewDevice from './Pages/Recover/NewDevice';
 
 const App = () => {
 
@@ -91,6 +94,9 @@ const App = () => {
               <Route path="/resetConfirm" element={<ResetConfirm />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/loginDetect" element={<LoginDetect />} />
+              <Route path="/loginDetected" element={<LoginDetected />} />
+              <Route path="/incognito" element={<Incognito />} />
+              <Route path="/newDevice" element={<NewDevice />} />
 
 
             </Routes>

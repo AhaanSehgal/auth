@@ -9,7 +9,7 @@ export default function Nav() {
   const { dappName, dappLogo } = useContext(NavContext)
   return (
     <div>
-      <div className="w-[416px]  justify-between items-start inline-flex">
+      <div className="w-[416px] justify-between items-start inline-flex">
         <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
           <div className=" relative" >
             <button onClick={() => { navigate("/") }}> <img src='/icons/close.svg'></img> </button>
