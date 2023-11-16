@@ -137,6 +137,7 @@ export default function SendAsset(props: any) {
       const txn = await wallet.send(payload, params?.chainName);
       console.log("txawait--------------->", txn);
       const pp = await txn.data.wait();
+      console.log("pp---------------------->",pp);
       const res = await wallet.waitForTransaction(txn);
       console.log("txres-------------------------->", res);
     } catch (err) {
