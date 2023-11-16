@@ -41,6 +41,7 @@ const App = () => {
   const [storedPassword, setStoredPassword] = useState("")
   const [dappName, setDappName] = useState("")
   const [dappLogo, setDappLogo] = useState("")
+  const [connectWithEmail, setConnectWithEmail] = useState(false)
   
   const obj = {
     token,
@@ -52,7 +53,9 @@ const App = () => {
     dappName,
     setDappName,
     dappLogo,
-    setDappLogo
+    setDappLogo,
+    connectWithEmail,
+    setConnectWithEmail
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);

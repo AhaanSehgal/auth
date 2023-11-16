@@ -7,11 +7,25 @@ import Footer from '../../Components/Footer';
 import NavContext from '../../NavContext';
 import { AuthController } from '@tria-sdk/core';
 import { KeyringController } from '@tria-sdk/web';
+import useWebSocket, { ReadyState } from "react-use-websocket"
 // import { KeyringController } from "../../../../../packages/web/dist/controllers/keyring.controller"
 
 export default function SignInPassword() {
 
+  
   const triaName = useParams()
+
+  //Socket
+  const WS_URL = "wss://staging.tria.so"
+
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
+    WS_URL,
+    {
+      share: false,
+      shouldReconnect: () => true,
+    },
+  )
+  
   const [mainLoader, setMainLoader] = useState(true)
   const { setStoredPassword } = useContext(NavContext)
   const [password, setPassword] = useState("")
@@ -72,9 +86,25 @@ export default function SignInPassword() {
     walletType,
   });
 
+  useEffect(()=>{
+    console.log("Connection state changed")
+    if (readyState === ReadyState.OPEN) {
+      // sendJsonMessage({
+      //   event: "subscribe",
+      //   data: {
+      //     channel: "general-chatroom",
+      //   },
+      // })
+      console.log("opened")
+    }
+
+  },[readyState])
+
   useEffect(() => {
     checkIfExists()
   }, [])
+
+
 
   const checkIfExists = async () => {
     try {
