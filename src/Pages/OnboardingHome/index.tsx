@@ -15,7 +15,7 @@ export default function OnboardingHome() {
   const [connectWallet, setConnectWallet] = useState(false);
   const navigate = useNavigate()
   const location = useLocation();
-  const { setToken, setUsername, setDappLogo, setDappName, dappName, dappLogo } = useContext(NavContext)
+  const { setToken, setUsername, setDappLogo, setDappName, dappName, dappLogo, connectWithEmail, setConnectWithEmail } = useContext(NavContext)
 
 
   const { eventData }: any = useListenerSO();
@@ -23,6 +23,8 @@ export default function OnboardingHome() {
   useEffect(() => {
     if (dappName === "" && dappLogo === "") {
       const searchParams = new URLSearchParams(location.search);
+      const email = searchParams.get('connectWithEmail');
+      setConnectWithEmail(!Boolean(email))
       const name = searchParams.get('dappName');
       setDappName(name)
       const logo = searchParams.get('dappLogo');
@@ -33,9 +35,11 @@ export default function OnboardingHome() {
     const searchParams = new URLSearchParams(location.search);
     const name = searchParams.get('dappName');
     const logo = searchParams.get('dappLogo');
-    console.log("DappName",name)
-    console.log("Logo",logo)
-    
+    const email = searchParams.get('connectWithEmail');
+    console.log("DappName", name)
+    console.log("Logo", logo)
+    console.log("email", !Boolean(email))
+
   }, [])
 
   useEffect(() => {
@@ -147,18 +151,20 @@ export default function OnboardingHome() {
     //   </div>
     // </div>
     // </div>
-    <div className="w-[448px] rounded-2xl dark:bg-fontLightColor h-[840px] p-4 flex-col  justify-between inline-flex">
+    <div className="w-[448px] rounded-2xl drop dark:bg-fontLightColor h-[840px] p-4 flex-col justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />
       </div>
-      <div className="flex-col justify-start gap-2   flex">
+      <div className="flex-col justify-start gap-2 flex">
         <div>
           <div className="w-[416px]  justify-between items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
-              {/* <div className=" relative" >
+              {/* 
+              <div className=" relative" >
                 <button onClick={() => { navigate("/") }}> <img src='/icons/close.svg'></img> </button>
-              </div> */}
+              </div> 
+              */}
             </div>
             <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
               {/* <img src='/icons/Shape.svg'></img> */}
@@ -182,7 +188,6 @@ export default function OnboardingHome() {
       <div className='mt-auto'>
         <EmailAndSocial />
       </div>
-
       <Footer />
     </div>
   );

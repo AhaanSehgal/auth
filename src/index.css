@@ -15,7 +15,7 @@ body {
 body {
   /* height: 100%; */
   zoom: .7;
-  background:black;
+  background: black;
   /* margin-top: 20vh; */
 }
 
@@ -25,8 +25,13 @@ font-size: 10px;
 /* .bg{
   background-image: url('../public//images/bg.jpg')!important;
 } */
-.wallet_icon{
+.wallet_icon {
   margin-top: 25px;
   height: 150px;
   width: auto;
+}
+
+.drop {
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }

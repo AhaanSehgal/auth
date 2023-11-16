@@ -32,6 +32,8 @@ import Reset from './Pages/Recover/Reset';
 import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
+import LoginDetect from './Pages/LoginDetect';
+import AccessToken from './Pages/AccessToken';
 
 const App = () => {
 
@@ -41,6 +43,7 @@ const App = () => {
   const [storedPassword, setStoredPassword] = useState("")
   const [dappName, setDappName] = useState("")
   const [dappLogo, setDappLogo] = useState("")
+  const [connectWithEmail, setConnectWithEmail] = useState(false)
   
   const obj = {
     token,
@@ -52,7 +55,9 @@ const App = () => {
     dappName,
     setDappName,
     dappLogo,
-    setDappLogo
+    setDappLogo,
+    connectWithEmail,
+    setConnectWithEmail
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -80,6 +85,7 @@ const App = () => {
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/mint/:param" element={<Mint />} />
               <Route path="/verify" element={<VerificationPage />} />
+              <Route path="/accessToken" element={<AccessToken />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
               <Route path="/logout" element={<Logout />} />
@@ -88,7 +94,7 @@ const App = () => {
               <Route path="/reset" element={<Reset />} />
               <Route path="/resetConfirm" element={<ResetConfirm />} />
               <Route path="/reset" element={<Reset />} />
-
+              <Route path="/loginDetect" element={<LoginDetect />} />
 
             </Routes>
             {/* )} */}
