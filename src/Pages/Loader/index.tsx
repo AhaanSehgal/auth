@@ -232,7 +232,7 @@ export default function LoaderPage() {
 
   return (
     <div>
-      <div className='mt-80'><Loader /></div>
+      <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'><Loader /></div>
     </div>
   )
 }

@@ -31,6 +31,7 @@ import Reset from './Pages/Recover/Reset';
 import ResetConfirm from './Pages/Recover/ResetConfirm';
 
 import { GetAllAddressesResponse, RampnalysisAssets, UserController } from '@tria-sdk/core';
+import LoginDetect from './Pages/LoginDetect';
 
 const App = () => {
 
@@ -86,6 +87,7 @@ const App = () => {
               <Route path="/reset" element={<Reset />} />
               <Route path="/resetConfirm" element={<ResetConfirm />} />
               <Route path="/reset" element={<Reset />} />
+              <Route path="/loginDetect" element={<LoginDetect />} />
 
 
             </Routes>
