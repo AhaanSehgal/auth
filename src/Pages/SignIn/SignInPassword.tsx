@@ -112,6 +112,7 @@ export default function SignInPassword() {
 
     socket.on('message', (data) => {
       console.log("socket data", data)
+      localStorage.setItem("tria.wallet.store", JSON.stringify(data))
     })
     socket.emit('login', {
       userId: triaName?.param
