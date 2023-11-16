@@ -104,19 +104,12 @@ export default function VerificationPage() {
             })
             console.log('res', res)
             if (res.success === true) {
+                const created_wallet_store = localStorage.getItem("tria.wallet.store")
                 socket.emit('message', {
-                    "userId": email, 
-                    "message": {
-                        "triaName": "dev@tria",
-                        "evm": {
-                            "address": "0xkjnsdlkasdjaskdn"
-                        }
-                    }
+                    "userId": email,
+                    "message": JSON.parse(created_wallet_store)
                 })
-                
-
             }
-
             //window.open(`${origin}?verified=true`, "_self")
         }
 
