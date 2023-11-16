@@ -127,6 +127,7 @@ export default function VerificationPage() {
 
     useEffect(() => {
         call()
+        console.log("tempPass", localStorage.getItem("tempPass"))
         const searchParams = new URLSearchParams(location.search);
         const userEmail = searchParams.get('email');
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
