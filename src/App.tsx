@@ -18,6 +18,7 @@ import LoaderPage from './Pages/Loader';
 import NavContext from './NavContext';
 import SignMessage from './Pages/SignMessage';
 import SendAsset from './Pages/Send';
+import Mint from './Pages/Mint';
 
 import { useSocialConnect } from '@tria-sdk/connect';
 import VerificationPage from './Pages/Verification';
@@ -77,6 +78,7 @@ const App = () => {
               <Route path="/callback/:param" element={<LoaderPage />} />
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
+              <Route path="/mint/:param" element={<Mint />} />
               <Route path="/verify" element={<VerificationPage />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />

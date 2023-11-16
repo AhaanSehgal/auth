@@ -77,7 +77,7 @@ const baseUrl = "https://staging.tria.so";
 //   // Add other props as needed
 // }
 
-export default function SendAsset(props: any) {
+export default function Mint(props: any) {
   // const { getAssetsForATriaName} = useContext(NavContext);
   const { getAssetDetails, getUserByAddress } = useTriaUser();
   // const chainName = "POLYGON";
@@ -90,15 +90,15 @@ export default function SendAsset(props: any) {
 
   const encodedParams = btoa(
     JSON.stringify({
-      enteredAmountValue: 0.00001,
-      senderName: "Lalitt@tria",
-      senderAddress: "Lalitt@tria",
-      recepientAddress: "dev@tria",
+      enteredAmountValue: 0.000001,
+      senderName: "dev@tria",
+      senderAddress: "dev@tria",
+      recepientAddress: "dev0@tria",
       chainName: "POLYGON",
       appLogo: "",
       appDomain: "https://facebook.com",
       darkMode: true,
-      tokenAddress: "",
+      tokenAddress: undefined,
     })
   );
   console.log("eecc", encodedParams);
@@ -321,7 +321,7 @@ export default function SendAsset(props: any) {
           </div>
           <div className="self-stretch justify-center  items-center gap-2 inline-flex">
             <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
-              Send Transaction
+            Mint Transaction
             </div>
           </div>
         </div>
@@ -355,7 +355,7 @@ export default function SendAsset(props: any) {
                 <div className="w-6 h-6 relative">
                   <img
                     className="dark:invisible visible dark:w-0"
-                    src="/icons/arrow-right.svg"
+                    src="/icons/arrow-right.png"
                   ></img>
                   <div className="w-6 h-6 left-0 top-0 absolute"></div>
                 </div>
