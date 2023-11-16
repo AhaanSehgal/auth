@@ -109,6 +109,9 @@ export default function VerificationPage() {
                     "userId": email,
                     "message": JSON.parse(created_wallet_store)
                 })
+                setTimeout(()=>{
+                    window.close()
+                },2000)
             }
             //window.open(`${origin}?verified=true`, "_self")
         }
