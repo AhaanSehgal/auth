@@ -8,9 +8,12 @@ import { KeyringController } from '@tria-sdk/web';
 import { AuthController } from '@tria-sdk/core';
 import Nav from '../../Components/SignUp/Nav';
 import Footer from '../../Components/Footer';
+import io from 'socket.io-client';
 
 
 export default function VerificationPage() {
+
+    const socket = io('wss://staging.tria.so');
 
     const walletType = {
         embedded: true,
@@ -100,7 +103,7 @@ export default function VerificationPage() {
                 origin: origin
             })
             console.log('res', res)
-            window.open(`${origin}?verified=true`, "_self")
+            //window.open(`${origin}?verified=true`, "_self")
         }
 
         // const resp = await keyringController.getVault({
