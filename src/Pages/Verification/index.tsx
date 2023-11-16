@@ -103,6 +103,15 @@ export default function VerificationPage() {
                 origin: origin
             })
             console.log('res', res)
+            socket.emit('message', {
+                "userId": email, // userId can be anything which you can use as an id on FE side
+                "message": {
+                    "triaName": "dev@tria",
+                    "evm": {
+                        "address": "0xkjnsdlkasdjaskdn"
+                    }
+                }
+            })
             //window.open(`${origin}?verified=true`, "_self")
         }
 
