@@ -113,6 +113,11 @@ export default function SignInPassword() {
     socket.on('message', (data) => {
       console.log("socket data", data)
       localStorage.setItem("tria.wallet.store", JSON.stringify(data))
+      keyringController.postMessage({
+        type: "Email Pwd Sign up", 
+        success: true,
+        data: data // JSON object // tria-wallet.store
+        });
     })
     socket.emit('login', {
       userId: triaName?.param
