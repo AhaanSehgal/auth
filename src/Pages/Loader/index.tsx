@@ -74,7 +74,7 @@ export default function LoaderPage() {
           await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
           setTimeout(() => {
             console.log("close stopped")
-            //window.close()
+            window.close()
           }, 2000)
         } else {
           //if Google account does not exist
@@ -91,7 +91,7 @@ export default function LoaderPage() {
               username: username
             }
           })
-          //window.close()
+          window.close()
           // navigate(`/signUpUserName/google/${userId}`)
         }
 
