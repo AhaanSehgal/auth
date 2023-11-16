@@ -10,7 +10,7 @@ import { useConnect } from 'wagmi';
 export default function EmailAndSocial(props: any) {
 
   //@ts-ignore
-  const { setView, authController, showOnboarding } = useContext(NavContext)
+  const { setView, authController, showOnboarding, connectWithEmail } = useContext(NavContext)
   const socialLogins = useSocialLoginConnectors();
   const navigate = useNavigate()
   const [authenticated, setAuthenticated] = useState(false);
@@ -37,7 +37,7 @@ export default function EmailAndSocial(props: any) {
       //@ts-ignore
       console.log('json', call?.data?.url)
       const redirect_url = call?.data?.url
-      window.open( redirect_url , "SSO", `width=${500},height=${600},left=${0},top=${top}`);
+      window.open(redirect_url, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
       //window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}?origin=${window?.origin}`, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
     } catch (err) {
       console.log(err);
@@ -132,19 +132,14 @@ export default function EmailAndSocial(props: any) {
               </div>
             </div>
           </div>
-          <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
+          {connectWithEmail !== false ? <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
             <input className="grow shrink basis-0 h-10 px-5 py-3 text-white font-Montserrat bg-white bg-opacity-5 rounded-[20px] justify-start items-center flex" type="email" placeholder='your@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
-            {/* <div className="justify-start items-center flex">
-                <div className="text-center text-stone-950 text-opacity-30 text-base font-normal font-Montserrat leading-tight">your@email.com</div>
-                <input type='email' ></input>
-              </div> */}
-            {/* </div> */}
             <div onClick={() => navigate(`/signInPassword/${email}`)} className="w-[99px] h-10 px-5 py-3 bg-white rounded-[20px] justify-center items-center flex">
               <div className="justify-center items-center flex">
                 <button><div className="text-center text-black text-base font-semibold font-Montserrat leading-tight" onClick={checkEmailExists}>Next</div></button>
               </div>
             </div>
-          </div>
+          </div> : null}
           <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
             <div className="grow shrink basis-0 h-[0px] border-2 border-white border-opacity-25"></div>
             <div className="px-2 justify-center items-center flex">
