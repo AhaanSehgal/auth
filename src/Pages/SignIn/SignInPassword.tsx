@@ -113,9 +113,9 @@ export default function SignInPassword() {
     socket.on('message', (data) => {
       console.log("socket data", data)
     })
-    socket.emit('login', JSON.stringify({
+    socket.emit('login', {
       userId: triaName?.param
-    }))
+    })
 
   }, [])
 
