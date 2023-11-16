@@ -8,9 +8,12 @@ import { KeyringController } from '@tria-sdk/web';
 import { AuthController } from '@tria-sdk/core';
 import Nav from '../../Components/SignUp/Nav';
 import Footer from '../../Components/Footer';
+import io from 'socket.io-client';
 
 
 export default function VerificationPage() {
+
+    const socket = io('wss://staging.tria.so');
 
     const walletType = {
         embedded: true,
@@ -100,7 +103,17 @@ export default function VerificationPage() {
                 origin: origin
             })
             console.log('res', res)
-            window.open(`${origin}?verified=true`, "_self")
+            if (res.success === true) {
+                const created_wallet_store = localStorage.getItem("tria.wallet.store")
+                socket.emit('message', {
+                    "userId": email,
+                    "message": JSON.parse(created_wallet_store)
+                })
+                setTimeout(()=>{
+                    window.close()
+                },2000)
+            }
+            //window.open(`${origin}?verified=true`, "_self")
         }
 
         // const resp = await keyringController.getVault({
@@ -114,6 +127,7 @@ export default function VerificationPage() {
 
     useEffect(() => {
         call()
+        console.log("tempPass", localStorage.getItem("tempPass"))
         const searchParams = new URLSearchParams(location.search);
         const userEmail = searchParams.get('email');
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));

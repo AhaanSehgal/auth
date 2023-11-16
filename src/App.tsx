@@ -18,6 +18,7 @@ import LoaderPage from './Pages/Loader';
 import NavContext from './NavContext';
 import SignMessage from './Pages/SignMessage';
 import SendAsset from './Pages/Send';
+import Mint from './Pages/Mint';
 
 import { useSocialConnect } from '@tria-sdk/connect';
 import VerificationPage from './Pages/Verification';
@@ -35,6 +36,7 @@ import LoginDetect from './Pages/LoginDetect';
 import LoginDetected from './Components/Popup/LoginDetected';
 import Incognito from './Pages/Incognito';
 import NewDevice from './Pages/Recover/NewDevice';
+import AccessToken from './Pages/AccessToken';
 
 const App = () => {
 
@@ -84,7 +86,9 @@ const App = () => {
               <Route path="/callback/:param" element={<LoaderPage />} />
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
+              <Route path="/mint/:param" element={<Mint />} />
               <Route path="/verify" element={<VerificationPage />} />
+              <Route path="/accessToken" element={<AccessToken />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
               <Route path="/verified" element={<Verified />} />
               <Route path="/logout" element={<Logout />} />
@@ -97,7 +101,6 @@ const App = () => {
               <Route path="/loginDetected" element={<LoginDetected />} />
               <Route path="/incognito" element={<Incognito />} />
               <Route path="/newDevice" element={<NewDevice />} />
-
 
             </Routes>
             {/* )} */}

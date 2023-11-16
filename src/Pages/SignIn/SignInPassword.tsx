@@ -7,25 +7,28 @@ import Footer from '../../Components/Footer';
 import NavContext from '../../NavContext';
 import { AuthController } from '@tria-sdk/core';
 import { KeyringController } from '@tria-sdk/web';
-import useWebSocket, { ReadyState } from "react-use-websocket"
+// import useWebSocket, { ReadyState } from "react-use-websocket"
+import io from 'socket.io-client';
 // import { KeyringController } from "../../../../../packages/web/dist/controllers/keyring.controller"
 
 export default function SignInPassword() {
 
-  
+
   const triaName = useParams()
 
   //Socket
-  const WS_URL = "wss://staging.tria.so"
+  // const WS_URL = "wss://staging.tria.so"
 
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
-    WS_URL,
-    {
-      share: false,
-      shouldReconnect: () => true,
-    },
-  )
-  
+  // const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
+  //   WS_URL,
+  //   {
+  //     share: false,
+  //     shouldReconnect: () => true,
+  //   },
+  // )
+
+  const socket = io('wss://staging.tria.so');
+
   const [mainLoader, setMainLoader] = useState(true)
   const { setStoredPassword } = useContext(NavContext)
   const [password, setPassword] = useState("")
@@ -86,25 +89,45 @@ export default function SignInPassword() {
     walletType,
   });
 
-  useEffect(()=>{
-    console.log("Connection state changed")
-    if (readyState === ReadyState.OPEN) {
-      // sendJsonMessage({
-      //   event: "subscribe",
-      //   data: {
-      //     channel: "general-chatroom",
-      //   },
-      // })
-      console.log("opened")
-    }
+  // useEffect(()=>{
+  //   console.log("Connection state changed")
+  //   if (readyState === ReadyState.OPEN) {
+  //     // sendJsonMessage({
+  //     //   event: "subscribe",
+  //     //   data: {
+  //     //     channel: "general-chatroom",
+  //     //   },
+  //     // })
+  //     console.log("opened")
+  //   }
 
-  },[readyState])
+  // },[readyState])
+
+  useEffect(() => {
+    // console.log("socket io -->>",socket)
+    // socket.connect()
+    // socket.emit('login', {
+    //   userId: triaName?.param
+    // });
+
+    socket.on('message', (data) => {
+      console.log("socket data", data)
+      localStorage.setItem("tria.wallet.store", JSON.stringify(data))
+      keyringController.postMessage({
+        type: "Email Pwd Sign up", 
+        success: true,
+        data: data // JSON object // tria-wallet.store
+        });
+    })
+    socket.emit('login', {
+      userId: triaName?.param
+    })
+
+  }, [])
 
   useEffect(() => {
     checkIfExists()
   }, [])
-
-
 
   const checkIfExists = async () => {
     try {
@@ -161,6 +184,8 @@ export default function SignInPassword() {
               password: password,
               origin: document.referrer
             })
+            console.log("store temp pass", password)
+            localStorage.setItem("tempPass", password)
             navigate('/verifyAccount')
           } catch (err) {
             console.log(err)
@@ -280,7 +305,7 @@ export default function SignInPassword() {
               </div> : null}
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                 <div className='grow shrink basis-0 h-10 px-5  py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white'>
-                  <input title="Minimum eight characters, at least one letter, one number and one special character" className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type={showPassword === false ? "password" : "text"} onChange={(e) => { setPassword(e.target.value); localStorage.setItem('tempPass', e.target.value); }} />
+                  <input title="Minimum eight characters, at least one letter, one number and one special character" className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type={showPassword === false ? "password" : "text"} onChange={(e) => { setPassword(e.target.value);}} />
                   <img onClick={() => setShowPassword(!showPassword)} className='ml-2 cursor-pointer' src="/icons/eye-slash.svg" alt="eye-slash" />
                 </div>
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
@@ -308,7 +333,7 @@ export default function SignInPassword() {
                       }
                     </div>
                     </button>}
-                    
+
                   </div>
                 </div>
               </div>
