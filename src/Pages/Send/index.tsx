@@ -285,7 +285,7 @@ const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
       {approveLoading ? (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="ml-[10] mt-[400px] transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
       ) : (
