@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../../Components/Navbar";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { FeeController, WalletController } from "@tria-sdk/web";
 import { Send } from "@tria-sdk/web";
 import { useParams } from "react-router-dom";
@@ -23,6 +23,7 @@ interface param {
   accessToken: string;
   darkMode: boolean;
   tokenAddress: string;
+  fromWallet:boolean;
 }
 
 // interface Asset {
@@ -115,6 +116,8 @@ export default function SendAsset(props: any) {
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
   const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
+
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
@@ -133,11 +136,12 @@ export default function SendAsset(props: any) {
         recipientTriaName: params?.recepientAddress || "",
         amount: params?.enteredAmountValue || 0,
         tokenAddress: params?.tokenAddress,
-      };
+      }; 
       await wallet.init();
       const txn = await wallet.send(payload, params?.chainName);
       console.log("txawait--------------->", txn);
       console.time("myTimer");
+      window.location.href= walletUrl;
       const x = await txn?.data?.wait();
       console.timeEnd("myTimer");
       console.log("x------------------->", x);
