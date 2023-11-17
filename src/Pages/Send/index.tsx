@@ -137,7 +137,9 @@ export default function SendAsset(props: any) {
       await wallet.init();
       const txn = await wallet.send(payload, params?.chainName);
       console.log("txawait--------------->", txn);
+      console.time("myTimer");
       const x = await txn?.data?.wait();
+      console.timeEnd("myTimer");
       console.log("x------------------->", x);
       const res = await wallet.waitForTransaction(txn);
 
@@ -164,7 +166,6 @@ export default function SendAsset(props: any) {
 
   const getSendFee = async (feeCallData) => {
     try {
-      setFeeLoading(true);
       const fee = new FeeController({
         baseUrl,
         walletType,
@@ -188,7 +189,6 @@ export default function SendAsset(props: any) {
         setTotalAmountIncrypto(
           parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
         );
-        setFeeLoading(false);
       }
       else{
         setError(res?.message ||"");
@@ -196,6 +196,9 @@ export default function SendAsset(props: any) {
       console.log({ res });
     } catch (err) {
       console.error(err);
+    }
+    finally{
+      setFeeLoading(false);
     }
   };
 
@@ -260,6 +263,7 @@ export default function SendAsset(props: any) {
 
   useEffect(() => {
     if (params) {
+      setFeeLoading(true);
       fetchSendFee();
       const intervalId = setInterval(async () => {
         fetchSendFee();
