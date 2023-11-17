@@ -19,7 +19,7 @@ export default function SignUp() {
 
   const baseUrl = 'https://staging.tria.so';
 
-  const { token, username } = useContext(NavContext)
+  const { token, username, dappName } = useContext(NavContext)
 
   const [recommendations, setRecommendations] = useState([])
   const [available, setAvailable] = useState()
@@ -133,7 +133,7 @@ export default function SignUp() {
           <Nav />
           <div className="w-[376px]  py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
-              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to Empire of Sight</div>
+              <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to {dappName}</div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React ,{useCallback}from 'react';
+import React, { useCallback } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Home from './Pages/Home';
@@ -48,7 +48,8 @@ const App = () => {
   const [dappName, setDappName] = useState("")
   const [dappLogo, setDappLogo] = useState("")
   const [connectWithEmail, setConnectWithEmail] = useState(false)
-  
+  const [continueOnIncognito, setContinueOnIncognito] = useState(false)
+
   const obj = {
     token,
     setToken,
@@ -61,7 +62,9 @@ const App = () => {
     dappLogo,
     setDappLogo,
     connectWithEmail,
-    setConnectWithEmail
+    setConnectWithEmail,
+    continueOnIncognito,
+    setContinueOnIncognito
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -69,7 +72,7 @@ const App = () => {
     <div className=''>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className={` fixed lg:right-[40%] lg:top-[15%] right-0 bottom-0 ${isDarkMode ? "dark" : ""}`}>
+          <div className={` fixed  lg:right-[30%] lg:top-[-17%] lg:bottom-[0%]  right-0 bottom-0 ${isDarkMode ? "dark" : ""}`}  style={{ transform: "scale(0.7)" }}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>
@@ -103,7 +106,6 @@ const App = () => {
               <Route path="/incognito" element={<Incognito />} />
               <Route path="/newDevice" element={<NewDevice />} />
               <Route path="/stackHome" element={<StackHome />} />
-
             </Routes>
             {/* )} */}
             {/* <div

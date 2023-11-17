@@ -19,7 +19,7 @@ export default function VerificationPage() {
         embedded: true,
     };
 
-    const { storedPassword } = useContext(NavContext)
+    const { storedPassword, dappName } = useContext(NavContext)
 
     const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
@@ -165,7 +165,7 @@ export default function VerificationPage() {
                             <Nav />
                             <div className="w-[376px] h-[46px] py-3 flex-col justify-center items-start gap-4 inline-flex">
                                 <div className="self-stretch justify-center items-center gap-2 inline-flex">
-                                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to Empire of Sight</div>
+                                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to {dappName}</div>
                                 </div>
                             </div>
                         </div>

@@ -25,7 +25,8 @@ export default function EmailAndSocial(props: any) {
   const baseUrl = 'https://staging.tria.so'
 
   const socialLoginClicked = async (socialLoginIndex: number) => {
-    const width = ((window.innerWidth) / 3.15);
+
+    const width = ((window.innerWidth) / 2.6);
     const top = 0;
     const left=0;
     const height = window.innerHeight;

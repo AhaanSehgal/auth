@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../../Components/Navbar";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { FeeController, WalletController } from "@tria-sdk/web";
 import { Send } from "@tria-sdk/web";
 import { useParams } from "react-router-dom";
@@ -23,6 +23,7 @@ interface param {
   accessToken: string;
   darkMode: boolean;
   tokenAddress: string;
+  fromWallet:boolean;
 }
 
 // interface Asset {
@@ -115,6 +116,8 @@ export default function SendAsset(props: any) {
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
   const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
+
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
@@ -133,11 +136,14 @@ export default function SendAsset(props: any) {
         recipientTriaName: params?.recepientAddress || "",
         amount: params?.enteredAmountValue || 0,
         tokenAddress: params?.tokenAddress,
-      };
+      }; 
       await wallet.init();
       const txn = await wallet.send(payload, params?.chainName);
       console.log("txawait--------------->", txn);
+      console.time("myTimer");
+      window.location.href= walletUrl;
       const x = await txn?.data?.wait();
+      console.timeEnd("myTimer");
       console.log("x------------------->", x);
       const res = await wallet.waitForTransaction(txn);
 
@@ -164,7 +170,6 @@ export default function SendAsset(props: any) {
 
   const getSendFee = async (feeCallData) => {
     try {
-      setFeeLoading(true);
       const fee = new FeeController({
         baseUrl,
         walletType,
@@ -188,7 +193,6 @@ export default function SendAsset(props: any) {
         setTotalAmountIncrypto(
           parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
         );
-        setFeeLoading(false);
       }
       else{
         setError(res?.message ||"");
@@ -196,6 +200,9 @@ export default function SendAsset(props: any) {
       console.log({ res });
     } catch (err) {
       console.error(err);
+    }
+    finally{
+      setFeeLoading(false);
     }
   };
 
@@ -260,6 +267,7 @@ export default function SendAsset(props: any) {
 
   useEffect(() => {
     if (params) {
+      setFeeLoading(true);
       fetchSendFee();
       const intervalId = setInterval(async () => {
         fetchSendFee();
@@ -277,7 +285,7 @@ export default function SendAsset(props: any) {
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
       {approveLoading ? (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="ml-[10] mt-[400px] transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
       ) : (

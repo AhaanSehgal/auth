@@ -5,7 +5,7 @@ import NavContext from '../../NavContext';
 export default function Nav() {
   const navigate = useNavigate();
 
-  const { dappLogo } = useContext(NavContext)
+  const { dappLogo, dappName } = useContext(NavContext)
   return (
     <div>
       {/* <div className="w-[416px] justify-between items-start inline-flex">
@@ -20,11 +20,11 @@ export default function Nav() {
                   </div> */}
       <div className="h-[221px] px-5 py-6 flex-col justify-center items-center gap-4 flex">
         <div className="self-stretch py-2  justify-center items-center inline-flex">
-          <div className="w-[95px] h-[95px] relative rounded-[127px] ">
+          {/* <div className="w-[95px] h-[95px] relative rounded-[127px] ">
             <img className="" src={dappLogo} />
-          </div>
+          </div> */}
           <div className=" flex-col justify-center mr-20 items-center gap-2 inline-flex">
-                <img className="w-[95px] h-[95px]  " src="https://www.empireofsight.com/assets/images/logo-icon.svg" />
+                <img className="w-[95px] h-[95px]  " src={dappLogo} />
               </div>
         </div>
       </div>
