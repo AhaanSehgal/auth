@@ -11,27 +11,22 @@ import Footer from '../../Components/Footer';
 import io from 'socket.io-client';
 
 
-export default function VerificationPage() {
+export default function SignUp() {
 
-    const socket = io('wss://staging.tria.so');
+    //const socket = io('wss://staging.tria.so');
 
     const walletType = {
         embedded: true,
     };
 
-    const { storedPassword, dappName } = useContext(NavContext)
+    const { storedPassword, dappName, userEmail, hash, hashPass } = useContext(NavContext)
 
-    const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
     const [recommendations, setRecommendations] = useState([])
     const [available, setAvailable] = useState()
     const [loader, setLoader] = useState(false)
 
-    const [email, setEmail] = useState("")
-    const [hash, setHash] = useState("")
-    const [password, setPassword] = useState("")
-
-    const { setToken } = useContext(NavContext)
+   
     const location = useLocation();
     const baseUrl = 'https://staging.tria.so'
 
@@ -68,32 +63,32 @@ export default function VerificationPage() {
         }
     }
 
-    const call = async () => {
-        const searchParams = new URLSearchParams(location.search);
-        const email = searchParams.get('email');
-        const token = searchParams.get('token');
-        socket.emit('message', {
-            "userId": email,
-            "message": {
-                token: token
-            }
-        })
-        // setEmail(email)
-        // console.log('Email', email);
-        // console.log('Token', token);
-        // const check = await keyringController.emailLinkVerification({ email: email, code: token })
-        // console.log('check', check)
-        // const auth = await keyringController.initiateEmailLinkAuth({
-        //     email: email,
-        //     password: localStorage.getItem('tempPass')
-        // })
-        // console.log('auth', auth)
-        // if (auth?.hash !== undefined) {
-        //     setOpen(true)
-        //     setHash(auth?.hash)
-        //     setPassword(auth?.password)
-        // }
-    }
+    // const call = async () => {
+    //     const searchParams = new URLSearchParams(location.search);
+    //     const email = searchParams.get('email');
+    //     const token = searchParams.get('token');
+    //     socket.emit('message', {
+    //         "userId": email,
+    //         "message": {
+    //             token: token
+    //         }
+    //     })
+    //     setEmail(email)
+    //     console.log('Email', email);
+    //     console.log('Token', token);
+    //     const check = await keyringController.emailLinkVerification({ email: email, code: token })
+    //     console.log('check', check)
+    //     const auth = await keyringController.initiateEmailLinkAuth({
+    //         email: email,
+    //         password: localStorage.getItem('tempPass')
+    //     })
+    //     console.log('auth', auth)
+    //     if (auth?.hash !== undefined) {
+    //         setOpen(true)
+    //         setHash(auth?.hash)
+    //         setPassword(auth?.password)
+    //     }
+    // }
 
     const call2 = async () => {
         if (name.length > 3) {
@@ -102,22 +97,22 @@ export default function VerificationPage() {
             const origin = searchParams.get('origin');
             const res = await keyringController.generateAccountByOTPOrLINK({
                 triaName: name + "@tria",
-                input: email,
+                input: userEmail,
                 hash: hash,
-                password: password,
+                password: hashPass,
                 type: "link",
-                origin: origin
+                origin: document.referrer
             })
             console.log('res', res)
             if (res.success === true) {
-                const created_wallet_store = localStorage.getItem("tria.wallet.store")
-                socket.emit('message', {
-                    "userId": email,
-                    "message": JSON.parse(created_wallet_store)
-                })
-                setTimeout(() => {
-                    window.close()
-                }, 2000)
+                // const created_wallet_store = localStorage.getItem("tria.wallet.store")
+                // socket.emit('message', {
+                //     "userId": email,
+                //     "message": JSON.parse(created_wallet_store)
+                // })
+                // setTimeout(() => {
+                //     window.close()
+                // }, 2000)
             }
             //window.open(`${origin}?verified=true`, "_self")
         }
@@ -132,16 +127,12 @@ export default function VerificationPage() {
     }
 
     useEffect(() => {
-        call()
-        // console.log("tempPass", localStorage.getItem("tempPass"))
-        // const searchParams = new URLSearchParams(location.search);
-        // const userEmail = searchParams.get('email');
-        // const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
-        // if (refined_email.length !== 0) {
-        //     setName(refined_email)
-        //     checkIfAvailable(refined_email)
-        //     getNameRecommendations(refined_email)
-        // }
+        const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
+        if (refined_email.length !== 0) {
+            setName(refined_email)
+            checkIfAvailable(refined_email)
+            getNameRecommendations(refined_email)
+        }
     }, []);
 
     const checkSpecialChar = (e) => {
@@ -152,9 +143,7 @@ export default function VerificationPage() {
 
     return (
         <>
-            {open === false ? <div className=''>
-                <div className='mt-80'><Loader /></div>
-            </div> :
+            
                 <div>
                     <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
                         <div className="flex-col justify-start items-center gap-2 flex">
@@ -251,7 +240,7 @@ export default function VerificationPage() {
                         </div>
                     </div>
                 </div>
-            }
+            
         </>
     )
 }

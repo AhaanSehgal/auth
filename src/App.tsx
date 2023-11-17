@@ -38,6 +38,7 @@ import Incognito from './Pages/Incognito';
 import NewDevice from './Pages/Recover/NewDevice';
 import AccessToken from './Pages/AccessToken';
 import StackHome from './Pages/Stack/StackHome';
+import SignUp from './Pages/Link';
 
 const App = () => {
 
@@ -49,6 +50,9 @@ const App = () => {
   const [dappLogo, setDappLogo] = useState("")
   const [connectWithEmail, setConnectWithEmail] = useState(false)
   const [continueOnIncognito, setContinueOnIncognito] = useState(false)
+  const [userEmail, setUserEmail] = useState("")
+  const [hash, setHash] = useState("")
+  const [hashPass, setHashPass] = useState("")
 
   const obj = {
     token,
@@ -64,7 +68,13 @@ const App = () => {
     connectWithEmail,
     setConnectWithEmail,
     continueOnIncognito,
-    setContinueOnIncognito
+    setContinueOnIncognito,
+    userEmail,
+    setUserEmail,
+    hash,
+    setHash,
+    hashPass,
+    setHashPass
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -106,6 +116,7 @@ const App = () => {
               <Route path="/incognito" element={<Incognito />} />
               <Route path="/newDevice" element={<NewDevice />} />
               <Route path="/stackHome" element={<StackHome />} />
+              <Route path="/SignUp" element={<SignUp />} />
             </Routes>
             {/* )} */}
             {/* <div

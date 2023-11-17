@@ -30,7 +30,7 @@ export default function SignInPassword() {
   const socket = io('wss://staging.tria.so');
 
   const [mainLoader, setMainLoader] = useState(true)
-  const { setStoredPassword } = useContext(NavContext)
+  const { setUserEmail, setStoredPassword, setHashPass, setHash } = useContext(NavContext)
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [signUp, setSignUp] = useState(false)
@@ -112,18 +112,37 @@ export default function SignInPassword() {
 
     socket.on('message', (data) => {
       console.log("socket data", data)
-      localStorage.setItem("tria.wallet.store", JSON.stringify(data))
-      keyringController.postMessage({
-        type: "Email Pwd Sign up", 
-        success: true,
-        data: data // JSON object // tria-wallet.store
-        });
+      handleSignUp(data.token)
+      //localStorage.setItem("tria.wallet.store", JSON.stringify(data))
+      // keyringController.postMessage({
+      //   type: "Email Pwd Sign up", 
+      //   success: true,
+      //   data: data // JSON object // tria-wallet.store
+      //   });
     })
     socket.emit('login', {
       userId: triaName?.param
     })
 
   }, [])
+
+  const handleSignUp = async (code) => {
+    console.log("Called")
+    const check = await keyringController.emailLinkVerification({ email: triaName?.param, code: code })
+    console.log('check', check)
+    const auth = await keyringController.initiateEmailLinkAuth({
+      email: triaName?.param,
+      password: password
+    })
+    if (auth?.hash !== undefined) {
+      setUserEmail(triaName?.param)
+      setStoredPassword(password)
+      setHash(auth?.hash)
+      setHashPass(auth?.password)
+      navigate("/SignUp")
+
+    }
+  }
 
   useEffect(() => {
     checkIfExists()
@@ -305,7 +324,7 @@ export default function SignInPassword() {
               </div> : null}
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                 <div className='grow shrink basis-0 h-10 px-5  py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex font-Montserrat text-white'>
-                  <input title="Minimum eight characters, at least one letter, one number and one special character" className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type={showPassword === false ? "password" : "text"} onChange={(e) => { setPassword(e.target.value);}} />
+                  <input title="Minimum eight characters, at least one letter, one number and one special character" className="w-full grow shrink basis-0 h-10 bg-transparent focus:outline-none font-Montserrat text-white" placeholder={signUp === false ? 'Password' : 'Confirm Password'} type={showPassword === false ? "password" : "text"} onChange={(e) => { setPassword(e.target.value); }} />
                   <img onClick={() => setShowPassword(!showPassword)} className='ml-2 cursor-pointer' src="/icons/eye-slash.svg" alt="eye-slash" />
                 </div>
                 <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
