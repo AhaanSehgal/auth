@@ -1,4 +1,4 @@
-import React ,{useCallback}from 'react';
+import React, { useCallback } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Home from './Pages/Home';
@@ -47,7 +47,8 @@ const App = () => {
   const [dappName, setDappName] = useState("")
   const [dappLogo, setDappLogo] = useState("")
   const [connectWithEmail, setConnectWithEmail] = useState(false)
-  
+  const [continueOnIncognito, setContinueOnIncognito] = useState(false)
+
   const obj = {
     token,
     setToken,
@@ -60,7 +61,9 @@ const App = () => {
     dappLogo,
     setDappLogo,
     connectWithEmail,
-    setConnectWithEmail
+    setConnectWithEmail,
+    continueOnIncognito,
+    setContinueOnIncognito
   }
   const [isDarkMode, setIsDarkMode] = useState(true);
   // const [showWallet, setShowWallet] = useState(true);
@@ -101,7 +104,6 @@ const App = () => {
               <Route path="/loginDetected" element={<LoginDetected />} />
               <Route path="/incognito" element={<Incognito />} />
               <Route path="/newDevice" element={<NewDevice />} />
-
             </Routes>
             {/* )} */}
             {/* <div

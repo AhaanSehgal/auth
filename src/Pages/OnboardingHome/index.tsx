@@ -8,6 +8,7 @@ import Footer from '../../Components/Footer';
 import { useListenerSO } from "@tria-sdk/connect"
 import { useNavigate, useLocation } from 'react-router-dom';
 import NavContext from '../../NavContext';
+import { detectIncognito } from "detectincognitojs";
 
 export default function OnboardingHome() {
   const [continueWithTria, setContinueWithTria] = useState(true);
@@ -15,7 +16,7 @@ export default function OnboardingHome() {
   const [connectWallet, setConnectWallet] = useState(false);
   const navigate = useNavigate()
   const location = useLocation();
-  const { setToken, setUsername, setDappLogo, setDappName, dappName, dappLogo, connectWithEmail, setConnectWithEmail } = useContext(NavContext)
+  const { setToken, setUsername, setDappLogo, setDappName, dappName, dappLogo, connectWithEmail, setConnectWithEmail, continueOnIncognito } = useContext(NavContext)
 
 
   const { eventData }: any = useListenerSO();
@@ -39,6 +40,15 @@ export default function OnboardingHome() {
     console.log("DappName", name)
     console.log("Logo", logo)
     console.log("email", !Boolean(email))
+
+    if (continueOnIncognito === false) {
+      detectIncognito().then((result) => {
+        console.log(result.browserName, result.isPrivate);
+        if (result.isPrivate === true) {
+          navigate("/incognito")
+        }
+      });
+    }
 
   }, [])
 
