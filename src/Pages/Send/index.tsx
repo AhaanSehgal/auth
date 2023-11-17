@@ -118,6 +118,13 @@ export default function SendAsset(props: any) {
   const [error, setError] = useState<string>("");
 const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
 
+const sendMessageToParent = (data:any=null) => {
+  // Post a message to the parent window
+  console.log("calling from send")
+  window.parent.postMessage({ type: 'closeIframe',callFrom:'send',data:data }, '*');
+};
+
+
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
@@ -141,7 +148,12 @@ const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
       const txn = await wallet.send(payload, params?.chainName);
       console.log("txawait--------------->", txn);
       console.time("myTimer");
+      if(params?.fromWallet){
       window.location.href= walletUrl;
+      }
+      else{
+        sendMessageToParent(txn);
+      }
       const x = await txn?.data?.wait();
       console.timeEnd("myTimer");
       console.log("x------------------->", x);
@@ -544,7 +556,8 @@ const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
           <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
               <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
+                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+                onClick={()=>sendMessageToParent()}>
                   <div className="justify-center items-center flex">
                     <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
                       Reject

@@ -67,6 +67,14 @@ function SignMessage() {
     const {getAssetDetails,getUserByAddress} =useTriaUser();
     const [tokenDetails,setTokenDetails]=useState<AssetDetails>();
     const param = useParams();
+
+    const sendMessageToParent = (data:any=null) => {
+      // Post a message to the parent window
+      window.parent.postMessage({ type: 'closeIframe',callFrom:'sign',data:data }, '*');
+  };
+  
+
+
     console.log(btoa(JSON.stringify({
       chainName: "POLYGON",
       message: "Hello, this is a dummy message!",
@@ -86,6 +94,7 @@ function SignMessage() {
       console.log("wallet",wallet,params?.chainName, params?.message);
       await wallet.init();
       const res = await wallet.signMessage(params?.message,params?.chainName);
+      sendMessageToParent(res);
       console.log("sign--------------------->",res);
     };
 
@@ -133,7 +142,7 @@ function SignMessage() {
   return (
     <div>
        { connect ? <Connect setConnect={setConnect}/> :
-        <Sign params={params} signMessage={signMessage} tokenDetails={tokenDetails}/>
+        <Sign params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
   }
     </div>
 

@@ -31,10 +31,12 @@ interface AssetDetails {
 interface Props {
   params: params;
   signMessage: () => Promise<void>;
-  tokenDetails?:AssetDetails
+  tokenDetails?:AssetDetails;
+  sendMessageToParent: () => void;
 }
 
-const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails }) => {
+const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageToParent}) => {
+
 
   console.log("params", params, signMessage );
 
@@ -92,7 +94,8 @@ const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails }) => {
               </div>
             </div>
             <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
+              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+              onClick={()=>sendMessageToParent()}>
                 <div className="justify-center items-center flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
                     Reject

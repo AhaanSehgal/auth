@@ -124,6 +124,13 @@ export default function Mint(props: any) {
   console.log("pa", param);
   console.log("tokenDetails---------------->", tokenDetails);
 
+  const sendMessageToParent = (data=null) => {
+    // Post a message to the parent window
+    window.parent.postMessage({ type: 'closeIframe',callFrom:'mint',data:data }, '*');
+};
+
+
+
   const sendToken = async () => {
     console.log("sending token..!!");
     const wallet = new WalletController({
@@ -136,6 +143,8 @@ export default function Mint(props: any) {
         params.ContractDetails,
         params?.chainName
       );
+
+      sendMessageToParent(mintRes);
       console.log("call contract res-------------->", mintRes);
     }
   };
@@ -508,7 +517,8 @@ export default function Mint(props: any) {
         <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
           <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
             <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex">
+              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+              onClick={()=>sendMessageToParent()}>
                 <div className="justify-center items-center flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
                     Reject
