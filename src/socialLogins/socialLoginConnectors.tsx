@@ -11,6 +11,14 @@ export interface SocialLogin {
   type: SocialLoginTypes;
 }
 
+export interface SocialLogins {
+  id: string;
+  iconUrl: any;
+  type: SocialLoginTypes;
+  name:string;
+  bgname:string;
+}
+
 function googleIcon() {
   return (
     <div className='h-10 w-10 bg-white rounded-full flex center justify-center items-center'>
@@ -114,4 +122,27 @@ export function useSocialLoginConnectors() {
     type: SocialLoginTypes.Discord,
   };
   return [google, twitter, discord];
+}
+
+
+
+export function useSocialLoginConnectorsStack() {
+  const google: SocialLogins = {
+    iconUrl:
+      googleIcon(),
+    id: "1",
+    type: SocialLoginTypes.Google,
+    name: 'Continue with Gmail',
+    bgname:'blue-500'
+  };
+
+  const twitter: SocialLogins = {
+    iconUrl:
+      xIcon(),
+    id: "3",
+    type: SocialLoginTypes.X,
+    name:'Continue with X',
+    bgname:''
+  };
+  return [google, twitter];
 }
