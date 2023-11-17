@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../../Components/Navbar";
 import { useLocation } from "react-router-dom";
-import { FeeController, WalletController } from "@tria-sdk/web";
+import {
+  FeeController,
+  WalletController,
+  ContractDetails,
+} from "@tria-sdk/web";
 import { Send } from "@tria-sdk/web";
 import { useParams } from "react-router-dom";
 import NavContext from "../../NavContext";
@@ -12,16 +16,14 @@ import {
   UserController,
 } from "@tria-sdk/core";
 interface param {
-  enteredAmountValue: number | undefined;
-  senderName: string;
-  senderAddress: string;
-  recepientAddress: string;
+  triaName: string;
   chainName: string;
   appLogo: string;
   appDomain: string;
   accessToken: string;
   darkMode: boolean;
   tokenAddress: string;
+  ContractDetails: ContractDetails;
 }
 
 // interface Asset {
@@ -90,15 +92,18 @@ export default function Mint(props: any) {
 
   const encodedParams = btoa(
     JSON.stringify({
-      enteredAmountValue: 0.000001,
-      senderName: "dev@tria",
-      senderAddress: "dev@tria",
-      recepientAddress: "dev0@tria",
+      triaName: "Lalitt@tria",
       chainName: "POLYGON",
       appLogo: "",
       appDomain: "https://facebook.com",
       darkMode: true,
       tokenAddress: undefined,
+      ContractDetails: {
+        contractAddress: "0123456789056789899",
+        abi: [],
+        functionName: "mintNft",
+        args: ["1"],
+      },
     })
   );
   console.log("eecc", encodedParams);
@@ -107,11 +112,13 @@ export default function Mint(props: any) {
   const [params, setParams] = useState<param>();
   const [tokenDetails, setTokenDetails] = useState<AssetDetails>();
   const [gasFees, setGasFees] = useState<fee>();
-  const [recieverTriaName, setRecieverTriaName] = useState();
+  const [recieverAddress, setRecieverAddress] = useState<string>();
   const [amountInUSD, setAmountInUSD] = useState<number>();
   const [totalAmountInUSD, setTotalAmountInUSD] = useState<number>();
   const [totalAmountIncrypto, setTotalAmountIncrypto] = useState<number>();
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
+  const [approveLoading, setApproveLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
@@ -123,27 +130,21 @@ export default function Mint(props: any) {
       baseUrl,
       walletType,
     });
-    const payload: Send = {
-      fromTriaName: params?.senderAddress,
-      recipientTriaName: params?.recepientAddress || "",
-      amount: params?.enteredAmountValue || 0,
-      tokenAddress: params?.tokenAddress,
-    };
-    await wallet.init();
-    const txn = await wallet.send(payload, params?.chainName);
-    console.log("txawait--------------->", txn);
-    const res = await wallet.waitForTransaction(txn);
-    // if(res.success){
-
-    // }
-    console.log("txres-------------------------->", res);
+    if (params) {
+      await wallet.init();
+      const mintRes = await wallet.callContract(
+        params.ContractDetails,
+        params?.chainName
+      );
+      console.log("call contract res-------------->", mintRes);
+    }
   };
 
-  const getTriaName = async (address: any, chainName: any) => {
-    const triaName = await getUserByAddress(address, chainName);
-    setRecieverTriaName(triaName);
-    console.log("triaName", triaName);
-  };
+  // const getTriaName = async (address: any, chainName: any) => {
+  //   const triaName = await getUserByAddress(address, chainName);
+  //   setRecieverTriaName(triaName);
+  //   console.log("triaName", triaName);
+  // };
 
   const getSendFee = async (feeCallData) => {
     try {
@@ -168,16 +169,15 @@ export default function Mint(props: any) {
         setTotalAmountInUSD(
           parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
         );
-        setTotalAmountIncrypto(
-          parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
-        );
+        setFeeLoading(false);
+        // setTotalAmountIncrypto(
+        //   parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
+        // );
       }
       console.log({ res });
     } catch (err) {
       console.error(err);
-    } finally {
-      setFeeLoading(false);
-    }
+    } 
   };
 
   const setStateParams = async () => {
@@ -196,10 +196,10 @@ export default function Mint(props: any) {
       // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
       // console.log("userdetail",getUserDetail )
       console.log("jsonData", jsonData);
-      getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
+      // getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
       getAsset(jsonData);
       setParams(jsonData);
-   
+      setRecieverAddress(jsonData?.ContractDetails?.contractAddress);
     }
   };
 
@@ -211,25 +211,25 @@ export default function Mint(props: any) {
     const response = await getAssetDetails(
       asset?.chainName,
       asset?.tokenAddress,
-      asset?.senderAddress
+      asset?.triaName
     );
     setTokenDetails(response);
-    if (params?.enteredAmountValue) {
-      const total = params?.enteredAmountValue * response.quoteRate;
-      console.log("total-------------->", total);
-      setAmountInUSD(total);
-    }
+    // if (params?.enteredAmountValue) {
+    //   const total = params?.enteredAmountValue * response.quoteRate;
+    //   console.log("total-------------->", total);
+    //   setAmountInUSD(total);
+    // }
 
     console.log("asset----------------------->", response);
   };
 
-  useEffect(() => {
-    if (params?.enteredAmountValue && tokenDetails) {
-      const total = params?.enteredAmountValue * tokenDetails.quoteRate;
-      console.log("total-------------->", total);
-      setAmountInUSD(total);
-    }
-  }, [params?.enteredAmountValue, tokenDetails]);
+  // useEffect(() => {
+  //   if (params?.enteredAmountValue && tokenDetails) {
+  //     const total = params?.enteredAmountValue * tokenDetails.quoteRate;
+  //     console.log("total-------------->", total);
+  //     setAmountInUSD(total);
+  //   }
+  // }, [params?.enteredAmountValue, tokenDetails]);
 
   const fetchSendFee = async () => {
     try {
@@ -289,7 +289,7 @@ export default function Mint(props: any) {
                     </div>
                     <div className="px-2 justify-start items-center inline-flex">
                       <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                        {params?.senderName}
+                        {params?.triaName}
                       </div>
                     </div>
                   </div>
@@ -321,7 +321,7 @@ export default function Mint(props: any) {
           </div>
           <div className="self-stretch justify-center  items-center gap-2 inline-flex">
             <div className="text-center mb-10 text-stone-950 text-opacity-90 text-xl font-semibold font-montserrat leading-normal dark:text-text">
-            Mint Transaction
+              {params?.ContractDetails?.functionName}
             </div>
           </div>
         </div>
@@ -335,7 +335,7 @@ export default function Mint(props: any) {
               </div>
               <div className="self-stretch justify-center items-center gap-1 inline-flex">
                 <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                  {params?.enteredAmountValue} {tokenDetails?.symbol}
+                  {} {tokenDetails?.symbol}
                 </div>
               </div>
             </div>
@@ -347,7 +347,7 @@ export default function Mint(props: any) {
                 />
                 <div className="px-2 justify-start items-center inline-flex">
                   <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                    {params?.senderName}
+                    {params?.triaName}
                   </div>
                 </div>
               </div>
@@ -367,84 +367,128 @@ export default function Mint(props: any) {
                 />
                 <div className="px-2 justify-start items-center inline-flex">
                   <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px]">
-                    {recieverTriaName}
+                    {recieverAddress}
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="self-stretch h-[205px] px-5 py-4 rounded-2xl flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-              <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
+                <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
+                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
+                      Network Fee
+                    </div>
+                    <div className="w-[18px] h-[18px] relative">
+                      <div className="font-montserrat">
+                        <img
+                          className="dark:invisible visible dark:w-0"
+                          src="/icons/info-circle.svg"
+                        ></img>
+                        <img
+                          className="dark:visible invisible w-0 dark:w-[18px]"
+                          src="/icons/info-circle-dark.svg"
+                        ></img>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-20 text-xs font-medium font-montserrat leading-[14.40px] dark:text-text">
+                      Refreshes in: 30
+                    </div>
+                  </div>
+                </div>
+                {feeLoading ? (
+                  <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
+                    {" "}
+                    <svg
+                      aria-hidden="true"
+                      className="w-4 h-4 mt-4  text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
+                    <div className="self-stretch justify-end items-center gap-2 inline-flex">
+                      <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
+                        ${gasFees?.usd?.substring(0, 7)}
+                      </div>
+                      <div className="w-[18px] h-[18px] relative">
+                        <div className="font-montserrat">
+                          <img
+                            className="dark:invisible visible dark:w-0"
+                            src="/icons/setting-2.svg"
+                          ></img>
+                          <img
+                            className="dark:visible  invisible w-0 dark:w-[18px]"
+                            src="/icons/setting-2-dark.svg"
+                          ></img>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="self-stretch justify-end items-center gap-2 inline-flex">
+                      <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
+                        {gasFees?.eth.substring(0, 7)} {tokenDetails?.symbol}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
+                <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                    Network Fee
+                    Total Cost
                   </div>
-                  <div className="w-[18px] h-[18px] relative">
-                    <div className="font-montserrat">
-                      <img
-                        className="dark:invisible visible dark:w-0"
-                        src="/icons/info-circle.svg"
-                      ></img>
-                      <img
-                        className="dark:visible invisible w-0 dark:w-[18px]"
-                        src="/icons/info-circle-dark.svg"
-                      ></img>
+                </div>
+                {feeLoading ? (
+                  <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">
+                    {" "}
+                    <svg
+                      aria-hidden="true"
+                      className="w-4 h-4  text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
+                    <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
+                      ${totalAmountInUSD?.toFixed(6)}
+                    </div>
+                    <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
+                      {totalAmountIncrypto?.toFixed(8)} {tokenDetails?.symbol}
                     </div>
                   </div>
-                </div>
-                <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-20 text-xs font-medium font-montserrat leading-[14.40px] dark:text-text">
-                    Refreshes in: 30
-                  </div>
-                </div>
+                )}
               </div>
-              <div className="grow shrink basis-0 flex-col justify-start items-start gap-2 inline-flex">
-                <div className="self-stretch justify-end items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-lg font-normal font-montserrat leading-snug dark:text-text">
-                    ${gasFees?.usd?.substring(0, 7)}
+              <div className="w-[376px] px-2 justify-center items-center gap-2 inline-flex">
+                <div className="justify-center items-center gap-0.5 flex">
+                  <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-['Red Hat Display'] text-zinc-500">
+                    {/* More */}
                   </div>
-                  <div className="w-[18px] h-[18px] relative">
-                    <div className="font-montserrat">
-                      <img
-                        className="dark:invisible visible dark:w-0"
-                        src="/icons/setting-2.svg"
-                      ></img>
-                      <img
-                        className="dark:visible  invisible w-0 dark:w-[18px]"
-                        src="/icons/setting-2-dark.svg"
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-                <div className="self-stretch justify-end items-center gap-2 inline-flex">
-                  <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                    {gasFees?.eth.substring(0, 7)} {tokenDetails?.symbol}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch py-3 justify-start items-start gap-4 inline-flex">
-              <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
-                <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug dark:text-text">
-                  Total Cost
-                </div>
-              </div>
-              <div className="grow shrink basis-0 flex-col justify-center items-end gap-1 inline-flex">
-                <div className="text-center text-stone-950 text-opacity-60 text-lg font-medium font-montserrat leading-snug dark:text-text">
-                  ${totalAmountInUSD?.toFixed(6)}
-                </div>
-                <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-montserrat leading-[16.80px] dark:text-text">
-                  {totalAmountIncrypto?.toFixed(8)} {tokenDetails?.symbol}
-                </div>
-              </div>
-            </div>
-            <div className="w-[376px] px-2 justify-center items-center gap-2 inline-flex">
-              <div className="justify-center items-center gap-0.5 flex">
-                <div className="text-center text-stone-950 text-opacity-60 text-sm font-normal font-['Red Hat Display'] text-zinc-500">
-                  {/* More */}
-                </div>
-                {/* <div className="w-[18px] h-[18px] relative">
+                  {/* <div className="w-[18px] h-[18px] relative">
                   <div className="font-montserrat">
                     <img
                       className="dark:invisible visible dark:w-0"
@@ -456,9 +500,9 @@ export default function Mint(props: any) {
                     ></img>
                   </div>
                 </div> */}
+                </div>
               </div>
             </div>
-          </div>
         </div>
         <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
           <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
