@@ -21,7 +21,6 @@ export default function EmailAndSocial(props: any) {
   //Wagmi Connector
   const { connect, connectors } = useConnect();
 
-
   const baseUrl = 'https://staging.tria.so'
 
   const socialLoginClicked = async (socialLoginIndex: number) => {

@@ -8,12 +8,10 @@ export default function Nav() {
   return (
     <div>
       <div className="w-[416px] h-[39.50px] justify-end items-start inline-flex">
-        <div className="p-3 rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
+        {/* <div className="p-3 rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
           <img src='/icons/ShapeW.svg'></img>
-        </div>
+        </div> */}
       </div>
-
-
       <div className="w-[416px]  px-5 py-6 flex-col justify-center items-center gap-4 inline-flex">
         <div className="w-[95px]  relative bg-stone-950 rounded-[67.31px] shadow">
           <img src={dappLogo}></img>
