@@ -132,7 +132,7 @@ export default function SignInPassword() {
     console.log('check', check)
     const auth = await keyringController.initiateEmailLinkAuth({
       email: triaName?.param,
-      password: password
+      password: localStorage?.getItem("tempPass")
     })
     if (auth?.hash !== undefined) {
       setUserEmail(triaName?.param)
