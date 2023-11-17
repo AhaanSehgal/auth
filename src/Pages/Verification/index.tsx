@@ -78,6 +78,9 @@ export default function VerificationPage() {
                 token: token
             }
         })
+        setTimeout(()=>{
+            window.alert("You have been verified successfully! Please go back to your session.")
+        },2000)
         // setEmail(email)
         // console.log('Email', email);
         // console.log('Token', token);

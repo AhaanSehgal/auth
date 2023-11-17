@@ -136,11 +136,11 @@ export default function SignInPassword() {
     })
     if (auth?.hash !== undefined) {
       setUserEmail(triaName?.param)
-      setStoredPassword(password)
+      setStoredPassword(localStorage?.getItem("tempPass"))
       setHash(auth?.hash)
       setHashPass(auth?.password)
+      localStorage.removeItem("tempPass");
       navigate("/SignUp")
-
     }
   }
 
