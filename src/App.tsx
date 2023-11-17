@@ -37,6 +37,7 @@ import LoginDetected from './Components/Popup/LoginDetected';
 import Incognito from './Pages/Incognito';
 import NewDevice from './Pages/Recover/NewDevice';
 import AccessToken from './Pages/AccessToken';
+import StackHome from './Pages/Stack/StackHome';
 
 const App = () => {
 
@@ -104,6 +105,7 @@ const App = () => {
               <Route path="/loginDetected" element={<LoginDetected />} />
               <Route path="/incognito" element={<Incognito />} />
               <Route path="/newDevice" element={<NewDevice />} />
+              <Route path="/stackHome" element={<StackHome />} />
             </Routes>
             {/* )} */}
             {/* <div

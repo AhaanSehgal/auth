@@ -25,6 +25,7 @@ export default function EmailAndSocial(props: any) {
   const baseUrl = 'https://staging.tria.so'
 
   const socialLoginClicked = async (socialLoginIndex: number) => {
+
     const width = ((window.innerWidth) / 2.6);
     const top = 0;
     const left=0;
@@ -40,7 +41,7 @@ export default function EmailAndSocial(props: any) {
       //@ts-ignore
       console.log('json', call?.data?.url)
       const redirect_url = call?.data?.url
-      window.open(redirect_url, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
+      window.open(redirect_url, "SSO", `width=${width},height=${height},left=${left},top=${top}`);
       //window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}?origin=${window?.origin}`, "SSO", `width=${500},height=${600},left=${0},top=${top}`);
     } catch (err) {
       console.log(err);
@@ -309,24 +310,6 @@ export default function EmailAndSocial(props: any) {
                 Authenticated
               </div>}
           </div>
-          {/* <div className="w-10 h-10 p-[3.33px] bg-neutral-50 rounded-[28.33px] shadow justify-center items-center gap-[3.33px] flex">
-              <div onClick={() => authGoogle()} className="w-6 h-6 relative"  >
-                <img src="/icons/google.svg" />
-              </div>
-
-            </div>
-            <div className="w-10 h-10 p-[3.33px] bg-neutral-50 rounded-[28.33px] shadow justify-center items-center gap-[3.33px] flex">
-              <div className="w-5 h-[18.07px] relative" >
-                <img src='/icons/x.svg' />
-              </div>
-            </div>
-            <div className="w-10 h-10 p-[3.33px] bg-neutral-50 rounded-[28.33px] shadow justify-center items-center gap-[3.33px] flex">
-              <div className="w-[23.33px] h-[18.08px] relative">
-                <img src="/icons/discord.svg" />
-                <div className="w-[23.33px] h-[18.08px] left-0 top-0 absolute">
-                </div>
-              </div>
-            </div> */}
         </div>
       </button>
     </div>
