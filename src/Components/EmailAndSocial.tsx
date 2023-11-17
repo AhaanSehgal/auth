@@ -25,9 +25,12 @@ export default function EmailAndSocial(props: any) {
   const baseUrl = 'https://staging.tria.so'
 
   const socialLoginClicked = async (socialLoginIndex: number) => {
-    // const left = window.screenX + (window.outerWidth) / 2;
-    const top = window.screenY + (window.outerHeight) / 2.5;
-    const socialNetwork = socialLogins[socialLoginIndex].type
+    const width = ((window.innerWidth) / 2.6);
+    const top = 0;
+    const left=0;
+    const height = window.innerHeight;
+    // const width=(window.outerWidth/2)-225
+    const socialNetwork = socialLogins[socialLoginIndex].type;
     localStorage.setItem('socialNetwork', socialNetwork);
     try {
       //window.open(`${baseUrl}/api/v1/auth/oauth/${socialNetwork}`, '_blank');
