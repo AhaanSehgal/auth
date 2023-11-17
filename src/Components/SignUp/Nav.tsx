@@ -23,7 +23,7 @@ export default function Nav() {
           {/* <div className="w-[95px] h-[95px] relative rounded-[127px] ">
             <img className="" src={dappLogo} />
           </div> */}
-          <div className=" flex-col justify-center mr-20 items-center gap-2 inline-flex">
+          <div className=" flex-col justify-center items-center gap-2 inline-flex">
                 <img className="w-[95px] h-[95px]  " src={dappLogo} />
               </div>
         </div>
