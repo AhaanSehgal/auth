@@ -209,12 +209,10 @@ const sendMessageToParent = (data:any=null) => {
       else{
         setError(res?.message ||"");
       }
+      setFeeLoading(false);
       console.log({ res });
     } catch (err) {
       console.error(err);
-    }
-    finally{
-      setFeeLoading(false);
     }
   };
 
@@ -296,11 +294,12 @@ const sendMessageToParent = (data:any=null) => {
 
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-      {approveLoading ? (
-        <div className="ml-[10] mt-[400px] transform -translate-x-1/2 -translate-y-1/2">
+    {approveLoading ? (
+      <div className="flex ml-12 items-center justify-center w-full h-full">
+        <div className="transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
-      ) : (
+      </div>) : (
         <div className=" px-5 flex-col justify-center items-center flex">
           <div className="w-[416px] justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
@@ -311,7 +310,7 @@ const sendMessageToParent = (data:any=null) => {
             <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "} */}
           </div>
           <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+            <div className="self-stretch border-b-2 border-zinc-500 pt-8 border-opacity-10 justify-center items-center gap-4 inline-flex">
               <div>
                 <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
                   <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
@@ -369,17 +368,17 @@ const sendMessageToParent = (data:any=null) => {
               </div>
             </div>
           </div>
-          <div className="self-stretch h-[444px] py-2 flex-col justify-center items-center gap-2 flex">
+          <div className="self-stretch h-[444px] py-2 mt-4 flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch h-[215px] px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
               <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
                 <div className="self-stretch justify-center items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                    ${amountInUSD?.toFixed(6)}
+                    ${amountInUSD?.toFixed(6) ||0}
                   </div>
                 </div>
                 <div className="self-stretch justify-center items-center gap-1 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    {params?.amount} {tokenDetails?.symbol}
+                    {params?.amount ||0} {tokenDetails?.symbol}
                   </div>
                 </div>
                 <div className="w-100 h-[18px] justify-center items-center gap-2 inline-flex">
@@ -556,7 +555,7 @@ const sendMessageToParent = (data:any=null) => {
           <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
               <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
                 onClick={()=>sendMessageToParent()}>
                   <div className="justify-center items-center flex">
                     <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">

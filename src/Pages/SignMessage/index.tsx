@@ -70,9 +70,10 @@ function SignMessage() {
 
     const sendMessageToParent = (data:any=null) => {
       // Post a message to the parent window
+      console.log("event emitted");
       window.parent.postMessage({ type: 'closeIframe',callFrom:'sign',data:data }, '*');
   };
-  
+
 
 
     console.log(btoa(JSON.stringify({
@@ -99,10 +100,6 @@ function SignMessage() {
     };
 
     const setStateParams = async () => {
-      // console.log("called");
-      // const searchParams = new URLSearchParams(location.search);
-      // console.log("sdf",searchParams);
-      // const encodedParams = searchParams.get('params');
       if (param.param) {
         const encodedParams=param.param;
         console.log("encodedParams",typeof(encodedParams));
@@ -119,6 +116,7 @@ function SignMessage() {
     };
 
     const getAsset = async(asset:any)=>{
+      try{
       console.log("start----------------------->");
       const response = await getAssetDetails(
        asset?.chainName,asset?.tokenAddress ,asset?.triaName
@@ -126,11 +124,10 @@ function SignMessage() {
       setTokenDetails(response);
       console.log("asset----------------------->",response);
       }
-  
-     
-      // const data=await getAssetDetails('POLYGON','0x1de58d46d05a379e020b1cbed0db98a2f55831b2','test@tria');
-      // console.log("data",data);
-    
+      catch(err){
+        console.log(err);
+      }
+      }
   
   
     useEffect(() => {
