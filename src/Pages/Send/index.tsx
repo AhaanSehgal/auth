@@ -13,7 +13,7 @@ import {
   UserController,
 } from "@tria-sdk/core";
 interface param {
-  enteredAmountValue: number | undefined;
+  amount: number | undefined;
   senderName: string;
   senderAddress: string;
   recepientAddress: string;
@@ -92,7 +92,7 @@ export default function SendAsset(props: any) {
 
   const encodedParams = btoa(
     JSON.stringify({
-      enteredAmountValue: 0.00001,
+      amount: 0.00001,
       senderName: "Lalitt@tria",
       senderAddress: "Lalitt@tria",
       recepientAddress: "dev@tria",
@@ -141,7 +141,7 @@ const sendMessageToParent = (data:any=null) => {
       const payload: Send = {
         fromTriaName: params?.senderAddress,
         recipientTriaName: params?.recepientAddress || "",
-        amount: params?.enteredAmountValue || 0,
+        amount: params?.amount || 0,
         tokenAddress: params?.tokenAddress,
       }; 
       await wallet.init();
@@ -191,7 +191,7 @@ const sendMessageToParent = (data:any=null) => {
       const payload = {
         fromTriaName: feeCallData?.senderAddress,
         recipientTriaName: feeCallData?.recepientAddress,
-        amount: feeCallData?.enteredAmountValue,
+        amount: feeCallData?.amount,
         tokenAddress: feeCallData?.tokenAddress,
       };
       const chainNames = feeCallData?.chainName;
@@ -203,7 +203,7 @@ const sendMessageToParent = (data:any=null) => {
           parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
         );
         setTotalAmountIncrypto(
-          parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
+          parseFloat(res?.fee?.eth || "0") + (params?.amount || 0)
         );
       }
       else{
@@ -252,8 +252,8 @@ const sendMessageToParent = (data:any=null) => {
       asset?.senderName
     );
     setTokenDetails(response);
-    if (params?.enteredAmountValue) {
-      const total = params?.enteredAmountValue * response.quoteRate;
+    if (params?.amount) {
+      const total = params?.amount * response.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
@@ -262,12 +262,12 @@ const sendMessageToParent = (data:any=null) => {
   };
 
   useEffect(() => {
-    if (params?.enteredAmountValue && tokenDetails) {
-      const total = params?.enteredAmountValue * tokenDetails.quoteRate;
+    if (params?.amount && tokenDetails) {
+      const total = params?.amount * tokenDetails.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
-  }, [params?.enteredAmountValue, tokenDetails]);
+  }, [params?.amount, tokenDetails]);
 
   const fetchSendFee = async () => {
     try {
@@ -379,7 +379,7 @@ const sendMessageToParent = (data:any=null) => {
                 </div>
                 <div className="self-stretch justify-center items-center gap-1 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    {params?.enteredAmountValue} {tokenDetails?.symbol}
+                    {params?.amount} {tokenDetails?.symbol}
                   </div>
                 </div>
                 <div className="w-100 h-[18px] justify-center items-center gap-2 inline-flex">
