@@ -20,7 +20,9 @@ export default function SignUp() {
         embedded: true,
     };
 
-    const { dappName, userEmail, hash, hashPass } = useContext(NavContext)
+    const { dappName, hash, hashPass, userEmail } = useContext(NavContext)
+
+    // const userEmail = "gzb4ytvup6@waterisgone.com"
 
     const [name, setName] = useState("")
     const [recommendations, setRecommendations] = useState([])
@@ -134,27 +136,28 @@ export default function SignUp() {
         // console.log("resp", resp)
     }
 
-    useEffect(() => {
+    const check = async () => {
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
         if (refined_email.length !== 0) {
             const more_refined_email = String(refined_email)?.toLowerCase()
-            console.log('more refined email -->',more_refined_email)
-            if (checkDidAvailability(more_refined_email) === true) {
+            console.log('more refined email -->', more_refined_email)
+            console.log('check', await checkDidAvailability(more_refined_email))
+            if (await checkDidAvailability(more_refined_email) === true) {
                 console.log("name after check", more_refined_email)
-                //setName(more_refined_email)
-                // checkIfAvailable(more_refined_email)
-                // getNameRecommendations(more_refined_email)
+                setName(more_refined_email)
+                checkIfAvailable(more_refined_email)
+                getNameRecommendations(more_refined_email)
             } else {
-                const suggestedName = getDidRecommendations(more_refined_email)
+                const suggestedName = await getDidRecommendations(more_refined_email)
                 setName(suggestedName)
                 checkIfAvailable(suggestedName)
                 getNameRecommendations(suggestedName)
-
             }
-            // setName(more_refined_email)
-            // checkIfAvailable(more_refined_email)
-            // getNameRecommendations(more_refined_email)
         }
+    }
+
+    useEffect(() => {
+        check()
     }, []);
 
     const checkSpecialChar = (e) => {
