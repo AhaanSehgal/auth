@@ -249,7 +249,7 @@ const sendMessageToParent = (data:any=null) => {
     const response = await getAssetDetails(
       asset?.chainName,
       asset?.tokenAddress,
-      asset?.senderAddress
+      asset?.senderName
     );
     setTokenDetails(response);
     if (params?.enteredAmountValue) {
