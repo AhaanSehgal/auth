@@ -140,7 +140,8 @@ export default function SignUp() {
             const more_refined_email = String(refined_email)?.toLowerCase()
             console.log('more refined email -->',more_refined_email)
             if (checkDidAvailability(more_refined_email) === true) {
-                setName(more_refined_email)
+                console.log("name after check", more_refined_email)
+                //setName(more_refined_email)
                 // checkIfAvailable(more_refined_email)
                 // getNameRecommendations(more_refined_email)
             } else {
