@@ -295,7 +295,7 @@ const sendMessageToParent = (data:any=null) => {
   }, [param]);
 
   return (
-    <div className="w-[100vw] h-[100vh] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
+    <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
       {approveLoading ? (
         <div className="ml-[10] mt-[400px] transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
