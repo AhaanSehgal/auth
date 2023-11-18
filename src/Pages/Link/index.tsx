@@ -44,7 +44,7 @@ export default function SignUp() {
 
     const getNameRecommendations = async (name) => {
         try {
-            const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name.toLowerCase()}`)
+            const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name?.toLowerCase()}`)
             console.log("recommed", data?.data)
             setRecommendations(data?.data)
         } catch (err) {
@@ -55,7 +55,7 @@ export default function SignUp() {
     const checkIfAvailable = async (name) => {
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-                did: name.toLowerCase() + "@tria"
+                did: name?.toLowerCase() + "@tria"
             })
             console.log("did", data?.response?.availabilityStatus)
             setAvailable(data?.response?.availabilityStatus)
@@ -137,7 +137,8 @@ export default function SignUp() {
     useEffect(() => {
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
         if (refined_email.length !== 0) {
-            const more_refined_email = refined_email.toLowerCase()
+            const more_refined_email = refined_email?.toLowerCase()
+            console.log('more refined email -->',more_refined_email)
             if (checkDidAvailability(more_refined_email) === true) {
                 setName(more_refined_email)
                 checkIfAvailable(more_refined_email)
