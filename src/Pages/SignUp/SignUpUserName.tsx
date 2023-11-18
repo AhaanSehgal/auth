@@ -21,7 +21,6 @@ export default function SignUp() {
   const baseUrl = 'https://staging.tria.so';
 
   const { token, dappName, username } = useContext(NavContext)
-  // const username = "avi_gupta_"
 
   const [recommendations, setRecommendations] = useState([])
   const [available, setAvailable] = useState()
@@ -109,7 +108,7 @@ export default function SignUp() {
   };
 
   const check = async () => {
-    const refined_email = username
+    const refined_email = username?.replace(/_/g, "")
     if (refined_email.length !== 0) {
       const more_refined_email = String(refined_email)?.toLowerCase()
       console.log('more refined email -->', more_refined_email)
