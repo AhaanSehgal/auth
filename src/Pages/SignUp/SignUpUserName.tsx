@@ -6,6 +6,7 @@ import { KeyringController } from '@tria-sdk/web';
 import axios from "axios"
 import { useParams } from 'react-router-dom'
 import NavContext from '../../NavContext';
+import { checkDidAvailability, getDidRecommendations } from '../../utils';
 
 
 export default function SignUp() {
@@ -19,12 +20,14 @@ export default function SignUp() {
 
   const baseUrl = 'https://staging.tria.so';
 
-  const { token, username, dappName } = useContext(NavContext)
+  const { token, dappName, username } = useContext(NavContext)
+  // const username = "avi_gupta_"
 
   const [recommendations, setRecommendations] = useState([])
   const [available, setAvailable] = useState()
   const [name, setName] = useState("")
   const [loader, setLoader] = useState(false)
+  const [conditions, setConditions] = useState(true)
 
   const userId = useParams()
   const handle = useParams()
@@ -35,7 +38,7 @@ export default function SignUp() {
 
   const getNameRecommendations = async (name) => {
     try {
-      const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name}`)
+      const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name?.toLowerCase()}`)
       console.log("recommed", data?.data)
       setRecommendations(data?.data)
     } catch (err) {
@@ -46,7 +49,7 @@ export default function SignUp() {
   const checkIfAvailable = async (name) => {
     try {
       const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-        did: name + "@tria"
+        did: name?.toLowerCase() + "@tria"
       })
       console.log("did", data?.response?.availabilityStatus)
       setAvailable(data?.response?.availabilityStatus)
@@ -105,14 +108,29 @@ export default function SignUp() {
     }
   };
 
+  const check = async () => {
+    const refined_email = username
+    if (refined_email.length !== 0) {
+      const more_refined_email = String(refined_email)?.toLowerCase()
+      console.log('more refined email -->', more_refined_email)
+      console.log('check', await checkDidAvailability(more_refined_email))
+      if (await checkDidAvailability(more_refined_email) === true) {
+        console.log("name after check", more_refined_email)
+        setName(more_refined_email)
+        checkIfAvailable(more_refined_email)
+        getNameRecommendations(more_refined_email)
+      } else {
+        const suggestedName = await getDidRecommendations(more_refined_email)
+        setName(suggestedName)
+        checkIfAvailable(suggestedName)
+        getNameRecommendations(suggestedName)
+      }
+    }
+  }
+
 
   useEffect(() => {
-    const refined_email = username;
-    if (refined_email.length !== 0) {
-      setName(refined_email)
-      checkIfAvailable(refined_email)
-      getNameRecommendations(refined_email)
-    }
+    check()
   }, [])
 
   return (
@@ -157,13 +175,13 @@ export default function SignUp() {
               <div className="self-stretch  flex-col justify-center items-center flex">
                 <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                   <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                    <input onKeyDown={(e) => checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                    <input style={{ textTransform: 'lowercase' }} onKeyDown={(e) => checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                     {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
                   <div className="w-[99px] px-5 py-3 h-10 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                     <div className="justify-center  items-center flex">
-                      <button onClick={() => { createAccountWithoutPassword(); }}> <div className="text-center  text-stone-950 text-base font-semibold font-Montserrat leading-tight">{loader === false ? <span>Next</span> :
+                      <button onClick={() => { createAccountWithoutPassword(); }} disabled={!conditions}> <div className="text-center  text-stone-950 text-base font-semibold font-Montserrat leading-tight">{loader === false ? <span>Next</span> :
                         <div className='ml-2' role="status">
                           <svg aria-hidden="true" className="w-4  mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -176,7 +194,7 @@ export default function SignUp() {
                   </div>
 
                 </div>
-               
+
               </div>
               {name.length !== 0 ? <div className="self-stretch justify-start items-center gap-2 inline-flex">
                 {available === true ? <div className="text-center text-green-600 text-sm font-semibold font-['Montserrat'] leading-[16.80px] flex gap-1 items-center">
@@ -211,16 +229,14 @@ export default function SignUp() {
                 </div>
               </div> : null}
               <div className="w-[376px]  py-3 justify-center items-center gap-3 inline-flex">
-                  <div className="w-6  relative">
-                  <img src='/icons/no-tick-square.svg'></img>
-
-                    <div className="w-6  left-0 top-0 absolute">
-                    </div>
-                  </div>
-                  <div className="grow shrink basis-0 text-zinc-500 text-sm font-medium font-['Montserrat']">By checking this, you agree to our Terms of Service and Privacy Policy.</div>
+                <div >
+                  {/* <img src='/icons/no-tick-square.svg'></img> */}
+                  <input type="checkbox" className='w-4 h-4' checked={conditions} onChange={() => setConditions(!conditions)} />
                 </div>
+                <div className="grow shrink basis-0 text-zinc-500 text-sm font-medium font-['Montserrat']">By checking this, you agree to our Terms of Service and Privacy Policy.</div>
+              </div>
             </div>
-            
+
           </div>
           <Footer />
         </div>
