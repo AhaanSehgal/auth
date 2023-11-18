@@ -141,8 +141,8 @@ export default function SignUp() {
             console.log('more refined email -->',more_refined_email)
             if (checkDidAvailability(more_refined_email) === true) {
                 setName(more_refined_email)
-                checkIfAvailable(more_refined_email)
-                getNameRecommendations(more_refined_email)
+                // checkIfAvailable(more_refined_email)
+                // getNameRecommendations(more_refined_email)
             } else {
                 const suggestedName = getDidRecommendations(more_refined_email)
                 setName(suggestedName)
