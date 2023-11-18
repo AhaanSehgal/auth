@@ -137,7 +137,7 @@ export default function SignUp() {
     useEffect(() => {
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
         if (refined_email.length !== 0) {
-            const more_refined_email = refined_email?.toLowerCase()
+            const more_refined_email = String(refined_email)?.toLowerCase()
             console.log('more refined email -->',more_refined_email)
             if (checkDidAvailability(more_refined_email) === true) {
                 setName(more_refined_email)
