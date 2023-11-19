@@ -142,7 +142,7 @@ export function useSocialLoginConnectorsStack() {
     id: "3",
     type: SocialLoginTypes.X,
     name:'Continue with X',
-    bgname:''
+    bgname:'neutral-800'
   };
   return [google, twitter];
 }

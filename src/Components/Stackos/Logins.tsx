@@ -57,7 +57,7 @@ export default function Logins(props: any) {
                         socialLogins?.map((social, index) => {
                             return (
                                 <div onClick={() => socialLoginClicked(index)}>
-                                    <div className="self-stretch cursor-pointer  flex-col justify-center   items-center gap-2 flex">
+                                    <div className={`self-stretch cursor-pointer mb-2 rounded-2xl hover:bg-opacity-80  ${social.bgname && `bg-${social.bgname}`} flex-col justify-center   items-center gap-2 flex`}>
                                         <div className="self-stretch px-2 py-3  bg-opacity-60 rounded-2xl justify-center items-center gap-2 inline-flex">
                                             {social?.iconUrl}
 
