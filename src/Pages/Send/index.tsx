@@ -154,7 +154,7 @@ const sendMessageToParent = (data:any=null) => {
         walletType,
       });
       const payload: Send = {
-        fromTriaName: params?.senderAddress,
+        fromTriaName: dappDetails?.triaName,
         recipientTriaName: params?.recepientAddress || "",
         amount: params?.amount || 0,
         tokenAddress: params?.tokenAddress,
