@@ -24,4 +24,19 @@ const getDidRecommendations = async (name) => {
     }
 }
 
-export { checkDidAvailability, getDidRecommendations }
+const getDataFromLocalStorage=async()=>{
+    try{
+        const dappData=localStorage.getItem("dappDetails")|| "";
+        const searchParams = new URLSearchParams(dappData);
+        const logo = searchParams.get('dappLogo');
+        const domain = searchParams.get('dappDomain');
+        const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
+        const data={dappLogo:logo,dappDomain:domain,triaName};
+        return data;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+export { checkDidAvailability, getDidRecommendations,getDataFromLocalStorage }

@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import {useTriaUser} from "../../contexts/tria-user-provider";
 import NavContext from "../../NavContext";
+import {getDataFromLocalStorage} from "../../utils";
 
 // interface params {
 //   chainName:string;
@@ -122,17 +123,18 @@ function SignMessage() {
         console.log("jsonString",jsonString);
         // Parse the JSON
        const jsonData = JSON.parse(jsonString);
+      //  const localDetails= await getDataFromLocalStorage();
        const dappData=localStorage.getItem("dappDetails")|| "";
        const searchParams = new URLSearchParams(dappData);
        const logo = searchParams.get('dappLogo');
-const domain = searchParams.get('dappDomain');
+       const domain = searchParams.get('dappDomain');
        const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
-       const data={dappLogo:logo,dappDomain:domain,triaName};
-       console.log("daapp======>",data);
-       setDappDetails(data);
+       const localDetails={dappLogo:logo,dappDomain:domain,triaName};
+       console.log("daapp======>",localDetails);
+       setDappDetails(localDetails);
         console.log("jsonData",jsonData);
         setParams(jsonData);
-        getAsset(jsonData,data);
+        getAsset(jsonData,localDetails);
       }
       
     };

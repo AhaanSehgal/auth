@@ -53,7 +53,7 @@ const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,s
           </div>
         <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
           <Navbar dappDetails={dappDetails} params={params} tokenDetails={tokenDetails} />
-          <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+          <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
             <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
             <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
               {dappDetails?.dappDomain}
