@@ -58,7 +58,7 @@ export default function LoaderPage() {
             walletType,
           });
           //@ts-ignore
-          console.log("origin",JSON.parse(state)?.origin )
+          console.log("origin", JSON.parse(state)?.origin)
           console.log("password", password)
           console.log('userId', userId)
           console.log('accessToken', accessToken)
@@ -71,7 +71,7 @@ export default function LoaderPage() {
             },
           }, true)
           //@ts-ignore
-          await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin });
+          await keyringController.getVault({ password: password, userId: userId, socialName: 'google', origin: JSON.parse(state)?.origin, accessToken: accessToken });
           setTimeout(() => {
             console.log("close stopped")
             window.close()
@@ -115,14 +115,14 @@ export default function LoaderPage() {
           console.log("account exists")
           console.log("password", data.password)
           console.log('userId', data.userId)
-          
+
           //@ts-ignore
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram', origin: JSON.parse(state)?.origin });
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'instagram', origin: JSON.parse(state)?.origin, accessToken: data?.accessToken });
           setTimeout(() => {
             window.close()
           }, 2000)
         } else {
-          
+
           navigate(`/signUpUserName/instagram/${data.userId}`)
         }
         // setId(id);
@@ -155,7 +155,7 @@ export default function LoaderPage() {
           console.log('userId', data.userId)
           console.log('access_token', data.accessToken)
           //@ts-ignore
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord', origin: JSON.parse(state)?.origin });
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'discord', origin: JSON.parse(state)?.origin, accessToken: data.accessToken });
           setTimeout(() => {
             window.close()
           }, 2000)
@@ -200,7 +200,7 @@ export default function LoaderPage() {
           console.log("password", data.password)
           console.log('userId', data.userId)
           //@ts-ignore
-          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin });
+          await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin, accessToken: data?.accessToken });
           setTimeout(() => {
             window.close()
           }, 2000)
