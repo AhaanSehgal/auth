@@ -1,14 +1,13 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import Navbar from '../Navbar/index';
+import NavContext from "../../NavContext";
 
 interface params {
   chainName:string;
   message:string;
-  triaName:string,
-  appDomain:string,
-  appLogo:string,
-  tokenAddress: String
+  tokenAddress: String;
 }
+
 
 interface AssetDetails {
   balanceInTokens: number;
@@ -27,16 +26,22 @@ interface AssetDetails {
   symbol: string;
   tokenAddress: string;
 }
+interface dappDetails{
+  dappDomain:string,
+  dappLogo :string,
+  triaName:string
+}
+
 
 interface Props {
+  dappDetails:dappDetails,
   params: params;
   signMessage: () => Promise<void>;
   tokenDetails?:AssetDetails;
   sendMessageToParent: () => void;
 }
 
-const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageToParent}) => {
-
+const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,sendMessageToParent}) => {
 
   console.log("params", params, signMessage );
 
@@ -44,19 +49,14 @@ const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageTo
     <div>
       <div className="w-[448px] h-[840px] bg-white dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between items-center inline-flex">
         <div className="w-[416px] justify-end items-start inline-flex">
-          <div className="p-3 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
-          {/* <img
-              className="dark:invisible visible dark:w-0"
-              src="/icons/Shape.svg"
-            ></img>
-            <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>       */}
-              </div>
+            <img className="dark:visible invisible W-[0] dark:W-18px cursor-pointer" src="/icons/ShapeW.svg" onClick={()=>sendMessageToParent()}></img>      
+          </div>
         <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
-          <Navbar params={params} tokenDetails={tokenDetails} />
-          <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-            <img className="w-7 h-7 shadow" src={params.appLogo} />
+          <Navbar dappDetails={dappDetails} params={params} tokenDetails={tokenDetails} />
+          <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+            <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
             <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-              {params.appDomain}
+              {dappDetails?.dappDomain}
             </div>
           </div>
         </div>
@@ -88,13 +88,13 @@ const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageTo
               <div className="self-stretch grow  shrink basis-0 py-2 justify-center items-start gap-2 inline-flex">
                 <div className="grow shrink basis-0 self-stretch px-2 justify-start items-center flex">
                   <div className="grow shrink basis-0 self-stretch text-neutral-600 text-opacity-90 text-base font-normal font-montserrat leading-tight">
-                    {params?.message}
+                  {typeof params?.message === 'string' ? params?.message : <pre>{JSON.stringify(params?.message, null, 2)}</pre>}
                   </div>
                 </div>
               </div>
             </div>
             <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
               onClick={()=>sendMessageToParent()}>
                 <div className="justify-center items-center flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">

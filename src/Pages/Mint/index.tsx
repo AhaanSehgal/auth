@@ -517,7 +517,7 @@ export default function Mint(props: any) {
         <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
           <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
             <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+              <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
               onClick={()=>sendMessageToParent()}>
                 <div className="justify-center items-center flex">
                   <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
