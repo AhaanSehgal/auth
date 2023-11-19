@@ -175,29 +175,29 @@ export default function Mint(props: any) {
         walletType,
       });
 
-    //  const contractFee=await fee.getCallContractFee(
-    //     "dev@tria",
-    //      "POLYGON",
-    //      {
+     //  const contractFee=await fee.getCallContractFee(
+        //     "dev@tria",
+         //      "POLYGON",
+         //      {
     //       contractAddress: '0x5927Aa58fb36691A4be262c63955b47b67c6e641',
-    //       abi: [
-    //         {
+          //       abi: [
+            //         {
     //           inputs: [
-    //             { internalType: 'uint256', name: 'id', type: 'uint256' },
-    //             { internalType: 'uint256', name: 'amount', type: 'uint256' },
-    //           ],
-    //           name: 'mint',
-    //           outputs: [],
-    //           stateMutability: 'payable',
-    //           type: 'function',
-    //         },
-    //       ],
-    //       functionName: 'mint',
-    //       args: [100, 1],
-    //     }
+                //             { internalType: 'uint256', name: 'id', type: 'uint256' },
+                //             { internalType: 'uint256', name: 'amount', type: 'uint256' },
+              //           ],
+              //           name: 'mint',
+              //           outputs: [],
+              //           stateMutability: 'payable',
+              //           type: 'function',
+            //         },
+          //       ],
+          //       functionName: 'mint',
+          //       args: [100, 1],
+          //     }
     //   )
 
-    //   console.log("contractFee------------------->",contractFee);
+      //   console.log("contractFee------------------->",contractFee);
       // const payload = {
       //   fromTriaName: feeCallData?.senderAddress,
       //   recipientTriaName: feeCallData?.recepientAddress,
@@ -365,7 +365,7 @@ export default function Mint(props: any) {
             </div>{" "}
           </div>
           <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-            <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+            <div className="w-[350px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
               <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
               <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
                 {dappDetails?.dappDomain}

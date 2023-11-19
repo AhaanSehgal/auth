@@ -167,7 +167,7 @@ const sendMessageToParent = (data:any=null) => {
       window.location.href= walletUrl;
       }
       else{
-        window.parent.postMessage({ type: 'closeIframe',callFrom:'send',data:txn }, '*');
+        sendMessageToParent({txnId:txn?.data?.txnId,viewInExplorer:txn?.data?.viewInExplorer});
       }
       const x = await txn?.data?.wait();
       console.timeEnd("myTimer");
@@ -378,7 +378,7 @@ const sendMessageToParent = (data:any=null) => {
               </div>{" "}
             </div>
             <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-              <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+              <div className="w-[350px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
                 <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
                 <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
                   {dappDetails?.dappDomain}
