@@ -204,7 +204,7 @@ const sendMessageToParent = (data:any=null) => {
 
       console.log("fee");
       const payload = {
-        fromTriaName: feeCallData?.senderAddress,
+        fromTriaName: dappDetails?.triaName,
         recipientTriaName: feeCallData?.recepientAddress,
         amount: feeCallData?.amount,
         tokenAddress: feeCallData?.tokenAddress,
