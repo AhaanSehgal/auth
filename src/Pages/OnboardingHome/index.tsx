@@ -31,9 +31,14 @@ export default function OnboardingHome() {
       const logo = searchParams.get('dappLogo');
       setDappLogo(logo)
       const ui = searchParams.get('stackui');
-      if(ui === "yes"){
+      if (ui === "yes") {
         navigate("/stackhome")
       }
+      const dapp_details = {
+        "dappDomain": document?.referrer,
+        "dappLogo": logo
+      }
+      localStorage?.setItem("dappDetails", JSON.stringify(dapp_details))
     }
 
     //Test logs
