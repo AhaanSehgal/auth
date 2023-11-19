@@ -167,7 +167,7 @@ const sendMessageToParent = (data:any=null) => {
       window.location.href= walletUrl;
       }
       else{
-        sendMessageToParent(txn);
+        window.parent.postMessage({ type: 'closeIframe',callFrom:'send',data:txn }, '*');
       }
       const x = await txn?.data?.wait();
       console.timeEnd("myTimer");
