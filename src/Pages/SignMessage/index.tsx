@@ -50,9 +50,9 @@ interface AssetDetails {
 }
 
 interface dappDetails{
-  dappDomain:string,
-  dappLogo :string,
-  triaName:string
+  dappDomain:any,
+  dappLogo :any,
+  triaName:any
 }
 
 const initialData:dappDetails={
@@ -116,15 +116,18 @@ function SignMessage() {
     const setStateParams = async () => {
       if (param.param) {
         const encodedParams=param.param;
-        console.log("encodedParams",typeof(encodedParams));
+        console.log("encodedParams",typeof(encodedParams)); 
         // Decode the string
         const jsonString = atob(encodedParams);
         console.log("jsonString",jsonString);
         // Parse the JSON
        const jsonData = JSON.parse(jsonString);
-       const dappData=JSON.parse(localStorage.getItem("dappDetails")|| "{}");
+       const dappData=localStorage.getItem("dappDetails")|| "";
+       const searchParams = new URLSearchParams(dappData);
+       const logo = searchParams.get('dappLogo');
+const domain = searchParams.get('dappDomain');
        const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
-       const data={...dappData,triaName};
+       const data={dappLogo:logo,dappDomain:domain,triaName};
        console.log("daapp======>",data);
        setDappDetails(data);
         console.log("jsonData",jsonData);
