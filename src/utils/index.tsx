@@ -39,4 +39,16 @@ const getDataFromLocalStorage=async()=>{
     }
 }
 
-export { checkDidAvailability, getDidRecommendations,getDataFromLocalStorage }
+function shortenWalletAddress(walletAddress:any, prefixLength = 6, suffixLength = 4) {
+    if (typeof walletAddress !== 'string' || !walletAddress.startsWith('0x') || walletAddress.length < 42) {
+      console.error('Invalid wallet address');
+      return null;
+    }
+  
+    const prefix = walletAddress.slice(0, prefixLength);
+    const suffix = walletAddress.slice(-suffixLength);
+  
+    return `${prefix}...${suffix}`;
+  }
+
+export { checkDidAvailability, getDidRecommendations,getDataFromLocalStorage,shortenWalletAddress }

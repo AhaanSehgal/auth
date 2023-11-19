@@ -15,13 +15,10 @@ import {
   RampnalysisAssets,
   UserController,
 } from "@tria-sdk/core";
+import {shortenWalletAddress} from "../../utils";
+  
 interface param {
-  triaName: string;
   chainName: string;
-  appLogo: string;
-  appDomain: string;
-  accessToken: string;
-  darkMode: boolean;
   tokenAddress: string;
   ContractDetails: ContractDetails;
 }
@@ -66,6 +63,19 @@ interface fee {
   eth: string;
   usd?: string | undefined;
 }
+
+interface dappDetails{
+  dappDomain:any,
+  dappLogo :any,
+  triaName:any
+}
+
+const initialData:dappDetails={
+  dappDomain:"",
+  dappLogo :"",
+  triaName:""
+}
+
 
 const walletType = { embedded: true };
 const baseUrl = "https://staging.tria.so";
@@ -119,12 +129,13 @@ export default function Mint(props: any) {
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
   const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [dappDetails,setDappDetails]=useState<dappDetails>(initialData);
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
   console.log("tokenDetails---------------->", tokenDetails);
 
-  const sendMessageToParent = (data=null) => {
+  const sendMessageToParent = (data:any=null) => {
     // Post a message to the parent window
     window.parent.postMessage({ type: 'closeIframe',callFrom:'mint',data:data }, '*');
 };
@@ -139,13 +150,15 @@ export default function Mint(props: any) {
     });
     if (params) {
       await wallet.init();
+      if(params.ContractDetails && params?.chainName){
       const mintRes = await wallet.callContract(
         params.ContractDetails,
         params?.chainName
       );
-
+      
       sendMessageToParent(mintRes);
       console.log("call contract res-------------->", mintRes);
+      }
     }
   };
 
@@ -162,26 +175,48 @@ export default function Mint(props: any) {
         walletType,
       });
 
-      console.log("fee");
-      const payload = {
-        fromTriaName: feeCallData?.senderAddress,
-        recipientTriaName: feeCallData?.recepientAddress,
-        amount: feeCallData?.enteredAmountValue,
-        tokenAddress: feeCallData?.tokenAddress,
-      };
-      const chainNames = feeCallData?.chainName;
-      console.log("chain------------------>", payload, chainNames);
-      const res = await fee.getSendFee(chainNames, payload);
-      if (res.success === true) {
-        setGasFees(res.fee);
-        setTotalAmountInUSD(
-          parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
-        );
-        // setTotalAmountIncrypto(
-        //   parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
-        // );
-      }
-      console.log({ res });
+    //  const contractFee=await fee.getCallContractFee(
+    //     "dev@tria",
+    //      "POLYGON",
+    //      {
+    //       contractAddress: '0x5927Aa58fb36691A4be262c63955b47b67c6e641',
+    //       abi: [
+    //         {
+    //           inputs: [
+    //             { internalType: 'uint256', name: 'id', type: 'uint256' },
+    //             { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    //           ],
+    //           name: 'mint',
+    //           outputs: [],
+    //           stateMutability: 'payable',
+    //           type: 'function',
+    //         },
+    //       ],
+    //       functionName: 'mint',
+    //       args: [100, 1],
+    //     }
+    //   )
+
+    //   console.log("contractFee------------------->",contractFee);
+      // const payload = {
+      //   fromTriaName: feeCallData?.senderAddress,
+      //   recipientTriaName: feeCallData?.recepientAddress,
+      //   amount: feeCallData?.enteredAmountValue,
+      //   tokenAddress: feeCallData?.tokenAddress,
+      // };
+      // const chainNames = feeCallData?.chainName;
+      // console.log("chain------------------>", payload, chainNames);
+      // const res = await fee.getSendFee(chainNames, payload);
+      // if (res.success === true) {
+      //   setGasFees(res.fee);
+      //   setTotalAmountInUSD(
+      //     parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
+      //   );
+      //   // setTotalAmountIncrypto(
+      //   //   parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
+      //   // );
+      // }
+      // console.log({ res });
     } catch (err) {
       console.error(err);
     } finally {
@@ -205,22 +240,30 @@ export default function Mint(props: any) {
       // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
       // console.log("userdetail",getUserDetail )
       console.log("jsonData", jsonData);
+      const dappData=localStorage.getItem("dappDetails")|| "";
+      const searchParams = new URLSearchParams(dappData);
+      const logo = searchParams.get('dappLogo');
+      const domain = searchParams.get('dappDomain');
+      const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
+      const localDetails={dappLogo:logo,dappDomain:domain,triaName};
+      setDappDetails(localDetails);
       // getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
-      getAsset(jsonData);
+      getAsset(jsonData,localDetails);
       setParams(jsonData);
-      setRecieverAddress(jsonData?.ContractDetails?.contractAddress);
+      const recieverAddressShort=shortenWalletAddress(jsonData?.ContractDetails?.contractAddress)||"";
+      setRecieverAddress(recieverAddressShort);
     }
   };
 
   // const SDK_BASE_URL = 'https://staging.tria.so'
   // const userController = new UserController(SDK_BASE_URL ?? '',"dev0@tria" );
 
-  const getAsset = async (asset: any) => {
+  const getAsset = async (asset: any,localDetails:any) => {
     console.log("start----------------------->");
     const response = await getAssetDetails(
       asset?.chainName,
       asset?.tokenAddress,
-      asset?.triaName
+      localDetails?.triaName
     );
     setTokenDetails(response);
     // if (params?.enteredAmountValue) {
@@ -299,7 +342,7 @@ export default function Mint(props: any) {
                     </div>
                     <div className="px-2 justify-start items-center inline-flex">
                       <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                        {params?.triaName}
+                        {dappDetails?.triaName}
                       </div>
                     </div>
                   </div>
@@ -322,10 +365,10 @@ export default function Mint(props: any) {
             </div>{" "}
           </div>
           <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-            <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-              <img className="w-7 h-7 shadow" src={params?.appLogo} />
+            <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+              <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
               <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                {params?.appDomain}
+                {dappDetails?.dappDomain}
               </div>
             </div>
           </div>
@@ -357,7 +400,7 @@ export default function Mint(props: any) {
                 />
                 <div className="px-2 justify-start items-center inline-flex">
                   <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                    {params?.triaName}
+                    {dappDetails?.triaName}
                   </div>
                 </div>
               </div>
