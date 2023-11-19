@@ -34,11 +34,8 @@ export default function OnboardingHome() {
       if (ui === "yes") {
         navigate("/stackhome")
       }
-      const dapp_details = {
-        "dappDomain": document?.referrer,
-        "dappLogo": logo
-      }
-      localStorage?.setItem("dappDetails", JSON.stringify(dapp_details))
+
+      localStorage?.setItem("dappDetails", JSON.stringify(document?.referrer))
     }
 
     //Test logs
