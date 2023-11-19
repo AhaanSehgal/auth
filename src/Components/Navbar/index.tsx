@@ -1,12 +1,8 @@
-import React from 'react'
-
+import React,{useContext} from 'react';
 
 interface params {
   chainName:string;
   message:string;
-  triaName:string,
-  appDomain:string,
-  appLogo:string,
   tokenAddress: String;
 }
 
@@ -29,14 +25,21 @@ interface AssetDetails {
   tokenAddress: string;
 }
 
+interface dappDetails{
+  dappDomain:string,
+  dappLogo :string,
+  triaName:string
+}
 
 interface Props {
+  dappDetails:dappDetails,
   params: params;
   tokenDetails?:AssetDetails
 }
 
 
-const Nav: React.FC<Props> =({params,tokenDetails})=> {
+
+const Nav: React.FC<Props> =({dappDetails,params,tokenDetails})=> {
   return (
     <div>
         <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
@@ -53,7 +56,7 @@ const Nav: React.FC<Props> =({params,tokenDetails})=> {
         <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">{params.chainName}</div>
       </div>
       <div className="px-2 justify-start items-center inline-flex">
-        <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">{params.triaName}</div>
+        <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">{dappDetails?.triaName}</div>
       </div>
     </div>
   </div>

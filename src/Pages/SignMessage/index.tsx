@@ -1,10 +1,11 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect,useContext} from 'react'
 import Connect from '../../Components/SignMessage/Connect';
 import Sign from "../../Components/SignMessage/Sign";
 import { WalletController } from '@tria-sdk/web';
 import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import {useTriaUser} from "../../contexts/tria-user-provider";
+import NavContext from "../../NavContext";
 
 // interface params {
 //   chainName:string;
@@ -20,9 +21,6 @@ import {useTriaUser} from "../../contexts/tria-user-provider";
 interface params {
   chainName:string;
   message:string;
-  triaName:string,
-  appDomain:string,
-  appLogo:string,
   tokenAddress: String;
 }
 
@@ -30,9 +28,6 @@ interface params {
 const initialParams :params={
   chainName:'',
   message:'',
-  triaName:'',
-  appDomain:'',
-  appLogo:'',
   tokenAddress: ''
 }
 
@@ -54,7 +49,17 @@ interface AssetDetails {
   tokenAddress: string;
 }
 
+interface dappDetails{
+  dappDomain:string,
+  dappLogo :string,
+  triaName:string
+}
 
+const initialData:dappDetails={
+  dappDomain:"",
+  dappLogo :"",
+  triaName:""
+}
 
 
 const walletType = { embedded: true };
@@ -67,6 +72,7 @@ function SignMessage() {
     const {getAssetDetails,getUserByAddress} =useTriaUser();
     const [tokenDetails,setTokenDetails]=useState<AssetDetails>();
     const param = useParams();
+    const [dappDetails,setDappDetails]=useState<dappDetails>(initialData);
 
     const sendMessageToParent = (data:any=null) => {
       // Post a message to the parent window
@@ -75,13 +81,21 @@ function SignMessage() {
   };
 
 
+  // const initialDappDetails = {
+  //   dappDomain: "example.com",
+  //   dappLogo: "logo.png",
+  //   triaName: "MyTria"
+  // };
+  
+  // const jsonString = JSON.stringify(initialDappDetails);
+  
+  // localStorage.setItem("dappDetails", jsonString);
+  
+
 
     console.log(btoa(JSON.stringify({
       chainName: "POLYGON",
       message: "Hello, this is a dummy message!",
-      triaName: "Lalitt@tria",
-      appDomain: "https://facebook.com",
-      appLogo: "dummylogo.png",
       tokenAddress: ""
     })));
 
@@ -108,18 +122,23 @@ function SignMessage() {
         console.log("jsonString",jsonString);
         // Parse the JSON
        const jsonData = JSON.parse(jsonString);
+       const dappData=JSON.parse(localStorage.getItem("dappDetails")|| "{}");
+       const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
+       const data={...dappData,triaName};
+       console.log("daapp======>",data);
+       setDappDetails(data);
         console.log("jsonData",jsonData);
         setParams(jsonData);
-        getAsset(jsonData);
+        getAsset(jsonData,data);
       }
       
     };
 
-    const getAsset = async(asset:any)=>{
+    const getAsset = async(asset:any,data)=>{
       try{
       console.log("start----------------------->");
       const response = await getAssetDetails(
-       asset?.chainName,asset?.tokenAddress ,asset?.triaName
+       asset?.chainName,asset?.tokenAddress ,data?.triaName
       );
       setTokenDetails(response);
       console.log("asset----------------------->",response);
@@ -139,7 +158,7 @@ function SignMessage() {
   return (
     <div>
        { connect ? <Connect setConnect={setConnect}/> :
-        <Sign params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
+        <Sign dappDetails={dappDetails} params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
   }
     </div>
 

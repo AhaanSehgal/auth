@@ -1,14 +1,13 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import Navbar from '../Navbar/index';
+import NavContext from "../../NavContext";
 
 interface params {
   chainName:string;
   message:string;
-  triaName:string,
-  appDomain:string,
-  appLogo:string,
-  tokenAddress: String
+  tokenAddress: String;
 }
+
 
 interface AssetDetails {
   balanceInTokens: number;
@@ -27,16 +26,22 @@ interface AssetDetails {
   symbol: string;
   tokenAddress: string;
 }
+interface dappDetails{
+  dappDomain:string,
+  dappLogo :string,
+  triaName:string
+}
+
 
 interface Props {
+  dappDetails:dappDetails,
   params: params;
   signMessage: () => Promise<void>;
   tokenDetails?:AssetDetails;
   sendMessageToParent: () => void;
 }
 
-const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageToParent}) => {
-
+const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,sendMessageToParent}) => {
 
   console.log("params", params, signMessage );
 
@@ -47,11 +52,11 @@ const Sign: React.FC<Props> = ({ params, signMessage,tokenDetails ,sendMessageTo
             <img className="dark:visible invisible W-[0] dark:W-18px cursor-pointer" src="/icons/ShapeW.svg" onClick={()=>sendMessageToParent()}></img>      
           </div>
         <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
-          <Navbar params={params} tokenDetails={tokenDetails} />
+          <Navbar dappDetails={dappDetails} params={params} tokenDetails={tokenDetails} />
           <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-            <img className="w-7 h-7 shadow" src={params.appLogo} />
+            <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
             <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-              {params.appDomain}
+              {dappDetails?.dappDomain}
             </div>
           </div>
         </div>
