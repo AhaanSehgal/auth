@@ -21,7 +21,7 @@ import {shortenWalletAddress} from "../../utils";
 interface param {
   chainName: string;
   tokenAddress: string;
-  ContractDetails: ContractDetails;
+  contractDetails: ContractDetails;
 }
 
 // interface Asset {
@@ -103,18 +103,27 @@ export default function Mint(props: any) {
 
   const encodedParams = btoa(
     JSON.stringify({
-      triaName: "Lalitt@tria",
       chainName: "POLYGON",
-      appLogo: "",
-      appDomain: "https://facebook.com",
-      darkMode: true,
       tokenAddress: undefined,
-      ContractDetails: {
-        contractAddress: "0123456789056789899",
-        abi: [],
-        functionName: "mintNft",
-        args: ["1"],
-      },
+      contractDetails:  {
+        contractAddress: '0x5927Aa58fb36691A4be262c63955b47b67c6e641',
+              abi: [
+                  {
+            inputs: [
+                          { internalType: 'uint256', name: 'id', type: 'uint256' },
+                          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+                      ],
+                      name: 'mint',
+                      outputs: [],
+                      stateMutability: 'payable',
+                      type: 'function',
+                  },
+              ],
+              functionName: 'mint',
+              //@ts-ignore
+              args: [100, 1],
+              value :8
+            },
     })
   );
   console.log("eecc", encodedParams);
@@ -151,9 +160,9 @@ export default function Mint(props: any) {
     });
     if (params && gasFees) {
       await wallet.init();
-      if(params.ContractDetails && params?.chainName){
+      if(params.contractDetails && params?.chainName){
       const mintRes = await wallet.callContract(
-        params.ContractDetails,
+        params.contractDetails,
         params?.chainName
       );
       
@@ -179,24 +188,7 @@ export default function Mint(props: any) {
       const contractFee=await fee.getCallContractFee(
         dappDetails?.triaName ,
         feeCallData?.chainName,
-              {
-          contractAddress: '0x5927Aa58fb36691A4be262c63955b47b67c6e641',
-                abi: [
-                    {
-              inputs: [
-                            { internalType: 'uint256', name: 'id', type: 'uint256' },
-                            { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                        ],
-                        name: 'mint',
-                        outputs: [],
-                        stateMutability: 'payable',
-                        type: 'function',
-                    },
-                ],
-                functionName: 'mint',
-                //@ts-ignore
-                args: [100, 1],
-              }
+        feeCallData?.con
       )
 
         console.log("contractFee------------------->",contractFee);
@@ -207,7 +199,7 @@ export default function Mint(props: any) {
           parseFloat(contractFee.fee?.usd || "0") + (amountInUSD || 0)
         );
         setTotalAmountIncrypto(
-          parseFloat(contractFee?.fee?.eth || "0") + (feeCallData?.ContractDetails?.value|| 0)
+          parseFloat(contractFee?.fee?.eth || "0") + (feeCallData?.contractDetails?.value|| 0)
         );
       }
       else{
@@ -247,7 +239,7 @@ export default function Mint(props: any) {
       // getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
       getAsset(jsonData,localDetails);
       setParams(jsonData);
-      const recieverAddressShort=shortenWalletAddress(jsonData?.ContractDetails?.contractAddress)||"";
+      const recieverAddressShort=shortenWalletAddress(jsonData?.contractDetails?.contractAddress)||"";
       setRecieverAddress(recieverAddressShort);
     }
   };
@@ -263,8 +255,8 @@ export default function Mint(props: any) {
       localDetails?.triaName
     );
     setTokenDetails(response);
-    if (asset?.ContractDetails?.value) {
-      const total = asset?.ContractDetails?.value * response.quoteRate;
+    if (asset?.contractDetails?.value) {
+      const total = asset?.contractDetails?.value * response.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
@@ -391,7 +383,7 @@ export default function Mint(props: any) {
                 </div>
                 <div className="self-stretch justify-center items-center gap-1 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    {params?.ContractDetails?.value ||0} {tokenDetails?.symbol}
+                    {params?.contractDetails?.value ||0} {tokenDetails?.symbol}
                   </div>
                 </div>
                 <div className="w-100 h-[18px] justify-center items-center gap-2 inline-flex">
