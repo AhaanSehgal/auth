@@ -165,20 +165,20 @@ export default function VerificationPage() {
                                         <button > <img src='/icons/close.svg'></img> </button>
                                     </div> */}
                                 </div>
-                                <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
-                                    <img src='/icons/Shape.svg'></img>
-                                </div>
+
                             </div>
-                            <Nav />
-                            <div className="w-[376px] h-[46px] py-3 flex-col justify-center items-start gap-4 inline-flex">
+                            <div className=" flex-col justify-center items-center gap-2 inline-flex">
+                                <img className="" src="/icons/done.svg" />
+                            </div>
+                            <div className=" py-3 flex-col justify-center items-start gap-4 inline-flex">
                                 <div className="self-stretch justify-center items-center gap-2 inline-flex">
-                                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to {dappName}</div>
+                                    <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Connected successfully!</div>
                                 </div>
                             </div>
                         </div>
-                        <div className="self-stretch  flex-col justify-center text-xl font-semibold items-center gap-2 flex text-lime-600 ">
-                            <p className='px-10 text-center'>You have been successfully verified! You can close this tab and head back to your session.</p>
-                            
+
+                        <div className="self-stretch -mt-[450px]  flex-col justify-center text-xs items-center gap-2 flex text-white text-opacity-60 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text ">
+                            <p className='px-1 text-center'>You can close this tab and continue journey on the sign up page!</p>
                         </div>
                         <Footer />
                     </div>
