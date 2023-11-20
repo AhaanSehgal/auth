@@ -167,7 +167,7 @@ export default function VerificationPage() {
                                 </div>
 
                             </div>
-                            <div className=" flex-col justify-center items-center gap-2 inline-flex">
+                            <div className=" flex-col justify-center items-center gap-2 inline-flex mt-20">
                                 <img className="" src="/icons/done.svg" />
                             </div>
                             <div className=" py-3 flex-col justify-center items-start gap-4 inline-flex">
@@ -177,7 +177,7 @@ export default function VerificationPage() {
                             </div>
                         </div>
 
-                        <div className="self-stretch -mt-[450px]  flex-col justify-center text-xs items-center gap-2 flex text-white text-opacity-60 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text ">
+                        <div className="self-stretch -mt-[400px]  flex-col justify-center text-xs items-center gap-2 flex text-white text-opacity-60 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text ">
                             <p className='px-1 text-center'>You can close this tab and continue journey on the sign up page!</p>
                         </div>
                         <Footer />
