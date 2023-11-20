@@ -418,7 +418,7 @@ const sendMessageToParent = (data:any=null) => {
                   />
                   <div className="px-2 justify-start items-center inline-flex">
                     <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                      {params?.senderName}
+                      {dappDetails?.triaName}
                     </div>
                   </div>
                 </div>
