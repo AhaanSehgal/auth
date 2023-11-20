@@ -219,7 +219,7 @@ export default function LoaderPage() {
               username: data.username
             }
           })
-          window.close()
+          // window.close()
         }
       }
     }

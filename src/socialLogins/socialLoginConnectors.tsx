@@ -1,8 +1,8 @@
 export enum SocialLoginTypes {
   Google = "google",
   Instagram = "instagram",
-  X = "X",
-  Discord = "Discord",
+  X = "twitter",
+  Discord = "discord",
 }
 
 export interface SocialLogin {
