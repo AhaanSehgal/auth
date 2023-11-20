@@ -184,11 +184,11 @@ export default function Mint(props: any) {
         baseUrl,
         walletType,
       });
-
+      
       const contractFee=await fee.getCallContractFee(
         dappDetails?.triaName ,
         feeCallData?.chainName,
-        feeCallData?.ContractDetails
+        feeCallData?.contractDetails
       )
 
         console.log("contractFee------------------->",contractFee);
