@@ -201,9 +201,9 @@ export default function LoaderPage() {
           console.log('userId', data.userId)
           //@ts-ignore
           await keyringController.getVault({ password: data.password, userId: data.userId, socialName: 'twitter', origin: JSON.parse(atob(state)).origin, accessToken: data?.accessToken });
-          setTimeout(() => {
-            window.close()
-          }, 2000)
+          // setTimeout(() => {
+          //   window.close()
+          // }, 2000)
         } else {
           //if Twitter account does not exist
           const keyringController = new KeyringController({
