@@ -64,7 +64,7 @@ export default function OnboardingHome() {
       localStorage.setItem("accessToken", eventData?.message?.token)
       setUsername(eventData?.message?.username)
       setToken(eventData?.message?.token)
-      navigate(`/signUpUserName/google/${eventData?.message?.userId}`)
+      navigate(`/signUpUserName/${localStorage?.getItem('socialNetwork')}/${eventData?.message?.userId}`)
     } else {
       localStorage.setItem("accessToken", eventData?.message?.token)
       setToken(eventData?.message?.token)
