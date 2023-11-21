@@ -5,9 +5,9 @@ import {
   FeeController,
   WalletController,
   ContractDetails,
+  CheckTokenAllowanceResponse,
 } from "@tria-sdk/web";
-import { Send } from "@tria-sdk/web";
-import { useParams ,useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import NavContext from "../../NavContext";
 import { useTriaUser } from "../../contexts/tria-user-provider";
 import Loader from "../../Components/Loader";
@@ -16,31 +16,18 @@ import {
   RampnalysisAssets,
   UserController,
 } from "@tria-sdk/core";
-import {shortenWalletAddress} from "../../utils";
-  
-interface param {
-  chainName: string;
+import { shortenWalletAddress } from "../../utils";
+
+interface Approve {
   tokenAddress: string;
-  contractDetails: ContractDetails;
+  amount: number;
+  spender: string;
 }
 
-// interface Asset {
-//   name: string,
-//   symbol: string,
-//   logoUrl: string,
-//   chainName: string, // ETH, POLYGON, APTOS ...
-//   chainLogo: string,
-//   balanceInTokens: number,
-//   balanceOfTokensInUnits: string,
-//   decimals: number,
-//   balanceInUSD: number,
-//   quoteRate: number, // value in USD of one token // eg. 1 ETH = 1916.545
-//   tokenAddress: string,
-//   isNativeToken: boolean,
-//   isSpam: boolean,
-//   percentChangein24hr: number, // e.g. -0.3412
-//   isFavroutie: boolean
-// }
+interface param {
+  chainName: string;
+  payload: Approve;
+}
 
 interface AssetDetails {
   balanceInTokens: number;
@@ -65,19 +52,17 @@ interface fee {
   usd?: string | undefined;
 }
 
-interface dappDetails{
-  dappDomain:any,
-  dappLogo :any,
-  triaName:any
+interface dappDetails {
+  dappDomain: any;
+  dappLogo: any;
+  triaName: any;
 }
 
-const initialData:dappDetails={
-  dappDomain:"",
-  dappLogo :"",
-  triaName:""
-}
-
-
+const initialData: dappDetails = {
+  dappDomain: "",
+  dappLogo: "",
+  triaName: "",
+};
 
 // interface MyComponentProps {
 //   chainLogo: string;
@@ -88,45 +73,26 @@ const initialData:dappDetails={
 //   // Add other props as needed
 // }
 
-export default function Mint(props: any) {
-  // const { getAssetsForATriaName} = useContext(NavContext);
-  const { getAssetDetails, getUserByAddress } = useTriaUser();
-  // const chainName = "POLYGON";
-  // const payload = {
-  //   fromTriaName: "dev0@tria",
-  //   recipientTriaName: "dev@tria",
-  //   amount: 0.00001,
-  //   tokenAddress: "",
-  // };
+export default function Approve(props: any) {
+  const walletType = { embedded: true };
+  const baseUrl = "https://staging.tria.so";
+  const fee = new FeeController({
+    baseUrl,
+    walletType,
+  });
 
   const encodedParams = btoa(
     JSON.stringify({
       chainName: "POLYGON",
-      tokenAddress: undefined,
-      contractDetails:  {
-        contractAddress: '0x5927Aa58fb36691A4be262c63955b47b67c6e641',
-              abi: [
-                  {
-            inputs: [
-                          { internalType: 'uint256', name: 'id', type: 'uint256' },
-                          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                      ],
-                      name: 'mint',
-                      outputs: [],
-                      stateMutability: 'payable',
-                      type: 'function',
-                  },
-              ],
-              functionName: 'mint',
-              //@ts-ignore
-              args: [100, 1],
-              value :8
-            },
+      payload: {
+        tokenAddress: "0xCf85FF1c37c594a10195F7A9Ab85CBb0a03f69dE",
+        amount: 1,
+        spender: "0x5927Aa58fb36691A4be262c63955b47b67c6e641",
+      },
     })
   );
   console.log("eecc", encodedParams);
 
-  console.log(encodedParams);
   const [params, setParams] = useState<param>();
   const [tokenDetails, setTokenDetails] = useState<AssetDetails>();
   const [gasFees, setGasFees] = useState<fee>();
@@ -137,44 +103,36 @@ export default function Mint(props: any) {
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
   const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [dappDetails,setDappDetails]=useState<dappDetails>(initialData);
-  const navigate = useNavigate(); 
+  const [dappDetails, setDappDetails] = useState<dappDetails>(initialData);
+  const { getAssetDetails, getUserByAddress } = useTriaUser();
+  const navigate = useNavigate();
   console.log("gasfees---------->", gasFees);
   const param = useParams();
   console.log("pa", param);
   console.log("tokenDetails---------------->", tokenDetails);
 
-  const sendMessageToParent = (data:any=null) => {
+  const sendMessageToParent = (data: any = null) => {
     // Post a message to the parent window
-    window.parent.postMessage({ type: 'closeIframe',callFrom:'mint',data:data }, '*');
-};
+    window.parent.postMessage(
+      { type: "closeIframe", callFrom: "mint", data: data },
+      "*"
+    );
+  };
 
-const walletType = { embedded: true };
-const baseUrl = "https://staging.tria.so";
-
-
-const fee = new FeeController({
-  baseUrl,
-  walletType,
-});
-
-
-  const sendToken = async () => {
+  const approve = async () => {
     console.log("sending token..!!");
+    const chain = params?.chainName;
     const wallet = new WalletController({
       baseUrl,
       walletType,
+      selectedChainName: chain,
     });
     if (params && gasFees) {
       await wallet.init();
-      if(params.contractDetails && params?.chainName){
-      const mintRes = await wallet.callContract(
-        params.contractDetails,
-        params?.chainName
-      );
-      
-      sendMessageToParent(mintRes);
-      console.log("call contract res-------------->", mintRes);
+      if (params.payload && params?.chainName) {
+        const res = await wallet.approve(params?.payload);
+        sendMessageToParent(res);
+        console.log("call contract res-------------->", res);
       }
     }
   };
@@ -185,29 +143,29 @@ const fee = new FeeController({
   //   console.log("triaName", triaName);
   // };
 
-  const getSendFee = async (feeCallData:any) => {
+  const getApproveFee = async () => {
     try {
+      if (!params?.payload) return;
 
-      
-      const contractFee=await fee.getCallContractFee(
-        dappDetails?.triaName ,
-        feeCallData?.chainName,
-        feeCallData?.contractDetails
-      )
+      const contractFee = await fee.getApproveFee(
+        dappDetails?.triaName,
+        params?.chainName || "",
+        params?.payload
+      );
 
-        console.log("contractFee------------------->",contractFee);
-      console.log("chain------------------>",feeCallData);
+      console.log("contractFee------------------->", contractFee);
+      console.log("chain------------------>", params);
       if (contractFee.success === true) {
         setGasFees(contractFee.fee);
         setTotalAmountInUSD(
           parseFloat(contractFee.fee?.usd || "0") + (amountInUSD || 0)
         );
         setTotalAmountIncrypto(
-          parseFloat(contractFee?.fee?.eth || "0") + (feeCallData?.contractDetails?.value|| 0)
+          parseFloat(contractFee?.fee?.eth || "0") +
+            (params?.payload?.amount || 0)
         );
-      }
-      else{
-        setError(contractFee?.message ||"");
+      } else {
+        setError(contractFee?.message || "");
       }
       console.log({ contractFee });
     } catch (err) {
@@ -233,53 +191,35 @@ const fee = new FeeController({
       // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
       // console.log("userdetail",getUserDetail )
       console.log("jsonData", jsonData);
-      const dappData=localStorage.getItem("dappDetails")|| "";
+      const dappData = localStorage.getItem("dappDetails") || "";
       const searchParams = new URLSearchParams(dappData);
-      const logo = searchParams.get('dappLogo');
-      const domain = searchParams.get('dappDomain');
-      const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
-      const localDetails={dappLogo:logo,dappDomain:domain,triaName};
-      checkTokenAllowance(jsonData,localDetails);
+      const logo = searchParams.get("dappLogo");
+      const domain = searchParams.get("dappDomain");
+      const triaName = JSON.parse(
+        localStorage.getItem("tria.wallet.store") || "{}"
+      )?.triaName;
+      const localDetails = { dappLogo: logo, dappDomain: domain, triaName };
       setDappDetails(localDetails);
       // getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
-      getAsset(jsonData,localDetails);
+      getAsset(jsonData, localDetails);
+
       setParams(jsonData);
-      const recieverAddressShort=shortenWalletAddress(jsonData?.contractDetails?.contractAddress)||"";
+      const recieverAddressShort =
+        shortenWalletAddress(jsonData?.contractDetails?.contractAddress) || "";
       setRecieverAddress(recieverAddressShort);
     }
   };
 
-  // const SDK_BASE_URL = 'https://staging.tria.so'
-  // const userController = new UserController(SDK_BASE_URL ?? '',"dev0@tria" );
-
-
-  const checkTokenAllowance = async (paramData: param,localDetails:dappDetails) => {
-
-   const payload={
-      tokenAddress: paramData?.tokenAddress,
-      amount: paramData?.contractDetails?.value || 0,
-      spender:paramData?.contractDetails?.contractAddress
-    }
-    const res = await fee.checkTokenAllowance(localDetails?.triaName, paramData?.chainName,payload);
-    console.log("token allowence------------------>",res);
-    if(!res?.allowance){
-        const url=  btoa(JSON.stringify({chainName:paramData?.chainName,payload}));
-       navigate(`/aprove/${url}`);
-    }
-    console.log("token allowence----->",res);
-  };
-
-
-  const getAsset = async (asset: any,localDetails:any) => {
+  const getAsset = async (paramData: any, localDetails: any) => {
     console.log("start----------------------->");
     const response = await getAssetDetails(
-      asset?.chainName,
-      asset?.tokenAddress,
+      paramData?.chainName,
+      paramData?.payload?.tokenAddress,
       localDetails?.triaName
     );
     setTokenDetails(response);
-    if (asset?.contractDetails?.value) {
-      const total = asset?.contractDetails?.value * response.quoteRate;
+    if (paramData?.payload?.amount) {
+      const total = paramData?.payload?.amount * response.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
@@ -287,17 +227,9 @@ const fee = new FeeController({
     console.log("asset----------------------->", response);
   };
 
-  // useEffect(() => {
-  //   if (params?.enteredAmountValue && tokenDetails) {
-  //     const total = params?.enteredAmountValue * tokenDetails.quoteRate;
-  //     console.log("total-------------->", total);
-  //     setAmountInUSD(total);
-  //   }
-  // }, [params?.enteredAmountValue, tokenDetails]);
-
-  const fetchSendFee = async () => {
+  const fetchApproveFee = async () => {
     try {
-      await getSendFee(params);
+      await getApproveFee();
     } catch (err) {
       console.error(err);
     }
@@ -305,10 +237,10 @@ const fee = new FeeController({
 
   useEffect(() => {
     if (params) {
-      fetchSendFee();
+      fetchApproveFee();
       setFeeLoading(true);
       const intervalId = setInterval(async () => {
-        fetchSendFee();
+        fetchApproveFee();
       }, 30000);
       return () => {
         clearInterval(intervalId);
@@ -322,12 +254,13 @@ const fee = new FeeController({
 
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-    {approveLoading ? (
-      <div className="flex ml-12 items-center justify-center w-full h-full">
-        <div className="transform -translate-x-1/2 -translate-y-1/2">
-          <Loader />
+      {approveLoading ? (
+        <div className="flex ml-12 items-center justify-center w-full h-full">
+          <div className="transform -translate-x-1/2 -translate-y-1/2">
+            <Loader />
+          </div>
         </div>
-      </div>) : (
+      ) : (
         <div className=" px-5 flex-col justify-center items-center flex">
           <div className="w-[416px] justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
@@ -401,12 +334,12 @@ const fee = new FeeController({
               <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
                 <div className="self-stretch justify-center items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                    ${amountInUSD?.toFixed(6) ||0}
+                    ${amountInUSD?.toFixed(6) || 0}
                   </div>
                 </div>
                 <div className="self-stretch justify-center items-center gap-1 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    {params?.contractDetails?.value ||0} {tokenDetails?.symbol}
+                    {params?.payload?.amount || 0} {tokenDetails?.symbol}
                   </div>
                 </div>
                 <div className="w-100 h-[18px] justify-center items-center gap-2 inline-flex">
@@ -583,8 +516,10 @@ const fee = new FeeController({
           <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
               <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
-                onClick={()=>sendMessageToParent()}>
+                <div
+                  className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
+                  onClick={() => sendMessageToParent()}
+                >
                   <div className="justify-center items-center flex">
                     <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">
                       Reject
@@ -593,7 +528,7 @@ const fee = new FeeController({
                 </div>
                 <div
                   className="grow shrink basis-0 h-[53px] p-5 bg-gradient-to-r from-violet-400 to-indigo-500 rounded-[58px] justify-center items-center flex cursor-pointer"
-                  onClick={() => sendToken()}
+                  onClick={() => approve()}
                 >
                   <div className="justify-center items-center flex">
                     <div className="text-center text-white text-lg font-semibold font-montserrat leading-snug">

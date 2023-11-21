@@ -39,6 +39,7 @@ import NewDevice from './Pages/Recover/NewDevice';
 import AccessToken from './Pages/AccessToken';
 import StackHome from './Pages/Stack/StackHome';
 import SignUp from './Pages/Link';
+import Approve from './Pages/Approve';
 
 const App = () => {
 
@@ -103,6 +104,7 @@ const App = () => {
               <Route path="/signMessage/:param" element={<SignMessage />} />
               <Route path="/send/:param" element={<SendAsset />} />
               <Route path="/mint/:param" element={<Mint />} />
+              <Route path="/approve/:param" element={<Approve/>}/>
               <Route path="/verify" element={<VerificationPage />} />
               <Route path="/accessToken" element={<AccessToken />} />
               <Route path="/verifyAccount" element={<VerifyAccount />} />
