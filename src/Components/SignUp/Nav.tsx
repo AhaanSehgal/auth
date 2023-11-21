@@ -18,7 +18,7 @@ export default function Nav() {
                         <img src='/icons/Shape.svg'></img>
                          </div>
                   </div> */}
-      <div className="h-[221px] px-5 py-6 flex-col justify-center items-center gap-4 flex">
+      <div className=" px-5 py-6 flex-col justify-center items-center gap-4 flex">
         <div className="self-stretch py-2  justify-center items-center inline-flex">
           {/* <div className="w-[95px] h-[95px] relative rounded-[127px] ">
             <img className="" src={dappLogo} />

@@ -134,19 +134,31 @@ export default function SignUp() {
 
   return (
 
-    <div>
-      <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
-        <div className="flex-col justify-start items-center gap-2 flex">
-          <div className="w-[416px] justify-between items-start inline-flex">
-            <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
+    
+      <div className="w-full h-full min-h-screen p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
+        <div className="flex-col w-full h-full  justify-start items-center gap-2 flex">
+          {/* <div className=" justify-between items-start inline-flex">
+            <div className="p-2  mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
               <div className=" relative" >
                 <button onClick={() => { navigate("/") }}> <img src='/icons/close.svg'></img> </button>
               </div>
             </div>
             <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
-              <img src='/icons/Shape.svg'></img>
+              <img src='/icons/ShapeW.svg'></img>
             </div>
-          </div>
+          </div> */}
+
+
+<div className="w-full h-10 justify-between items-start inline-flex">
+  <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
+    <div className=" relative" >
+    <button onClick={() => { navigate("/") }}> <img src='/icons/close.svg'></img> </button>
+</div>
+  </div>
+  <div className="p-3 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
+  <img src='/icons/ShapeW.svg'></img>
+</div>
+</div>
           <Nav />
           <div className="w-[376px]  py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
@@ -155,14 +167,14 @@ export default function SignUp() {
           </div>
         </div>
         <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
-          <div className="self-stretch  flex-col justify-start  items-center gap-3 flex rounded-md">
-            <div className="w-[416px]  px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+          <div className="self-stretch w-full flex-col justify-start  items-center gap-3 flex rounded-md">
+            <div className=" w-full px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
               <div className="self-stretch py-3 flex-col justify-center items-start gap-4 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                   <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your username</div>
                 </div>
               </div>
-              <div className="w-[376px] px-2 justify-start items-center inline-flex">
+              <div className="px-2 justify-start items-center inline-flex">
                 <div className="grow shrink basis-0 mix-blend-difference">
                   <div>
                     {/* <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}>Your </span>
@@ -178,7 +190,7 @@ export default function SignUp() {
                     {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                     {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                   </div>
-                  <div className="w-[99px] px-5 py-3 h-10 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
+                  <div className=" px-5 py-3 h-10 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                     <div className="justify-center  items-center flex">
                       <button onClick={() => { createAccountWithoutPassword(); }} disabled={!conditions}> <div className="text-center  text-stone-950 text-base font-semibold font-Montserrat leading-tight">{loader === false ? <span>Next</span> :
                         <div className='ml-2' role="status">
@@ -227,7 +239,7 @@ export default function SignUp() {
 
                 </div>
               </div> : null}
-              <div className="w-[376px]  py-3 justify-center items-center gap-3 inline-flex">
+              <div className="  py-3 justify-center items-center gap-3 inline-flex">
                 <div >
                   {/* <img src='/icons/no-tick-square.svg'></img> */}
                   <input type="checkbox" className='w-4 h-4' checked={conditions} onChange={() => setConditions(!conditions)} />
@@ -240,6 +252,6 @@ export default function SignUp() {
           <Footer />
         </div>
       </div>
-    </div>
+   
   );
 }

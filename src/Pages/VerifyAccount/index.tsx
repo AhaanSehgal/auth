@@ -7,23 +7,21 @@ import Nav from '../../Components/SignUp/Nav'
 export default function index() {
   return (
     <div>
-      <div className="w-[448px] rounded-2xl dark:bg-fontLightColor h-[840px] p-4 flex-col  justify-between inline-flex">
+      <div className="w-full h-full min-h-screen rounded-2xl dark:bg-fontLightColor  p-4 flex-col  justify-between inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />
         </div>
-        <div className="flex-col justify-start gap-2   flex">
+        <div className="flex-col w-full h-full  justify-start gap-2   flex">
           <Nav />
         </div>
         <div className="self-stretch justify-center  gap-2 inline-flex">
           <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug dark:text-text">Create your account</div>
         </div>
-        <div className='mt-auto'>
 
 
-        </div>
-        <div className="w-[416px] h-[137px] px-5 py-4 mb-auto rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
-          <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
+        <div className=" px-5 py-4 w-full h-full mb-auto mt-auto rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+          <div className="self-stretch  py-3 flex-col justify-center items-start gap-4 flex">
             <div className="self-stretch justify-start items-center gap-2 inline-flex">
               <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Verify your account</div>
             </div>

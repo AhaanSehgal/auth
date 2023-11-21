@@ -157,9 +157,9 @@ export default function VerificationPage() {
                 <div className='mt-80'><Loader /></div>
             </div> :
                 <div>
-                    <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
+                    <div className="w-full h-full min-h-screen p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
                         <div className="flex-col justify-start items-center gap-2 flex">
-                            <div className="w-[416px] justify-between items-start inline-flex">
+                            <div className=" justify-between items-start inline-flex">
                                 <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
                                     {/* <div className=" relative" >
                                         <button > <img src='/icons/close.svg'></img> </button>
@@ -167,17 +167,17 @@ export default function VerificationPage() {
                                 </div>
 
                             </div>
-                            <div className=" flex-col justify-center items-center gap-2 inline-flex mt-20">
+                            <div className="w-full flex-col justify-center items-center gap-2 inline-flex mt-20">
                                 <img className="" src="/icons/done.svg" />
                             </div>
                             <div className=" py-3 flex-col justify-center items-start gap-4 inline-flex">
-                                <div className="self-stretch justify-center items-center gap-2 inline-flex">
+                                <div className=" self-stretch justify-center items-center gap-2 inline-flex">
                                     <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Connected successfully!</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="self-stretch -mt-[400px]  flex-col justify-center text-xs items-center gap-2 flex text-white text-opacity-60 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text ">
+                        <div className="self-stretch w-full mb-auto  flex-col justify-center text-xs items-center gap-2 flex text-white text-opacity-60 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text ">
                             <p className='px-1 text-center'>You can close this tab and continue journey on the sign up page!</p>
                         </div>
                         <Footer />

@@ -161,7 +161,7 @@ function SignMessage() {
 
 
   return (
-    <div>
+    <div className='w-full h-full min-h-screen'>
        { connect ? <Connect setConnect={setConnect}/> :
         <Sign dappDetails={dappDetails} params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
   }

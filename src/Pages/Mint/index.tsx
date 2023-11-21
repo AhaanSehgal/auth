@@ -298,15 +298,15 @@ export default function Mint(props: any) {
   }, [param]);
 
   return (
-    <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
+    <div className="w-full h-full min-h-screen p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
     {approveLoading ? (
       <div className="flex ml-12 items-center justify-center w-full h-full">
         <div className="transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
       </div>) : (
-        <div className=" px-5 flex-col justify-center items-center flex">
-          <div className="w-[416px] justify-end items-start inline-flex">
+        <div className=" w-full h-full min-h-screen px-5 flex-col justify-center items-center flex">
+          <div className=" justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
             {/* <img
               className="dark:invisible visible dark:w-0"
@@ -317,14 +317,14 @@ export default function Mint(props: any) {
           <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch border-b-2 border-zinc-500 pt-8 border-opacity-10 justify-center items-center gap-4 inline-flex">
               <div>
-                <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+                <div className=" border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
                   <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
-                    <div className="w-[50px] h-[50px] relative">
+                    <div className=" relative">
                       <img
-                        className="w-[50px] h-[50px] left-0 top-0 absolute rounded-[50px]"
+                        className=" left-0 top-0 absolute rounded-[50px]"
                         src="/icons/boy.svg"
                       />
-                      <div className="w-[26.07px] h-[26.07px] pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
+                      <div className=" pl-[0.69px] pr-[0.52px] pt-[0.86px] pb-[0.35px] left-[33.51px] top-[-13px] absolute origin-top-left justify-center items-center inline-flex">
                         <img src={tokenDetails?.logoUrl}></img>
                         <div className="w-[19.55px] h-[19.55px] relative origin-top-left rotate-[-19.05deg] flex-col justify-start items-start flex" />
                       </div>

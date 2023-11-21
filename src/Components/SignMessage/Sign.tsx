@@ -47,27 +47,27 @@ const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,s
 
   return (
     <div>
-      <div className="w-[448px] h-[840px] bg-white dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between items-center inline-flex">
-        <div className="w-[416px] justify-end items-start inline-flex">
+      <div className="w-full h-full min-h-screen bg-white dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between items-center inline-flex">
+        <div className=" justify-end items-start inline-flex">
             <img className="dark:visible invisible W-[0] dark:W-18px cursor-pointer" src="/icons/ShapeW.svg" onClick={()=>sendMessageToParent()}></img>      
           </div>
-        <div className="h-[190px] px-5 py-2 flex-col justify-center items-center gap-4 flex">
+        <div className="w-full h-full  px-5 py-2 flex-col justify-center items-center gap-4 flex">
           <Navbar dappDetails={dappDetails} params={params} tokenDetails={tokenDetails} />
-          <div className="w-[100vw] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+          <div className=" px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
             <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
             <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
               {dappDetails?.dappDomain}
             </div>
           </div>
         </div>
-        <div className="h-[130px] px-5 py-4 flex-col justify-center items-center gap-4 flex">
-          <div className="self-stretch h-[98px] py-3 flex-col justify-center items-start gap-4 flex">
+        <div className=" px-5 py-4 flex-col justify-center items-center gap-4 flex">
+          <div className="self-stretch  py-3 flex-col justify-center items-start gap-4 flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
               <div className="text-center text-neutral-600 text-xl font-semibold font-montserrat leading-normal dark:text-text">
                 Sign Message
               </div>
             </div>
-            <div className="w-[376px] px-2 justify-start items-center inline-flex">
+            <div className=" px-2 justify-start items-center inline-flex">
               <div className="grow shrink basis-0 text-center text-neutral-600 text-opacity-80 text-sm font-normal font-montserrat leading-[16.80px]">
                 Only sign this message if you fully understand the content and trust the requesting
                 site.
@@ -84,7 +84,7 @@ const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,s
                 </div>
               </div>
             </div>
-            <div className="w-[416px]  grow shrink basis-0 px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
+            <div className="w-full  grow shrink basis-0 px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
               <div className="self-stretch grow  shrink basis-0 py-2 justify-center items-start gap-2 inline-flex">
                 <div className="grow shrink basis-0 self-stretch px-2 justify-start items-center flex">
                   <div className="grow shrink basis-0 self-stretch text-neutral-600 text-opacity-90 text-base font-normal font-montserrat leading-tight">
@@ -93,7 +93,7 @@ const Sign: React.FC<Props> = ({dappDetails, params, signMessage,tokenDetails ,s
                 </div>
               </div>
             </div>
-            <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
+            <div className="w-[416px]  justify-center items-center gap-6 inline-flex">
               <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
               onClick={()=>sendMessageToParent()}>
                 <div className="justify-center items-center flex">

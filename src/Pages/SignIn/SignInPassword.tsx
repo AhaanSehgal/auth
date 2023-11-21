@@ -247,7 +247,7 @@ export default function SignInPassword() {
 
   return (
     <div>
-      <div className="w-[448px] bg-white dark:bg-fontLightColor rounded-2xl h-[840px] p-4 flex-col justify-between inline-flex">
+      <div className="w-full h-full min-h-screen bg-white dark:bg-fontLightColor rounded-2xl  p-4 flex-col justify-between inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />
@@ -272,17 +272,17 @@ export default function SignInPassword() {
             </button>
           </div>
         </div> : null}
-        {mainLoader === false ? <div className="w-[416px] mt-auto h-[275px] flex-col justify-center  items-center gap-3 inline-flex">
-          <div className=" self-stretch h-[275px] px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
+        {mainLoader === false ? <div className="h-full w-full mt-auto  flex-col justify-center  items-center gap-3 inline-flex">
+          <div className=" self-stretch h-full w-full px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
+            <div className="self-stretch  py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug -mt-16 ">{signUp === false ? <span>Login with email</span> : <span>Sign up with email</span>}</div>
+                <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug mt-auto ">{signUp === false ? <span>Login with email</span> : <span>Sign up with email</span>}</div>
               </div>
             </div>
 
-            <div className="self-stretch h-32 flex-col justify-center items-center flex">
+            <div className="self-stretch  flex-col justify-center items-center flex">
               <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-                <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex">
+                <div className="grow shrink basis-0  px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-start items-center flex">
                   <div className="justify-start items-center flex">
                     <div className="mix-blend-difference text-center text-white text-opacity-90 text-base font-semibold font-Montserrat leading-tight">{triaName?.param}</div>
                   </div>
