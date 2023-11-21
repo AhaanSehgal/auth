@@ -110,9 +110,9 @@ export default function EmailAndSocial(props: any) {
         </div>
         : null}
       <button>
-        <div className="w-[416px] h-[260px]  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
-          <div className="w-[376px] h-[54px] py-3 justify-center items-center gap-4 inline-flex">
-            <div className="grow shrink basis-0 h-[22px] justify-start items-center gap-2 flex">
+        <div className="w-full h-full  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+          <div className=" py-3 justify-center items-center gap-4 inline-flex">
+            <div className="grow shrink basis-0 justify-start items-center gap-2 flex">
               <div onClick={props.toggleState2} className="text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Continue with email</div>
               {/* <div className="h-[22px] px-2 py-1 bg-pink-500 bg-opacity-10 rounded-[22px] justify-center items-center gap-2 flex">
                 <div className="text-center text-pink-500 text-opacity-90 text-xs font-medium font-['Montserrat'] leading-[14.40px]">fast</div>
@@ -120,35 +120,35 @@ export default function EmailAndSocial(props: any) {
             </div>
             <div className="justify-start items-start flex">
               <div className="px-3 py-1.5 bg-stone-950 bg-opacity-20 rounded-tl-[20px] rounded-bl-[20px] justify-center items-center gap-2 flex">
-                <div className="w-[18px] h-[18px] justify-center items-center flex">
+                <div className=" justify-center items-center flex">
                   {/* <img src='/icons/sms.svg'></img> */}
-                  <div className="w-[18px] h-[18px] relative">
+                  <div className=" relative">
                   </div>
                 </div>
               </div>
               <div className="px-3 py-1.5 bg-stone-950 bg-opacity-5 rounded-tr-[20px] rounded-br-[20px] justify-center items-center gap-2 flex">
-                <div className="w-[18px] h-[18px] justify-center items-center flex">
+                <div className=" justify-center items-center flex">
                   {/* <img src='/icons/call.svg'></img> */}
-                  <div className="w-[18px] h-[18px] relative">
+                  <div className=" relative">
                   </div>
                 </div>
               </div>
             </div>
           </div>
           {connectWithEmail !== false ? <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-            <input className="grow shrink basis-0 h-10 px-5 py-3 text-white font-Montserrat bg-white bg-opacity-5 rounded-[20px] justify-start items-center flex" type="email" placeholder='your@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
-            <div onClick={() => navigate(`/signInPassword/${email}`)} className="w-[99px] h-10 px-5 py-3 bg-white rounded-[20px] justify-center items-center flex">
+            <input className="grow shrink basis-0  px-5 py-3 text-white font-Montserrat bg-white bg-opacity-5 rounded-[20px] justify-start items-center flex" type="email" placeholder='your@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <div onClick={() => navigate(`/signInPassword/${email}`)} className="  px-5 py-3 bg-white rounded-[20px] justify-center items-center flex">
               <div className="justify-center items-center flex">
                 <button><div className="text-center text-black text-base font-semibold font-Montserrat leading-tight" onClick={checkEmailExists}>Next</div></button>
               </div>
             </div>
           </div> : null}
           <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 h-[0px] border-2 border-white border-opacity-25"></div>
+            <div className="grow shrink basis-0 border-2 border-white border-opacity-25"></div>
             <div className="px-2 justify-center items-center flex">
               <div className="text-center text-white text-opacity-25 text-xs font-semibold font-Montserrat uppercase leading-[14.40px]">OR</div>
             </div>
-            <div className="grow shrink basis-0 h-[0px] border-2 border-white border-opacity-25"></div>
+            <div className="grow shrink basis-0  border-2 border-white border-opacity-25"></div>
           </div>
           <div className="">
             {authenticated === false ? <div className='self-stretch px-5 py-2 justify-center items-center gap-5 inline-flex'>

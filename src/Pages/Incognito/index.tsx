@@ -11,8 +11,8 @@ export default function Index() {
   const { setContinueOnIncognito } = useContext(NavContext)
 
   return (
-    <div>
-      <div className="w-[448px] h-[840px] dark:bg-fontLightColor bg-white rounded-2xl p-4 flex-col justify-between items-center inline-flex">
+    <div className=''>
+      <div className="w-[100vw] h-[100vh]  dark:bg-fontLightColor bg-white rounded-2xl p-4 flex-col justify-between items-center inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />
@@ -21,10 +21,10 @@ export default function Index() {
           <Nav />
         </div>
         {/* <div className="h-[289px] flex-col  items-center gap-3 flex"> */}
-        <div className="w-[416px] mb-auto  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className="self-stretch mb-auto  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
           <div className="self-stretch py-3 justify-center items-center gap-4 inline-flex">
             <div className="grow shrink basis-0  justify-center items-center gap-2 flex">
-              <div className="w-7 relative">
+              <div className=" relative">
 
                 <img src='/icons/danger.svg'></img>
 

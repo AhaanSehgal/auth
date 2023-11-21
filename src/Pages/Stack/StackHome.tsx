@@ -1,4 +1,4 @@
-import React , { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Nav from '../../Components/Stackos/Nav'
 import Logins from '../../Components/Stackos/Logins'
 import Footer from '../../Components/Footer'
@@ -28,7 +28,7 @@ export default function StackHome() {
       const logo = searchParams.get('dappLogo');
       setDappLogo(logo)
       const ui = searchParams.get('stackui');
-     
+
     }
 
     //Test logs
@@ -64,21 +64,21 @@ export default function StackHome() {
     }
   }, [eventData])
 
-  
+
   return (
-    <div className="w-[448px] rounded-2xl drop dark:bg-fontLightColor h-[840px] p-4 flex-col justify-between inline-flex">
-    <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
-      {' '}
-      <HomeBackgroundVector />
+    <div className="w-full min-h-screen rounded-2xl drop dark:bg-fontLightColor h-full p-4 flex-col justify-between inline-flex">
+      <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
+        {' '}
+        <HomeBackgroundVector />
+      </div>
+      <div className="flex-col justify-start gap-2 flex">
+        <Nav />
+
+      </div>
+      <div className='mt-auto'>
+        <Logins />
+      </div>
+      <Footer />
     </div>
-    <div className="flex-col justify-start gap-2 flex">
-      <Nav/>
-     
-    </div>
-    <div className='mt-auto'>
-      <Logins />
-    </div>
-    <Footer />
-  </div>
   )
 }

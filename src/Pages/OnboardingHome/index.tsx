@@ -165,14 +165,14 @@ export default function OnboardingHome() {
     //   </div>
     // </div>
     // </div>
-    <div className="w-[448px] rounded-2xl drop dark:bg-fontLightColor h-[840px] p-4 flex-col justify-between inline-flex">
+    <div className="w-full rounded-2xl drop dark:bg-fontLightColor h-full p-4 flex-col justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />
       </div>
       <div className="flex-col justify-start gap-2 flex">
         <div>
-          <div className="w-[416px]  justify-between items-start inline-flex">
+          <div className="  justify-between items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
               {/* 
               <div className=" relative" >
@@ -184,14 +184,14 @@ export default function OnboardingHome() {
               {/* <img src='/icons/Shape.svg'></img> */}
             </div>
           </div>
-          <div className="h-[221px] px-5 py-6 flex-col justify-center  gap-4 flex">
+          <div className=" px-5 py-6 flex-col justify-center  gap-4 flex">
             <div className="self-stretch py-2  justify-center  gap-2 inline-flex">
               <div className=" flex-col justify-center  gap-2 inline-flex">
                 {/* <img className="w-[95px] h-[95px]" src={"https://www.empireofsight.com/assets/images/logo-icon.svg"} /> */}
                 <img className="w-[95px] h-[95px]" src={dappLogo} />
               </div>
             </div>
-            <div className="self-stretch h-[46px] py-3 flex-col justify-center items-start gap-4 flex">
+            <div className="self-stretch  py-3 flex-col justify-center items-start gap-4 flex">
               <div className="self-stretch justify-center  gap-2 inline-flex">
                 <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug dark:text-text">Login to {dappName}</div>
               </div>
@@ -199,7 +199,7 @@ export default function OnboardingHome() {
           </div>
         </div>
       </div>
-      <div className='mt-auto'>
+      <div className='mt-auto self-stretch'>
         <EmailAndSocial />
       </div>
       <Footer />

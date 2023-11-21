@@ -82,7 +82,7 @@ const App = () => {
     <div className=''>
       <NavContext.Provider value={obj}>
         <Router>
-          <div className={` fixed  lg:right-[40%] lg:top-[15%]   right-0 bottom-0 ${isDarkMode ? "dark" : ""}`}>
+          <div className={` ${isDarkMode ? "dark" : ""}`}>
             {/* <div className=""> */}
             {/* {showWallet && ( */}
             <Routes>

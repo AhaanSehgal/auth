@@ -49,7 +49,7 @@ export default function Logins(props: any) {
 
 
     return (
-        <div className="w-[416px] h-[286px] px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className="w-full h-full px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
 
             <div className="">
                 {authenticated === false ? <div className=''>
@@ -57,11 +57,11 @@ export default function Logins(props: any) {
                         socialLogins?.map((social, index) => {
                             return (
                                 <div onClick={() => socialLoginClicked(index)}>
-                                    <div className="self-stretch cursor-pointer  flex-col justify-center   items-center gap-2 flex">
-                                        <div className="self-stretch px-2 py-3  bg-opacity-60 rounded-2xl justify-center items-center gap-2 inline-flex">
+                                    <div className="self-stretch cursor-pointer  justify-start    items-center gap-2 flex">
+                                        <div className="self-stretch px-2 py-3 w-100vw mr-auto bg-opacity-60 rounded-2xl justify-center items-center gap-2 inline-flex">
                                             {social?.iconUrl}
 
-                                            <div className="grow shrink basis-0 h-10 px-2 py-3 rounded-[20px] justify-start items-center flex">
+                                            <div className="grow shrink basis-0 w-full px-2 py-3 rounded-[20px] justify-start items-center flex">
                                                 <div className="justify-start items-center flex">
                                                     <div className="text-center text-white text-base font-semibold font-['Montserrat'] leading-tight">{social?.name}</div>
                                                 </div>
@@ -72,7 +72,7 @@ export default function Logins(props: any) {
                             )
                         })
                     }
-                    <div className="w-[376px]  py-3 justify-center items-center gap-2 inline-flex">
+                    <div className=" py-3 justify-center items-center gap-2 inline-flex">
                         <div className="grow shrink basis-0 border-2 border-white border-opacity-10"></div>
                         <div className="px-2 justify-center items-center flex">
                             <div className="text-center text-white text-opacity-40 text-xs font-semibold font-['Montserrat'] uppercase leading-[14.40px]">or</div>

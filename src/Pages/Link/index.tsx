@@ -150,9 +150,9 @@ export default function SignUp() {
         <>
 
             <div>
-                <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
+                <div className="w-full h-full p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
                     <div className="flex-col justify-start items-center gap-2 flex">
-                        <div className="w-[416px] justify-between items-start inline-flex">
+                        <div className=" justify-between items-start inline-flex">
                             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
                                 <div className=" relative" >
                                     <button > <img src='/icons/close.svg'></img> </button>
@@ -163,21 +163,21 @@ export default function SignUp() {
                             </div>
                         </div>
                         <Nav />
-                        <div className="w-[376px] h-[46px] py-3 flex-col justify-center items-start gap-4 inline-flex">
+                        <div className=" py-3 flex-col justify-center items-start gap-4 inline-flex">
                             <div className="self-stretch justify-center items-center gap-2 inline-flex">
                                 <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to {dappName}</div>
                             </div>
                         </div>
                     </div>
                     <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
-                        <div className="self-stretch  flex-col justify-start  items-center gap-3 flex rounded-md">
-                            <div className="w-[416px]  px-5 py-4 rounded-2xl mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
-                                <div className="self-stretch py-3 flex-col justify-center items-start gap-4 flex">
+                        <div className="self-stretch  flex-col justify-start   gap-3 flex rounded-md">
+                            <div className="  px-5 py-4 rounded-2xl flex mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+                                <div className="self-stretch py-3 flex-col  items-start gap-4 flex">
                                     <div className="self-stretch justify-start items-center gap-2 inline-flex">
                                         <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your username</div>
                                     </div>
                                 </div>
-                                <div className="w-[376px] px-2 justify-start items-center inline-flex">
+                                <div className=" px-2 justify-start mr-auto inline-flex">
                                     <div className="grow shrink basis-0 mix-blend-difference">
                                         <div>
                                             {/* <span style={{ color: 'white', opacity: 0.5, fontSize: '0.875rem', fontWeight: 'normal' }}>Your </span>
@@ -193,7 +193,7 @@ export default function SignUp() {
                                             {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                                             {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                                         </div>
-                                        <div className="w-[99px] h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
+                                        <div className=" h-10 px-5 py-3 mix-blend-difference bg-white bg-opacity-90 rounded-[20px] justify-center items-center flex">
                                             <div className="justify-center items-center flex">
                                                 <button onClick={() => call2()} > <div className="text-center text-stone-950 text-base font-semibold font-Montserrat leading-tight">{loader === false ? <span>Next</span> :
                                                     <div className='ml-2' role="status">
@@ -225,7 +225,7 @@ export default function SignUp() {
                                         <div className="mix-blend-difference text-center text-gray-400 text-sm font-medium font-Montserrat leading-snug">Recommended : </div>
                                     </div>
                                     <div className="self-stretch justify-start items-center gap-2 inline-flex">
-                                        <div className='flex flex-wrap gap-3 items-center w-[376px] px-2 '>
+                                        <div className='flex flex-wrap gap-3 items-center  px-2 '>
                                             {recommendations?.slice(0, 3)?.map((item, index) => {
                                                 return (
                                                     <div onClick={() => setName(item)} key={index} className="self-stretch cursor-pointer justify-start items-center gap-2 inline-flex mt-3">
