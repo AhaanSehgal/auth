@@ -31,9 +31,11 @@ export default function OnboardingHome() {
       const logo = searchParams.get('dappLogo');
       setDappLogo(logo)
       const ui = searchParams.get('stackui');
-      if(ui === "yes"){
+      if (ui === "yes") {
         navigate("/stackhome")
       }
+
+      localStorage?.setItem("dappDetails", JSON.stringify(document?.referrer))
     }
 
     //Test logs
@@ -62,7 +64,7 @@ export default function OnboardingHome() {
       localStorage.setItem("accessToken", eventData?.message?.token)
       setUsername(eventData?.message?.username)
       setToken(eventData?.message?.token)
-      navigate(`/signUpUserName/google/${eventData?.message?.userId}`)
+      navigate(`/signUpUserName/${localStorage?.getItem('socialNetwork')}/${eventData?.message?.userId}`)
     } else {
       localStorage.setItem("accessToken", eventData?.message?.token)
       setToken(eventData?.message?.token)

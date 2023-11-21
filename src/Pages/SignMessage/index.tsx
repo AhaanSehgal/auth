@@ -1,10 +1,12 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect,useContext} from 'react'
 import Connect from '../../Components/SignMessage/Connect';
 import Sign from "../../Components/SignMessage/Sign";
 import { WalletController } from '@tria-sdk/web';
 import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import {useTriaUser} from "../../contexts/tria-user-provider";
+import NavContext from "../../NavContext";
+import {getDataFromLocalStorage} from "../../utils";
 
 // interface params {
 //   chainName:string;
@@ -20,9 +22,6 @@ import {useTriaUser} from "../../contexts/tria-user-provider";
 interface params {
   chainName:string;
   message:string;
-  triaName:string,
-  appDomain:string,
-  appLogo:string,
   tokenAddress: String;
 }
 
@@ -30,9 +29,6 @@ interface params {
 const initialParams :params={
   chainName:'',
   message:'',
-  triaName:'',
-  appDomain:'',
-  appLogo:'',
   tokenAddress: ''
 }
 
@@ -54,7 +50,17 @@ interface AssetDetails {
   tokenAddress: string;
 }
 
+interface dappDetails{
+  dappDomain:any,
+  dappLogo :any,
+  triaName:any
+}
 
+const initialData:dappDetails={
+  dappDomain:"",
+  dappLogo :"",
+  triaName:""
+}
 
 
 const walletType = { embedded: true };
@@ -67,20 +73,30 @@ function SignMessage() {
     const {getAssetDetails,getUserByAddress} =useTriaUser();
     const [tokenDetails,setTokenDetails]=useState<AssetDetails>();
     const param = useParams();
+    const [dappDetails,setDappDetails]=useState<dappDetails>(initialData);
 
     const sendMessageToParent = (data:any=null) => {
       // Post a message to the parent window
+      console.log("event emitted");
       window.parent.postMessage({ type: 'closeIframe',callFrom:'sign',data:data }, '*');
   };
+
+
+  // const initialDappDetails = {
+  //   dappDomain: "example.com",
+  //   dappLogo: "logo.png",
+  //   triaName: "MyTria"
+  // };
+  
+  // const jsonString = JSON.stringify(initialDappDetails);
+  
+  // localStorage.setItem("dappDetails", jsonString);
   
 
 
     console.log(btoa(JSON.stringify({
       chainName: "POLYGON",
       message: "Hello, this is a dummy message!",
-      triaName: "Lalitt@tria",
-      appDomain: "https://facebook.com",
-      appLogo: "dummylogo.png",
       tokenAddress: ""
     })));
 
@@ -99,38 +115,43 @@ function SignMessage() {
     };
 
     const setStateParams = async () => {
-      // console.log("called");
-      // const searchParams = new URLSearchParams(location.search);
-      // console.log("sdf",searchParams);
-      // const encodedParams = searchParams.get('params');
       if (param.param) {
         const encodedParams=param.param;
-        console.log("encodedParams",typeof(encodedParams));
+        console.log("encodedParams",typeof(encodedParams)); 
         // Decode the string
         const jsonString = atob(encodedParams);
         console.log("jsonString",jsonString);
         // Parse the JSON
        const jsonData = JSON.parse(jsonString);
+      //  const localDetails= await getDataFromLocalStorage();
+       const dappData=localStorage.getItem("dappDetails")|| "";
+       const searchParams = new URLSearchParams(dappData);
+       const logo = searchParams.get('dappLogo');
+       const domain = searchParams.get('dappDomain');
+       const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
+       const localDetails={dappLogo:logo,dappDomain:domain,triaName};
+       console.log("daapp======>",localDetails);
+       setDappDetails(localDetails);
         console.log("jsonData",jsonData);
         setParams(jsonData);
-        getAsset(jsonData);
+        getAsset(jsonData,localDetails);
       }
       
     };
 
-    const getAsset = async(asset:any)=>{
+    const getAsset = async(asset:any,data)=>{
+      try{
       console.log("start----------------------->");
       const response = await getAssetDetails(
-       asset?.chainName,asset?.tokenAddress ,asset?.triaName
+       asset?.chainName,asset?.tokenAddress ,data?.triaName
       );
       setTokenDetails(response);
       console.log("asset----------------------->",response);
       }
-  
-     
-      // const data=await getAssetDetails('POLYGON','0x1de58d46d05a379e020b1cbed0db98a2f55831b2','test@tria');
-      // console.log("data",data);
-    
+      catch(err){
+        console.log(err);
+      }
+      }
   
   
     useEffect(() => {
@@ -142,7 +163,7 @@ function SignMessage() {
   return (
     <div>
        { connect ? <Connect setConnect={setConnect}/> :
-        <Sign params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
+        <Sign dappDetails={dappDetails} params={params} signMessage={signMessage} tokenDetails={tokenDetails} sendMessageToParent={sendMessageToParent}/>
   }
     </div>
 

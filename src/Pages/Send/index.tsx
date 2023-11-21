@@ -13,7 +13,7 @@ import {
   UserController,
 } from "@tria-sdk/core";
 interface param {
-  enteredAmountValue: number | undefined;
+  amount: number | undefined;
   senderName: string;
   senderAddress: string;
   recepientAddress: string;
@@ -67,6 +67,20 @@ interface fee {
   usd?: string | undefined;
 }
 
+interface dappDetails{
+  dappDomain:any,
+  dappLogo :any,
+  triaName:any
+}
+
+
+const initialData:dappDetails={
+  dappDomain:"",
+  dappLogo :"",
+  triaName:""
+}
+
+
 const walletType = { embedded: true };
 const baseUrl = "https://staging.tria.so";
 
@@ -92,7 +106,7 @@ export default function SendAsset(props: any) {
 
   const encodedParams = btoa(
     JSON.stringify({
-      enteredAmountValue: 0.00001,
+      amount: 0.00001,
       senderName: "Lalitt@tria",
       senderAddress: "Lalitt@tria",
       recepientAddress: "dev@tria",
@@ -116,6 +130,7 @@ export default function SendAsset(props: any) {
   const [feeLoading, setFeeLoading] = useState<boolean>(false);
   const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [dappDetails,setDappDetails]=useState<dappDetails>(initialData);
 const walletUrl="https://reliable-semifreddo-e8e93e.netlify.app/home";
 
 const sendMessageToParent = (data:any=null) => {
@@ -139,9 +154,9 @@ const sendMessageToParent = (data:any=null) => {
         walletType,
       });
       const payload: Send = {
-        fromTriaName: params?.senderAddress,
+        fromTriaName: dappDetails?.triaName,
         recipientTriaName: params?.recepientAddress || "",
-        amount: params?.enteredAmountValue || 0,
+        amount: params?.amount || 0,
         tokenAddress: params?.tokenAddress,
       }; 
       await wallet.init();
@@ -152,7 +167,7 @@ const sendMessageToParent = (data:any=null) => {
       window.location.href= walletUrl;
       }
       else{
-        sendMessageToParent(txn);
+        sendMessageToParent({txnId:txn?.data?.txnId,viewInExplorer:txn?.data?.viewInExplorer});
       }
       const x = await txn?.data?.wait();
       console.timeEnd("myTimer");
@@ -189,9 +204,9 @@ const sendMessageToParent = (data:any=null) => {
 
       console.log("fee");
       const payload = {
-        fromTriaName: feeCallData?.senderAddress,
+        fromTriaName: dappDetails?.triaName,
         recipientTriaName: feeCallData?.recepientAddress,
-        amount: feeCallData?.enteredAmountValue,
+        amount: feeCallData?.amount,
         tokenAddress: feeCallData?.tokenAddress,
       };
       const chainNames = feeCallData?.chainName;
@@ -203,18 +218,16 @@ const sendMessageToParent = (data:any=null) => {
           parseFloat(res.fee?.usd || "0") + (amountInUSD || 0)
         );
         setTotalAmountIncrypto(
-          parseFloat(res?.fee?.eth || "0") + (params?.enteredAmountValue || 0)
+          parseFloat(res?.fee?.eth || "0") + (params?.amount || 0)
         );
       }
       else{
         setError(res?.message ||"");
       }
+      setFeeLoading(false);
       console.log({ res });
     } catch (err) {
       console.error(err);
-    }
-    finally{
-      setFeeLoading(false);
     }
   };
 
@@ -231,11 +244,19 @@ const sendMessageToParent = (data:any=null) => {
       console.log("jsonString", jsonString);
       // Parse the JSON
       const jsonData = JSON.parse(jsonString);
-      // getUserDetail(jsonData?.senderName,jsonData?.tokenAddress )
-      // console.log("userdetail",getUserDetail )
+
+      const dappData=localStorage.getItem("dappDetails")|| "";
+      const searchParams = new URLSearchParams(dappData);
+      const logo = searchParams.get('dappLogo');
+      const domain = searchParams.get('dappDomain');
+      const triaName=JSON.parse(localStorage.getItem("tria.wallet.store") || "{}")?.triaName;
+      const localDetails={dappLogo:logo,dappDomain:domain,triaName};
+      console.log("daapp======>",localDetails);
+      setDappDetails(localDetails);
+
       console.log("jsonData", jsonData);
       getTriaName(jsonData?.recepientAddress, jsonData?.chainName);
-      getAsset(jsonData);
+      getAsset(jsonData,localDetails);
       setParams(jsonData);
       setRecieverTriaName(jsonData.recepientAddress);
     }
@@ -244,16 +265,16 @@ const sendMessageToParent = (data:any=null) => {
   // const SDK_BASE_URL = 'https://staging.tria.so'
   // const userController = new UserController(SDK_BASE_URL ?? '',"dev0@tria" );
 
-  const getAsset = async (asset: any) => {
+  const getAsset = async (asset: any,localDetails:any) => {
     console.log("start----------------------->");
     const response = await getAssetDetails(
       asset?.chainName,
       asset?.tokenAddress,
-      asset?.senderAddress
+     localDetails?.triaName
     );
     setTokenDetails(response);
-    if (params?.enteredAmountValue) {
-      const total = params?.enteredAmountValue * response.quoteRate;
+    if (params?.amount) {
+      const total = params?.amount * response.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
@@ -262,12 +283,12 @@ const sendMessageToParent = (data:any=null) => {
   };
 
   useEffect(() => {
-    if (params?.enteredAmountValue && tokenDetails) {
-      const total = params?.enteredAmountValue * tokenDetails.quoteRate;
+    if (params?.amount && tokenDetails) {
+      const total = params?.amount * tokenDetails.quoteRate;
       console.log("total-------------->", total);
       setAmountInUSD(total);
     }
-  }, [params?.enteredAmountValue, tokenDetails]);
+  }, [params?.amount, tokenDetails]);
 
   const fetchSendFee = async () => {
     try {
@@ -296,11 +317,12 @@ const sendMessageToParent = (data:any=null) => {
 
   return (
     <div className="w-[448px] h-[840px] p-4 flex-col bg-white dark:bg-fontLightColor rounded-2xl justify-between items-center inline-flex">
-      {approveLoading ? (
-        <div className="ml-[10] mt-[400px] transform -translate-x-1/2 -translate-y-1/2">
+    {approveLoading ? (
+      <div className="flex ml-12 items-center justify-center w-full h-full">
+        <div className="transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
         </div>
-      ) : (
+      </div>) : (
         <div className=" px-5 flex-col justify-center items-center flex">
           <div className="w-[416px] justify-end items-start inline-flex">
             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-end gap-2 inline-flex" />
@@ -311,7 +333,7 @@ const sendMessageToParent = (data:any=null) => {
             <img className="dark:visible invisible W-[0] dark:W-18px " src="/icons/ShapeW.svg"></img>{" "} */}
           </div>
           <div className="self-stretch h-[166px] flex-col justify-center items-center gap-2 flex">
-            <div className="self-stretch border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
+            <div className="self-stretch border-b-2 border-zinc-500 pt-8 border-opacity-10 justify-center items-center gap-4 inline-flex">
               <div>
                 <div className="w-[376px] h-[74px] border-b-2 border-zinc-500 border-opacity-10 justify-center items-center gap-4 inline-flex">
                   <div className="grow shrink basis-0 h-[74px] py-3 justify-start items-center gap-3 flex">
@@ -333,7 +355,7 @@ const sendMessageToParent = (data:any=null) => {
                       </div>
                       <div className="px-2 justify-start items-center inline-flex">
                         <div className="text-center text-neutral-600 text-sm font-semibold font-montserrat leading-[16.80px]">
-                          {params?.senderName}
+                          {dappDetails?.triaName}
                         </div>
                       </div>
                     </div>
@@ -356,10 +378,10 @@ const sendMessageToParent = (data:any=null) => {
               </div>{" "}
             </div>
             <div className="self-stretch h-[84px] py-3 flex-col justify-center items-center gap-4 flex">
-              <div className="w-[212px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
-                <img className="w-7 h-7 shadow" src={params?.appLogo} />
+              <div className="w-[350px] h-[60px] px-6 py-4 rounded-[52px] border-2 border-zinc-500 border-opacity-10 justify-center items-center gap-3 inline-flex">
+                <img className="w-7 h-7 shadow" src={dappDetails?.dappLogo} />
                 <div className="text-center text-neutral-600 text-sm font-normal font-montserrat leading-[16.80px]">
-                  {params?.appDomain}
+                  {dappDetails?.dappDomain}
                 </div>
               </div>
             </div>
@@ -369,17 +391,17 @@ const sendMessageToParent = (data:any=null) => {
               </div>
             </div>
           </div>
-          <div className="self-stretch h-[444px] py-2 flex-col justify-center items-center gap-2 flex">
+          <div className="self-stretch h-[444px] py-2 mt-4 flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch h-[215px] px-5 py-4 rounded-2xl border-2 border-violet-400 border-opacity-30 flex-col justify-center items-center flex">
               <div className="h-20 py-3 flex-col justify-center items-start gap-2 flex">
                 <div className="self-stretch justify-center items-center gap-2 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-90 text-2xl font-semibold font-montserrat leading-[28.80px] dark:text-text">
-                    ${amountInUSD?.toFixed(6)}
+                    ${amountInUSD?.toFixed(6) ||0}
                   </div>
                 </div>
                 <div className="self-stretch justify-center items-center gap-1 inline-flex">
                   <div className="text-center text-stone-950 text-opacity-60 text-base font-medium font-montserrat leading-tight dark:text-text">
-                    {params?.enteredAmountValue} {tokenDetails?.symbol}
+                    {params?.amount ||0} {tokenDetails?.symbol}
                   </div>
                 </div>
                 <div className="w-100 h-[18px] justify-center items-center gap-2 inline-flex">
@@ -396,7 +418,7 @@ const sendMessageToParent = (data:any=null) => {
                   />
                   <div className="px-2 justify-start items-center inline-flex">
                     <div className="text-center text-zinc-500 text-sm font-semibold font-montserrat leading-[16.80px] ">
-                      {params?.senderName}
+                      {dappDetails?.triaName}
                     </div>
                   </div>
                 </div>
@@ -556,7 +578,7 @@ const sendMessageToParent = (data:any=null) => {
           <div className="self-stretch h-[104px] mt-20  flex-col justify-center items-center gap-2 flex">
             <div className="self-stretch mt-auto h-[53px] flex-col justify-center items-center gap-4 flex">
               <div className="w-[416px] h-[53px] justify-center items-center gap-6 inline-flex">
-                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex"
+                <div className="grow shrink basis-0 h-[53px] p-5 bg-white rounded-[58px] border border-zinc-500 border-opacity-30 justify-center items-center flex cursor-pointer"
                 onClick={()=>sendMessageToParent()}>
                   <div className="justify-center items-center flex">
                     <div className="text-center text-stone-950 text-opacity-80 text-lg font-semibold font-montserrat leading-snug">

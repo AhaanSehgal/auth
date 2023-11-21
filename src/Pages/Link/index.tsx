@@ -9,6 +9,7 @@ import { AuthController } from '@tria-sdk/core';
 import Nav from '../../Components/SignUp/Nav';
 import Footer from '../../Components/Footer';
 import io from 'socket.io-client';
+import { checkDidAvailability, getDidRecommendations } from '../../utils';
 
 
 export default function SignUp() {
@@ -19,7 +20,9 @@ export default function SignUp() {
         embedded: true,
     };
 
-    const { dappName, userEmail, hash, hashPass } = useContext(NavContext)
+    const { dappName, hash, hashPass, userEmail } = useContext(NavContext)
+
+    // const userEmail = "gzb4ytvup6@waterisgone.com"
 
     const [name, setName] = useState("")
     const [recommendations, setRecommendations] = useState([])
@@ -43,7 +46,7 @@ export default function SignUp() {
 
     const getNameRecommendations = async (name) => {
         try {
-            const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name}`)
+            const { data } = await axios.get(`${baseUrl}/api/v2/get-name-recommendation?name=${name?.toLowerCase()}`)
             console.log("recommed", data?.data)
             setRecommendations(data?.data)
         } catch (err) {
@@ -54,7 +57,7 @@ export default function SignUp() {
     const checkIfAvailable = async (name) => {
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/did/check`, {
-                did: name + "@tria"
+                did: name?.toLowerCase() + "@tria"
             })
             console.log("did", data?.response?.availabilityStatus)
             setAvailable(data?.response?.availabilityStatus)
@@ -62,6 +65,8 @@ export default function SignUp() {
             console.log(err)
         }
     }
+
+
 
     // const call = async () => {
     //     const searchParams = new URLSearchParams(location.search);
@@ -96,7 +101,7 @@ export default function SignUp() {
             const searchParams = new URLSearchParams(location.search);
             const origin = searchParams.get('origin');
             const res = await keyringController.generateAccountByOTPOrLINK({
-                triaName: name + "@tria",
+                triaName: name.toLowerCase() + "@tria",
                 input: userEmail,
                 hash: hash,
                 password: hashPass,
@@ -131,13 +136,28 @@ export default function SignUp() {
         // console.log("resp", resp)
     }
 
-    useEffect(() => {
+    const check = async () => {
         const refined_email = userEmail?.substring(0, userEmail.indexOf('@'));
         if (refined_email.length !== 0) {
-            setName(refined_email)
-            checkIfAvailable(refined_email)
-            getNameRecommendations(refined_email)
+            const more_refined_email = String(refined_email)?.toLowerCase()
+            console.log('more refined email -->', more_refined_email)
+            console.log('check', await checkDidAvailability(more_refined_email))
+            if (await checkDidAvailability(more_refined_email) === true) {
+                console.log("name after check", more_refined_email)
+                setName(more_refined_email)
+                checkIfAvailable(more_refined_email)
+                getNameRecommendations(more_refined_email)
+            } else {
+                const suggestedName = await getDidRecommendations(more_refined_email)
+                setName(suggestedName)
+                checkIfAvailable(suggestedName)
+                getNameRecommendations(suggestedName)
+            }
         }
+    }
+
+    useEffect(() => {
+        check()
     }, []);
 
     const checkSpecialChar = (e) => {
@@ -189,7 +209,7 @@ export default function SignUp() {
                                 <div className="self-stretch h-16 flex-col justify-center items-center flex">
                                     <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
                                         <div className="grow shrink basis-0 h-10 px-5 py-3 bg-zinc-500 bg-opacity-10 rounded-[20px] justify-between items-center flex">
-                                            <input onKeyDown={(e) => checkSpecialChar(e)} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
+                                            <input style={{ textTransform: 'lowercase' }} onKeyDown={(e) => { checkSpecialChar(e) }} className='justify-start bg-transparent px-2 py-2 font-Montserrat focus:outline-none dark:text-text' placeholder="Your name" value={name} onChange={(e) => { setName(e.target.value); getNameRecommendations(e.target.value); checkIfAvailable(e.target.value) }} />
                                             {/* <span className='justify-end' style={{ color: 'white', opacity: 0.4, fontSize: '1rem', fontWeight: 'normal' }}>@tria</span> */}
                                             {/* <div className='text-gray-700 font-bold font-Montserrat'>@tria</div> */}
                                         </div>
