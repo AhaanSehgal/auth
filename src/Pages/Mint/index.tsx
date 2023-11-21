@@ -264,7 +264,7 @@ const fee = new FeeController({
     console.log("token allowence------------------>",res);
     if(!res?.allowance){
         const url=  btoa(JSON.stringify({chainName:paramData?.chainName,payload}));
-       navigate(`/aprove/${url}`);
+       navigate(`/approve/${url}`);
     }
     console.log("token allowence----->",res);
   };
