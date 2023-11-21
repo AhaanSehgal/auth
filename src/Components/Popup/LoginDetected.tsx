@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function LoginDetected() {
   return (
-    <div><div className="w-80 h-[215.50px] bg-stone-950 rounded-2xl border flex-col justify-center items-center inline-flex">
+    <div><div className="w-full h-full min-h-screen bg-stone-950 rounded-2xl border flex-col justify-center items-center inline-flex">
     <div className="self-stretch pt-3 pb-1 flex-col justify-start items-center gap-2 flex">
       <div className="self-stretch px-5 justify-start items-center gap-4 inline-flex">
         <div className="grow shrink basis-0  justify-start items-center gap-2 flex">

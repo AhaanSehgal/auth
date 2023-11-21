@@ -3,11 +3,11 @@ import React from 'react'
 export default function LoginWith() {
   return (
     
-    <div className="w-[416px] h-[222px] py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
-  <div className="self-stretch h-[46px] px-5 py-3 flex-col justify-center items-center gap-4 flex">
+    <div className="w-full h-full  py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+  <div className="self-stretch  px-5 py-3 flex-col justify-center items-center gap-4 flex">
     <div className="self-stretch justify-start items-center gap-2 inline-flex">
       <div className="text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Log in with</div>
-      <div className="h-[22px] px-2 py-1 bg-pink-500 bg-opacity-10 rounded-[22px] justify-center items-center gap-2 flex">
+      <div className=" px-2 py-1 bg-pink-500 bg-opacity-10 rounded-[22px] justify-center items-center gap-2 flex">
         <div className="text-center text-pink-500 text-opacity-90 text-xs font-medium font-['Montserrat'] leading-[14.40px]">fast</div>
       </div>
     </div>
@@ -15,7 +15,7 @@ export default function LoginWith() {
   <div className="self-stretch h-16 px-10 py-3 bg-neutral-800 bg-opacity-20 flex-col justify-start items-center gap-2 flex">
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
       <div className="w-10 h-10 relative">
-        <img className="w-10 h-10 left-0 top-0 absolute rounded-[25px]" src="/icons/user.svg" />
+        <img className="left-0 top-0 absolute rounded-[25px]" src="/icons/user.svg" />
         <div className="w-[18px] h-[18px] p-[1.50px] left-[26px] top-[24px] absolute bg-neutral-50 rounded-xl shadow justify-center items-center gap-[1.50px] inline-flex">
           <div className="w-[10.80px] h-[10.80px] relative" />
           <img src='/icons/google.svg'></img>

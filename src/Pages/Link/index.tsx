@@ -170,7 +170,7 @@ export default function SignUp() {
         <>
 
             <div>
-                <div className="w-full h-full p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
+                <div className="w-full h-full min-h-screen p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
                     <div className="flex-col justify-start items-center gap-2 flex">
                         <div className=" justify-between items-start inline-flex">
                             <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
@@ -190,8 +190,8 @@ export default function SignUp() {
                         </div>
                     </div>
                     <div className="self-stretch  flex-col justify-center  items-center gap-2 flex">
-                        <div className="self-stretch  flex-col justify-start   gap-3 flex rounded-md">
-                            <div className="  px-5 py-4 rounded-2xl flex mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+                        <div className="self-stretch mt-auto flex-col justify-start   gap-3 flex rounded-md">
+                            <div className="  px-5 py-4 rounded-2xl mt-auto flex mt-auto border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
                                 <div className="self-stretch py-3 flex-col  items-start gap-4 flex">
                                     <div className="self-stretch justify-start items-center gap-2 inline-flex">
                                         <div className="mix-blend-difference text-center text-white text-opacity-80 text-lg font-medium font-Montserrat leading-snug">Create your username</div>

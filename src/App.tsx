@@ -112,7 +112,6 @@ const App = () => {
               <Route path="/email" element={<Email />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/resetConfirm" element={<ResetConfirm />} />
-              <Route path="/reset" element={<Reset />} />
               <Route path="/loginDetect" element={<LoginDetect />} />
               <Route path="/loginDetected" element={<LoginDetected />} />
               <Route path="/incognito" element={<Incognito />} />

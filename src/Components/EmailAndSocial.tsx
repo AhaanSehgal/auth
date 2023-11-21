@@ -27,7 +27,7 @@ export default function EmailAndSocial(props: any) {
 
     const width = ((window.innerWidth) / 2.6);
     const top = 0;
-    const left=0;
+    const left = 0;
     const height = window.innerHeight;
     // const width=(window.outerWidth/2)-225
     const socialNetwork = socialLogins[socialLoginIndex].type;
@@ -102,68 +102,68 @@ export default function EmailAndSocial(props: any) {
   }
 
   return (
-    <div>
+    <div className=''>
       {openIframe === true ? <Iframe /> : null}
       {openLoginFrame === true ?
         <div className="mb-4 mr-2 absolute right-0 bottom-0 left-0 bg-black">
           <iframe width="450" height="1000" src={`https://auth-7rin.vercel.app/signInPassword/${email}`} />
         </div>
         : null}
-      <button>
-        <div className="w-full h-full  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
-          <div className=" py-3 justify-center items-center gap-4 inline-flex">
-            <div className="grow shrink basis-0 justify-start items-center gap-2 flex">
-              <div onClick={props.toggleState2} className="text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Continue with email</div>
-              {/* <div className="h-[22px] px-2 py-1 bg-pink-500 bg-opacity-10 rounded-[22px] justify-center items-center gap-2 flex">
+
+      <div className="w-full h-full  px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 inline-flex">
+        <div className=" py-3 justify-center items-center gap-4 inline-flex">
+          <div className="grow shrink basis-0 justify-start items-center gap-2 flex">
+            <div onClick={props.toggleState2} className="text-center text-white text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug">Continue with email</div>
+            {/* <div className="h-[22px] px-2 py-1 bg-pink-500 bg-opacity-10 rounded-[22px] justify-center items-center gap-2 flex">
                 <div className="text-center text-pink-500 text-opacity-90 text-xs font-medium font-['Montserrat'] leading-[14.40px]">fast</div>
               </div> */}
-            </div>
-            <div className="justify-start items-start flex">
-              <div className="px-3 py-1.5 bg-stone-950 bg-opacity-20 rounded-tl-[20px] rounded-bl-[20px] justify-center items-center gap-2 flex">
-                <div className=" justify-center items-center flex">
-                  {/* <img src='/icons/sms.svg'></img> */}
-                  <div className=" relative">
-                  </div>
+          </div>
+          <div className="justify-start items-start flex">
+            <div className="px-3 py-1.5 bg-stone-950 bg-opacity-20 rounded-tl-[20px] rounded-bl-[20px] justify-center items-center gap-2 flex">
+              <div className=" justify-center items-center flex">
+                {/* <img src='/icons/sms.svg'></img> */}
+                <div className=" relative">
                 </div>
               </div>
-              <div className="px-3 py-1.5 bg-stone-950 bg-opacity-5 rounded-tr-[20px] rounded-br-[20px] justify-center items-center gap-2 flex">
-                <div className=" justify-center items-center flex">
-                  {/* <img src='/icons/call.svg'></img> */}
-                  <div className=" relative">
-                  </div>
+            </div>
+            <div className="px-3 py-1.5 bg-stone-950 bg-opacity-5 rounded-tr-[20px] rounded-br-[20px] justify-center items-center gap-2 flex">
+              <div className=" justify-center items-center flex">
+                {/* <img src='/icons/call.svg'></img> */}
+                <div className=" relative">
                 </div>
               </div>
             </div>
           </div>
-          {connectWithEmail !== false ? <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-            <input className="grow shrink basis-0  px-5 py-3 text-white font-Montserrat bg-white bg-opacity-5 rounded-[20px] justify-start items-center flex" type="email" placeholder='your@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
-            <div onClick={() => navigate(`/signInPassword/${email}`)} className="  px-5 py-3 bg-white rounded-[20px] justify-center items-center flex">
-              <div className="justify-center items-center flex">
-                <button><div className="text-center text-black text-base font-semibold font-Montserrat leading-tight" onClick={checkEmailExists}>Next</div></button>
-              </div>
+        </div>
+        {connectWithEmail !== false ? <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
+          <input className="grow shrink basis-0  px-5 py-3 text-white font-Montserrat bg-white bg-opacity-5 rounded-[20px] justify-start items-center flex" type="email" placeholder='your@email.com' value={email} onChange={(e) => setEmail(e.target.value)} />
+          <div onClick={() => navigate(`/signInPassword/${email}`)} className="  px-5 py-3 bg-white rounded-[20px] justify-center items-center flex">
+            <div className="justify-center items-center flex">
+              <button><div className="text-center text-black text-base font-semibold font-Montserrat leading-tight" onClick={checkEmailExists}>Next</div></button>
             </div>
-          </div> : null}
-          <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
-            <div className="grow shrink basis-0 border-2 border-white border-opacity-25"></div>
-            <div className="px-2 justify-center items-center flex">
-              <div className="text-center text-white text-opacity-25 text-xs font-semibold font-Montserrat uppercase leading-[14.40px]">OR</div>
-            </div>
-            <div className="grow shrink basis-0  border-2 border-white border-opacity-25"></div>
           </div>
-          <div className="">
-            {authenticated === false ? <div className='self-stretch px-5 py-2 justify-center items-center gap-5 inline-flex'>
-              {
-                socialLogins?.map((social, index) => {
-                  return (
-                    <div onClick={() => socialLoginClicked(index)}>
-                      {social?.iconUrl}
-                    </div>
-                  )
-                })
-              }
-              {/* Metamask Login */}
+        </div> : null}
+        <div className="self-stretch py-3 justify-center items-center gap-2 inline-flex">
+          <div className="grow shrink basis-0 border-2 border-white border-opacity-25"></div>
+          <div className="px-2 justify-center items-center flex">
+            <div className="text-center text-white text-opacity-25 text-xs font-semibold font-Montserrat uppercase leading-[14.40px]">OR</div>
+          </div>
+          <div className="grow shrink basis-0  border-2 border-white border-opacity-25"></div>
+        </div>
+        <div className="">
+          {authenticated === false ? <div className='self-stretch px-5 py-2 justify-center items-center gap-5 inline-flex'>
+            {
+              socialLogins?.map((social, index) => {
+                return (
+                  <div onClick={() => socialLoginClicked(index)}>
+                    {social?.iconUrl}
+                  </div>
+                )
+              })
+            }
+            {/* Metamask Login */}
 
-              {/* <div onClick={() => { connect({ connector: connectors[2] }) }}>
+            {/* <div onClick={() => { connect({ connector: connectors[2] }) }}>
                 <div className='h-10 w-10 bg-white rounded-full flex center justify-center items-center'>
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="28" height="28" fill="#1E1E1E" />
@@ -294,8 +294,8 @@ export default function EmailAndSocial(props: any) {
                 </div>
               </div> */}
 
-              {/* Wallet Connect */}
-              {/* <div onClick={() => { connect({ connector: connectors[1] }) }}>
+            {/* Wallet Connect */}
+            {/* <div onClick={() => { connect({ connector: connectors[1] }) }}>
                 <div className='h-10 w-10 bg-[#3B99FC] rounded-full flex center justify-center items-center'>
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="28" height="28" rx="6" fill="#3B99FC" />
@@ -304,13 +304,13 @@ export default function EmailAndSocial(props: any) {
                 </div>
               </div> */}
 
-            </div> :
-              <div className='px-8 py-2 bg-green-400 text-green-700 font-bold font-Montserrat rounded-md'>
-                Authenticated
-              </div>}
-          </div>
+          </div> :
+            <div className='px-8 py-2 bg-green-400 text-green-700 font-bold font-Montserrat rounded-md'>
+              Authenticated
+            </div>}
         </div>
-      </button>
+      </div>
+
     </div>
   )
 }

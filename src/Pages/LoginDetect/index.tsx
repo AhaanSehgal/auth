@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
 
-    <div className="w-full rounded-2xl dark:bg-fontLightColor h-full p-4 flex-col  justify-between inline-flex">
+    <div className="w-full min-h-screen rounded-2xl dark:bg-fontLightColor h-full p-4 flex-col  justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />
@@ -85,9 +85,9 @@ export default function Home() {
         </div>
       )} */}
       {!connectWallet && <div className='cursor-pointer' onClick={toggleState3}>
-        <div className="w-[416px] h-[78px] px-5 py-4 rounded-2xl border border-stone-950 border-opacity-5 flex-col justify-center items-center gap-2 inline-flex">
-          <div className="self-stretch h-[46px] py-3 flex-col justify-start items-center gap-4 flex">
-            <div className="self-stretch h-[22px] flex-col justify-center items-start gap-2 flex">
+        <div className=" px-5 py-4 rounded-2xl border border-stone-950 border-opacity-5 flex-col justify-center items-center gap-2 inline-flex">
+          <div className="self-stretch  py-3 flex-col justify-start items-center gap-4 flex">
+            <div className="self-stretch  flex-col justify-center items-start gap-2 flex">
               <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-Montserrat leading-snug dark:text-text">Connect a Wallet</div>
             </div>
           </div>

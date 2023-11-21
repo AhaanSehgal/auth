@@ -72,7 +72,7 @@ export default function Logins(props: any) {
                             )
                         })
                     }
-                    <div className=" py-3 justify-center items-center gap-2 inline-flex">
+                    <div className=" py-3 justify-center items-center gap-2 inline-flex w-full">
                         <div className="grow shrink basis-0 border-2 border-white border-opacity-10"></div>
                         <div className="px-2 justify-center items-center flex">
                             <div className="text-center text-white text-opacity-40 text-xs font-semibold font-['Montserrat'] uppercase leading-[14.40px]">or</div>
@@ -81,7 +81,7 @@ export default function Logins(props: any) {
                     </div>
                     <div className="self-stretch justify-center items-center inline-flex">
                         <div onClick={() => { connect({ connector: connectors[2] }) }}>
-                            <div className="grow shrink basis-0 h-16 px-1 py-3 justify-center cursor-pointer items-center gap-2 flex">
+                            <div className="grow shrink basis-0  w-[11.75rem] h-16 px-1 py-3 justify-center cursor-pointer items-center gap-2 flex">
                                 <div className="w-10 h-10 p-[3.33px] bg-white rounded-[28.33px] shadow justify-center items-center gap-[3.33px] flex">
                                     <div className="w-7 h-7 relative">
                                         <div className="w-7 h-7 left-0 top-0 absolute bg-white rounded-md">

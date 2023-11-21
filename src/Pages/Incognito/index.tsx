@@ -12,12 +12,12 @@ export default function Index() {
 
   return (
     <div className=''>
-      <div className="w-[100vw] h-[100vh]  dark:bg-fontLightColor bg-white rounded-2xl p-4 flex-col justify-between items-center inline-flex">
+      <div className="w-full h-full min-h-screen dark:bg-fontLightColor bg-white rounded-2xl p-4 flex-col justify-between items-center inline-flex">
         <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
           {' '}
           <HomeBackgroundVector />
         </div>
-        <div className="flex-col justify-start items-center gap-2 flex">
+        <div className="flex-col w-full h-full justify-start items-center gap-2 flex">
           <Nav />
         </div>
         {/* <div className="h-[289px] flex-col  items-center gap-3 flex"> */}

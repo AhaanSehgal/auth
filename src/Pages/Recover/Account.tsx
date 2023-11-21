@@ -41,21 +41,21 @@ export default function Account() {
 
     return (
         <div className="">
-  <div className="bg-white w-full h-full dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between inline-flex">
+  <div className="bg-white w-full h-full min-h-screen dark:bg-fontLightColor rounded-2xl p-4 flex-col justify-between inline-flex">
     <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
       {' '}
       {/* HomeBackgroundVector */}
     </div>
     <div className="flex-col justify-start gap-2">
-      {/* Nav */}
+      <Nav/>
     </div>
     <div className="flex-col justify-center items-start gap-1 inline-flex">
       <div className="self-stretch justify-center items-center gap-2">
         <div className="text-center text-white text-opacity-80 text-2xl font-normal  font-['Montserrat'] leading-[28.80px]">Recover your account</div>
       </div>
     </div>
-    <div className=" flex-col justify-center items-center gap-3 inline-flex">
-      <div className="px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
+    <div className="w-full h-full mt-auto flex-col justify-center items-center gap-3 inline-flex">
+      <div className="w-full h-full px-5 py-4 rounded-2xl border border-violet-400 border-opacity-30 flex-col justify-center items-center gap-2 flex">
         <div className="py-3 flex-col justify-center items-start gap-4">
           <div className="py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="justify-start items-center gap-2 inline-flex">

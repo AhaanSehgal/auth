@@ -167,7 +167,7 @@ export default function OnboardingHome() {
     //   </div>
     // </div>
     // </div>
-    <div className="w-full rounded-2xl drop dark:bg-fontLightColor h-full p-4 flex-col justify-between inline-flex">
+    <div className="w-full h-full min-h-screen rounded-2xl drop dark:bg-fontLightColor h-full p-4 flex-col justify-between inline-flex">
       <div style={{ marginLeft: '-150px' }} className="absolute top-0 ">
         {' '}
         <HomeBackgroundVector />
@@ -190,7 +190,7 @@ export default function OnboardingHome() {
             <div className="self-stretch py-2  justify-center  gap-2 inline-flex">
               <div className=" flex-col justify-center  gap-2 inline-flex">
                 {/* <img className="w-[95px] h-[95px]" src={"https://www.empireofsight.com/assets/images/logo-icon.svg"} /> */}
-                <img className="w-[95px] h-[95px]" src={dappLogo} />
+                <img className="" src={dappLogo} />
               </div>
             </div>
             <div className="self-stretch  py-3 flex-col justify-center items-start gap-4 flex">
