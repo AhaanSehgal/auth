@@ -127,6 +127,7 @@ export default function SignUp() {
     }
   }
 
+  const { dappLogo } = useContext(NavContext)
 
   useEffect(() => {
     check()
@@ -138,16 +139,26 @@ export default function SignUp() {
       <div className="w-[448px] h-[840px] p-4 bg-white dark:bg-fontLightColor rounded-2xl flex-col justify-between items-center inline-flex">
         <div className="flex-col justify-start items-center gap-2 flex">
           <div className="w-[416px] justify-between items-start inline-flex">
-            <div className="p-2 mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
+            <div className=" mix-blend-difference rounded-[39px] flex-col justify-center items-center gap-2 inline-flex">
               <div className=" relative" >
                 <button onClick={() => { navigate("/") }}> <img src='/icons/close.svg'></img> </button>
               </div>
             </div>
-            <div className="p-3  rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
+            <div className=" rounded-[39px] flex-col justify-center items-center gap-2 inline-flex" >
               <img src='/icons/Shape.svg'></img>
             </div>
           </div>
-          <Nav />
+          {/* <Nav /> */}
+          <div className=" px-5  flex-col justify-center items-center gap-4 flex">
+        <div className="self-stretch py-2  justify-center items-center inline-flex">
+          {/* <div className="w-[95px] h-[95px] relative rounded-[127px] ">
+            <img className="" src={dappLogo} />
+          </div> */}
+          <div className=" flex-col justify-center items-center gap-2 inline-flex">
+                <img className="w-[95px] h-[95px]  " src={dappLogo} />
+              </div>
+        </div>
+      </div>
           <div className="w-[376px]  py-3 flex-col justify-center items-start gap-4 inline-flex">
             <div className="self-stretch justify-center items-center gap-2 inline-flex">
               <div className="text-center text-stone-950 text-opacity-80 text-lg font-medium font-['Montserrat'] leading-snug dark:text-text">Login to {dappName}</div>
